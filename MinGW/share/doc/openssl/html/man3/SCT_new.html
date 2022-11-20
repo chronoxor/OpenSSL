@@ -28,63 +28,63 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<pre><code> #include &lt;openssl/ct.h&gt;
+<pre><code>#include &lt;openssl/ct.h&gt;
 
- typedef enum {
-     CT_LOG_ENTRY_TYPE_NOT_SET = -1,
-     CT_LOG_ENTRY_TYPE_X509 = 0,
-     CT_LOG_ENTRY_TYPE_PRECERT = 1
- } ct_log_entry_type_t;
+typedef enum {
+    CT_LOG_ENTRY_TYPE_NOT_SET = -1,
+    CT_LOG_ENTRY_TYPE_X509 = 0,
+    CT_LOG_ENTRY_TYPE_PRECERT = 1
+} ct_log_entry_type_t;
 
- typedef enum {
-     SCT_VERSION_NOT_SET = -1,
-     SCT_VERSION_V1 = 0
- } sct_version_t;
+typedef enum {
+    SCT_VERSION_NOT_SET = -1,
+    SCT_VERSION_V1 = 0
+} sct_version_t;
 
- typedef enum {
-     SCT_SOURCE_UNKNOWN,
-     SCT_SOURCE_TLS_EXTENSION,
-     SCT_SOURCE_X509V3_EXTENSION,
-     SCT_SOURCE_OCSP_STAPLED_RESPONSE
- } sct_source_t;
+typedef enum {
+    SCT_SOURCE_UNKNOWN,
+    SCT_SOURCE_TLS_EXTENSION,
+    SCT_SOURCE_X509V3_EXTENSION,
+    SCT_SOURCE_OCSP_STAPLED_RESPONSE
+} sct_source_t;
 
- SCT *SCT_new(void);
- SCT *SCT_new_from_base64(unsigned char version,
-                          const char *logid_base64,
-                          ct_log_entry_type_t entry_type,
-                          uint64_t timestamp,
-                          const char *extensions_base64,
-                          const char *signature_base64);
+SCT *SCT_new(void);
+SCT *SCT_new_from_base64(unsigned char version,
+                         const char *logid_base64,
+                         ct_log_entry_type_t entry_type,
+                         uint64_t timestamp,
+                         const char *extensions_base64,
+                         const char *signature_base64);
 
- void SCT_free(SCT *sct);
- void SCT_LIST_free(STACK_OF(SCT) *a);
+void SCT_free(SCT *sct);
+void SCT_LIST_free(STACK_OF(SCT) *a);
 
- sct_version_t SCT_get_version(const SCT *sct);
- int SCT_set_version(SCT *sct, sct_version_t version);
+sct_version_t SCT_get_version(const SCT *sct);
+int SCT_set_version(SCT *sct, sct_version_t version);
 
- ct_log_entry_type_t SCT_get_log_entry_type(const SCT *sct);
- int SCT_set_log_entry_type(SCT *sct, ct_log_entry_type_t entry_type);
+ct_log_entry_type_t SCT_get_log_entry_type(const SCT *sct);
+int SCT_set_log_entry_type(SCT *sct, ct_log_entry_type_t entry_type);
 
- size_t SCT_get0_log_id(const SCT *sct, unsigned char **log_id);
- int SCT_set0_log_id(SCT *sct, unsigned char *log_id, size_t log_id_len);
- int SCT_set1_log_id(SCT *sct, const unsigned char *log_id, size_t log_id_len);
+size_t SCT_get0_log_id(const SCT *sct, unsigned char **log_id);
+int SCT_set0_log_id(SCT *sct, unsigned char *log_id, size_t log_id_len);
+int SCT_set1_log_id(SCT *sct, const unsigned char *log_id, size_t log_id_len);
 
- uint64_t SCT_get_timestamp(const SCT *sct);
- void SCT_set_timestamp(SCT *sct, uint64_t timestamp);
+uint64_t SCT_get_timestamp(const SCT *sct);
+void SCT_set_timestamp(SCT *sct, uint64_t timestamp);
 
- int SCT_get_signature_nid(const SCT *sct);
- int SCT_set_signature_nid(SCT *sct, int nid);
+int SCT_get_signature_nid(const SCT *sct);
+int SCT_set_signature_nid(SCT *sct, int nid);
 
- size_t SCT_get0_signature(const SCT *sct, unsigned char **sig);
- void SCT_set0_signature(SCT *sct, unsigned char *sig, size_t sig_len);
- int SCT_set1_signature(SCT *sct, const unsigned char *sig, size_t sig_len);
+size_t SCT_get0_signature(const SCT *sct, unsigned char **sig);
+void SCT_set0_signature(SCT *sct, unsigned char *sig, size_t sig_len);
+int SCT_set1_signature(SCT *sct, const unsigned char *sig, size_t sig_len);
 
- size_t SCT_get0_extensions(const SCT *sct, unsigned char **ext);
- void SCT_set0_extensions(SCT *sct, unsigned char *ext, size_t ext_len);
- int SCT_set1_extensions(SCT *sct, const unsigned char *ext, size_t ext_len);
+size_t SCT_get0_extensions(const SCT *sct, unsigned char **ext);
+void SCT_set0_extensions(SCT *sct, unsigned char *ext, size_t ext_len);
+int SCT_set1_extensions(SCT *sct, const unsigned char *ext, size_t ext_len);
 
- sct_source_t SCT_get_source(const SCT *sct);
- int SCT_set_source(SCT *sct, sct_source_t source);</code></pre>
+sct_source_t SCT_get_source(const SCT *sct);
+int SCT_set_source(SCT *sct, sct_source_t source);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -109,7 +109,7 @@
 <p>The former takes ownership, whereas the latter makes a copy. See RFC 6962, Section 3.2 for the definition of LogID.</p>
 
 </li>
-<li><p>SCT_set_timestamp() to set the time the SCT was issued (epoch time in milliseconds).</p>
+<li><p>SCT_set_timestamp() to set the time the SCT was issued (time in milliseconds since the Unix Epoch).</p>
 
 </li>
 <li><p>SCT_set_signature_nid() to set the NID of the signature.</p>
@@ -140,7 +140,7 @@
 <li><p>The type of certificate the SCT was issued for: <b>CT_LOG_ENTRY_TYPE_X509</b> for a normal certificate. <b>CT_LOG_ENTRY_TYPE_PRECERT</b> for a pre-certificate.</p>
 
 </li>
-<li><p>The time that the SCT was issued (epoch time in milliseconds).</p>
+<li><p>The time that the SCT was issued (time in milliseconds since the Unix Epoch).</p>
 
 </li>
 <li><p>The SCT extensions, base64 encoded.</p>
@@ -189,7 +189,7 @@
 
 <p>Copyright 2016-2017 The OpenSSL Project Authors. All Rights Reserved.</p>
 
-<p>Licensed under the OpenSSL license (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
+<p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 
 
 </body>

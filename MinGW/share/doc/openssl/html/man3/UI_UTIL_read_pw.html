@@ -27,13 +27,13 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<pre><code> #include &lt;openssl/ui.h&gt;
+<pre><code>#include &lt;openssl/ui.h&gt;
 
- int UI_UTIL_read_pw_string(char *buf, int length, const char *prompt,
-                            int verify);
- int UI_UTIL_read_pw(char *buf, char *buff, int size, const char *prompt,
-                     int verify);
- UI_METHOD *UI_UTIL_wrap_read_pem_callback(pem_password_cb *cb, int rwflag);</code></pre>
+int UI_UTIL_read_pw_string(char *buf, int length, const char *prompt,
+                           int verify);
+int UI_UTIL_read_pw(char *buf, char *buff, int size, const char *prompt,
+                    int verify);
+UI_METHOD *UI_UTIL_wrap_read_pem_callback(pem_password_cb *cb, int rwflag);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -61,9 +61,9 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2001-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2001-2018 The OpenSSL Project Authors. All Rights Reserved.</p>
 
-<p>Licensed under the OpenSSL license (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
+<p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 
 
 </body>

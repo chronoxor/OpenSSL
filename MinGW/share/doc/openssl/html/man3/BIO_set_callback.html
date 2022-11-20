@@ -18,33 +18,39 @@
   <li><a href="#CALLBACK-OPERATIONS">CALLBACK OPERATIONS</a></li>
   <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
   <li><a href="#EXAMPLES">EXAMPLES</a></li>
+  <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
 </ul>
 
 <h1 id="NAME">NAME</h1>
 
-<p>BIO_set_callback_ex, BIO_get_callback_ex, BIO_set_callback, BIO_get_callback, BIO_set_callback_arg, BIO_get_callback_arg, BIO_debug_callback, BIO_callback_fn_ex, BIO_callback_fn - BIO callback functions</p>
+<p>BIO_set_callback_ex, BIO_get_callback_ex, BIO_set_callback, BIO_get_callback, BIO_set_callback_arg, BIO_get_callback_arg, BIO_debug_callback, BIO_debug_callback_ex, BIO_callback_fn_ex, BIO_callback_fn - BIO callback functions</p>
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<pre><code> #include &lt;openssl/bio.h&gt;
+<pre><code>#include &lt;openssl/bio.h&gt;
 
- typedef long (*BIO_callback_fn_ex)(BIO *b, int oper, const char *argp,
-                                    size_t len, int argi,
-                                    long argl, int ret, size_t *processed);
- typedef long (*BIO_callback_fn)(BIO *b, int oper, const char *argp, int argi,
-                                 long argl, long ret);
+typedef long (*BIO_callback_fn_ex)(BIO *b, int oper, const char *argp,
+                                   size_t len, int argi,
+                                   long argl, int ret, size_t *processed);
 
- void BIO_set_callback_ex(BIO *b, BIO_callback_fn_ex callback);
- BIO_callback_fn_ex BIO_get_callback_ex(const BIO *b);
+void BIO_set_callback_ex(BIO *b, BIO_callback_fn_ex callback);
+BIO_callback_fn_ex BIO_get_callback_ex(const BIO *b);
 
- void BIO_set_callback(BIO *b, BIO_callback_fn cb);
- BIO_callback_fn BIO_get_callback(BIO *b);
- void BIO_set_callback_arg(BIO *b, char *arg);
- char *BIO_get_callback_arg(const BIO *b);
+void BIO_set_callback_arg(BIO *b, char *arg);
+char *BIO_get_callback_arg(const BIO *b);
 
- long BIO_debug_callback(BIO *bio, int cmd, const char *argp, int argi,
-                         long argl, long ret);</code></pre>
+long BIO_debug_callback_ex(BIO *bio, int oper, const char *argp, size_t len,
+                           int argi, long argl, int ret, size_t *processed);</code></pre>
+
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+
+<pre><code>typedef long (*BIO_callback_fn)(BIO *b, int oper, const char *argp, int argi,
+                                long argl, long ret);
+void BIO_set_callback(BIO *b, BIO_callback_fn cb);
+BIO_callback_fn BIO_get_callback(const BIO *b);
+long BIO_debug_callback(BIO *bio, int cmd, const char *argp, int argi,
+                        long argl, long ret);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -54,9 +60,9 @@
 
 <p>BIO_set_callback_arg() and BIO_get_callback_arg() are macros which can be used to set and retrieve an argument for use in the callback.</p>
 
-<p>BIO_debug_callback() is a standard debugging callback which prints out information relating to each BIO operation. If the callback argument is set it is interpreted as a BIO to send the information to, otherwise stderr is used.</p>
+<p>BIO_debug_callback_ex() is a standard debugging callback which prints out information relating to each BIO operation. If the callback argument is set it is interpreted as a BIO to send the information to, otherwise stderr is used. The BIO_debug_callback() function is the deprecated version of the same callback for use with the old callback format BIO_set_callback() function.</p>
 
-<p>BIO_callback_fn_ex() is the type of the callback function and BIO_callback_fn() is the type of the old format callback function. The meaning of each argument is described below:</p>
+<p>BIO_callback_fn_ex is the type of the callback function and BIO_callback_fn is the type of the old format callback function. The meaning of each argument is described below:</p>
 
 <dl>
 
@@ -109,11 +115,11 @@
 <dt id="BIO_free-b"><b>BIO_free(b)</b></dt>
 <dd>
 
-<pre><code> callback_ex(b, BIO_CB_FREE, NULL, 0, 0, 0L, 1L, NULL)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_FREE, NULL, 0, 0, 0L, 1L, NULL)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_FREE, NULL, 0L, 0L, 1L)</code></pre>
+<pre><code>callback(b, BIO_CB_FREE, NULL, 0L, 0L, 1L)</code></pre>
 
 <p>is called before the free operation.</p>
 
@@ -121,20 +127,20 @@
 <dt id="BIO_read_ex-b-data-dlen-readbytes"><b>BIO_read_ex(b, data, dlen, readbytes)</b></dt>
 <dd>
 
-<pre><code> callback_ex(b, BIO_CB_READ, data, dlen, 0, 0L, 1L, NULL)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_READ, data, dlen, 0, 0L, 1L, NULL)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_READ, data, dlen, 0L, 1L)</code></pre>
+<pre><code>callback(b, BIO_CB_READ, data, dlen, 0L, 1L)</code></pre>
 
 <p>is called before the read and</p>
 
-<pre><code> callback_ex(b, BIO_CB_READ | BIO_CB_RETURN, data, dlen, 0, 0L, retvalue,
-             &amp;readbytes)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_READ | BIO_CB_RETURN, data, dlen, 0, 0L, retvalue,
+            &amp;readbytes)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_READ|BIO_CB_RETURN, data, dlen, 0L, retvalue)</code></pre>
+<pre><code>callback(b, BIO_CB_READ|BIO_CB_RETURN, data, dlen, 0L, retvalue)</code></pre>
 
 <p>after.</p>
 
@@ -142,20 +148,20 @@
 <dt id="BIO_write-b-data-dlen-written"><b>BIO_write(b, data, dlen, written)</b></dt>
 <dd>
 
-<pre><code> callback_ex(b, BIO_CB_WRITE, data, dlen, 0, 0L, 1L, NULL)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_WRITE, data, dlen, 0, 0L, 1L, NULL)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_WRITE, datat, dlen, 0L, 1L)</code></pre>
+<pre><code>callback(b, BIO_CB_WRITE, datat, dlen, 0L, 1L)</code></pre>
 
 <p>is called before the write and</p>
 
-<pre><code> callback_ex(b, BIO_CB_WRITE | BIO_CB_RETURN, data, dlen, 0, 0L, retvalue,
-             &amp;written)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_WRITE | BIO_CB_RETURN, data, dlen, 0, 0L, retvalue,
+            &amp;written)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_WRITE|BIO_CB_RETURN, data, dlen, 0L, retvalue)</code></pre>
+<pre><code>callback(b, BIO_CB_WRITE|BIO_CB_RETURN, data, dlen, 0L, retvalue)</code></pre>
 
 <p>after.</p>
 
@@ -163,20 +169,20 @@
 <dt id="BIO_gets-b-buf-size"><b>BIO_gets(b, buf, size)</b></dt>
 <dd>
 
-<pre><code> callback_ex(b, BIO_CB_GETS, buf, size, 0, 0L, 1, NULL, NULL)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_GETS, buf, size, 0, 0L, 1, NULL, NULL)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_GETS, buf, size, 0L, 1L)</code></pre>
+<pre><code>callback(b, BIO_CB_GETS, buf, size, 0L, 1L)</code></pre>
 
 <p>is called before the operation and</p>
 
-<pre><code> callback_ex(b, BIO_CB_GETS | BIO_CB_RETURN, buf, size, 0, 0L, retvalue,
-             &amp;readbytes)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_GETS | BIO_CB_RETURN, buf, size, 0, 0L, retvalue,
+            &amp;readbytes)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_GETS|BIO_CB_RETURN, buf, size, 0L, retvalue)</code></pre>
+<pre><code>callback(b, BIO_CB_GETS|BIO_CB_RETURN, buf, size, 0L, retvalue)</code></pre>
 
 <p>after.</p>
 
@@ -184,19 +190,19 @@
 <dt id="BIO_puts-b-buf"><b>BIO_puts(b, buf)</b></dt>
 <dd>
 
-<pre><code> callback_ex(b, BIO_CB_PUTS, buf, 0, 0, 0L, 1L, NULL);</code></pre>
+<pre><code>callback_ex(b, BIO_CB_PUTS, buf, 0, 0, 0L, 1L, NULL);</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_PUTS, buf, 0, 0L, 1L)</code></pre>
+<pre><code>callback(b, BIO_CB_PUTS, buf, 0, 0L, 1L)</code></pre>
 
 <p>is called before the operation and</p>
 
-<pre><code> callback_ex(b, BIO_CB_PUTS | BIO_CB_RETURN, buf, 0, 0, 0L, retvalue, &amp;written)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_PUTS | BIO_CB_RETURN, buf, 0, 0, 0L, retvalue, &amp;written)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_PUTS|BIO_CB_RETURN, buf, 0, 0L, retvalue)</code></pre>
+<pre><code>callback(b, BIO_CB_PUTS|BIO_CB_RETURN, buf, 0, 0L, retvalue)</code></pre>
 
 <p>after.</p>
 
@@ -204,19 +210,19 @@
 <dt id="BIO_ctrl-BIO-b-int-cmd-long-larg-void-parg"><b>BIO_ctrl(BIO *b, int cmd, long larg, void *parg)</b></dt>
 <dd>
 
-<pre><code> callback_ex(b, BIO_CB_CTRL, parg, 0, cmd, larg, 1L, NULL)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_CTRL, parg, 0, cmd, larg, 1L, NULL)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_CTRL, parg, cmd, larg, 1L)</code></pre>
+<pre><code>callback(b, BIO_CB_CTRL, parg, cmd, larg, 1L)</code></pre>
 
 <p>is called before the call and</p>
 
-<pre><code> callback_ex(b, BIO_CB_CTRL | BIO_CB_RETURN, parg, 0, cmd, larg, ret, NULL)</code></pre>
+<pre><code>callback_ex(b, BIO_CB_CTRL | BIO_CB_RETURN, parg, 0, cmd, larg, ret, NULL)</code></pre>
 
 <p>or</p>
 
-<pre><code> callback(b, BIO_CB_CTRL|BIO_CB_RETURN, parg, cmd, larg, ret)</code></pre>
+<pre><code>callback(b, BIO_CB_CTRL|BIO_CB_RETURN, parg, cmd, larg, ret)</code></pre>
 
 <p>after.</p>
 
@@ -235,13 +241,19 @@
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
-<p>The BIO_debug_callback() function is a good example, its source is in crypto/bio/bio_cb.c</p>
+<p>The BIO_debug_callback_ex() function is an example, its source is in crypto/bio/bio_cb.c</p>
+
+<h1 id="HISTORY">HISTORY</h1>
+
+<p>The BIO_debug_callback_ex() function was added in OpenSSL 3.0.</p>
+
+<p>BIO_set_callback(), BIO_get_callback(), and BIO_debug_callback() were deprecated in OpenSSL 3.0. Use the non-deprecated _ex functions instead.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
 
-<p>Licensed under the OpenSSL license (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
+<p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 
 
 </body>

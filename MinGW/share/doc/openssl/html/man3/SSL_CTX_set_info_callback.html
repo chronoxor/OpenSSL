@@ -28,13 +28,13 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<pre><code> #include &lt;openssl/ssl.h&gt;
+<pre><code>#include &lt;openssl/ssl.h&gt;
 
- void SSL_CTX_set_info_callback(SSL_CTX *ctx, void (*callback)());
- void (*SSL_CTX_get_info_callback(const SSL_CTX *ctx))();
+void SSL_CTX_set_info_callback(SSL_CTX *ctx, void (*callback)());
+void (*SSL_CTX_get_info_callback(const SSL_CTX *ctx))();
 
- void SSL_set_info_callback(SSL *ssl, void (*callback)());
- void (*SSL_get_info_callback(const SSL *ssl))();</code></pre>
+void SSL_set_info_callback(SSL *ssl, void (*callback)());
+void (*SSL_get_info_callback(const SSL *ssl))();</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -52,7 +52,7 @@
 
 <p>The callback function is called as <b>callback(SSL *ssl, int where, int ret)</b>. The <b>where</b> argument specifies information about where (in which context) the callback function was called. If <b>ret</b> is 0, an error condition occurred. If an alert is handled, SSL_CB_ALERT is set and <b>ret</b> specifies the alert information.</p>
 
-<p><b>where</b> is a bit mask made up of the following bits:</p>
+<p><b>where</b> is a bit-mask made up of the following bits:</p>
 
 <dl>
 
@@ -138,35 +138,35 @@
 
 <p>The following example callback function prints state strings, information about alerts being handled and error messages to the <b>bio_err</b> BIO.</p>
 
-<pre><code> void apps_ssl_info_callback(SSL *s, int where, int ret)
- {
-     const char *str;
-     int w = where &amp; ~SSL_ST_MASK;
+<pre><code>void apps_ssl_info_callback(SSL *s, int where, int ret)
+{
+    const char *str;
+    int w = where &amp; ~SSL_ST_MASK;
 
-     if (w &amp; SSL_ST_CONNECT)
-         str = &quot;SSL_connect&quot;;
-     else if (w &amp; SSL_ST_ACCEPT)
-         str = &quot;SSL_accept&quot;;
-     else
-         str = &quot;undefined&quot;;
+    if (w &amp; SSL_ST_CONNECT)
+        str = &quot;SSL_connect&quot;;
+    else if (w &amp; SSL_ST_ACCEPT)
+        str = &quot;SSL_accept&quot;;
+    else
+        str = &quot;undefined&quot;;
 
-     if (where &amp; SSL_CB_LOOP) {
-         BIO_printf(bio_err, &quot;%s:%s\n&quot;, str, SSL_state_string_long(s));
-     } else if (where &amp; SSL_CB_ALERT) {
-         str = (where &amp; SSL_CB_READ) ? &quot;read&quot; : &quot;write&quot;;
-         BIO_printf(bio_err, &quot;SSL3 alert %s:%s:%s\n&quot;, str,
-                    SSL_alert_type_string_long(ret),
-                    SSL_alert_desc_string_long(ret));
-     } else if (where &amp; SSL_CB_EXIT) {
-         if (ret == 0) {
-             BIO_printf(bio_err, &quot;%s:failed in %s\n&quot;,
-                        str, SSL_state_string_long(s));
-         } else if (ret &lt; 0) {
-             BIO_printf(bio_err, &quot;%s:error in %s\n&quot;,
-                        str, SSL_state_string_long(s));
-         }
-     }
- }</code></pre>
+    if (where &amp; SSL_CB_LOOP) {
+        BIO_printf(bio_err, &quot;%s:%s\n&quot;, str, SSL_state_string_long(s));
+    } else if (where &amp; SSL_CB_ALERT) {
+        str = (where &amp; SSL_CB_READ) ? &quot;read&quot; : &quot;write&quot;;
+        BIO_printf(bio_err, &quot;SSL3 alert %s:%s:%s\n&quot;, str,
+                   SSL_alert_type_string_long(ret),
+                   SSL_alert_desc_string_long(ret));
+    } else if (where &amp; SSL_CB_EXIT) {
+        if (ret == 0) {
+            BIO_printf(bio_err, &quot;%s:failed in %s\n&quot;,
+                       str, SSL_state_string_long(s));
+        } else if (ret &lt; 0) {
+            BIO_printf(bio_err, &quot;%s:error in %s\n&quot;,
+                       str, SSL_state_string_long(s));
+        }
+    }
+}</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
@@ -176,7 +176,7 @@
 
 <p>Copyright 2001-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
 
-<p>Licensed under the OpenSSL license (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
+<p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 
 
 </body>
