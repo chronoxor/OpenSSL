@@ -110,9 +110,11 @@ PropertyQuery  ::= &#39;-&#39; PropertyName
 Value          ::= NumberLiteral | StringLiteral
 StringLiteral  ::= QuotedString | UnquotedString
 QuotedString   ::= &#39;&quot;&#39; [^&quot;]* &#39;&quot;&#39; | &quot;&#39;&quot; [^&#39;]* &quot;&#39;&quot;
-UnquotedString ::= [^{space},]+
+UnquotedString ::= [A-Za-z] [^{space},]+
 NumberLiteral  ::= &#39;0&#39; ( [0-7]* | &#39;x&#39; [0-9A-Fa-f]+ ) | &#39;-&#39;? [1-9] [0-9]+
-PropertyName   ::= [A-Z] [A-Z0-9_]* ( &#39;.&#39; [A-Z] [A-Z0-9_]* )*</code></pre>
+PropertyName   ::= [A-Za-z] [A-Za-z0-9_]* ( &#39;.&#39; [A-Za-z] [A-Za-z0-9_]* )*</code></pre>
+
+<p>The flavour of EBNF being used is defined by: <a href="https://www.w3.org/TR/2010/REC-xquery-20101214/#EBNFNotation">https://www.w3.org/TR/2010/REC-xquery-20101214/#EBNFNotation</a>.</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -120,7 +122,7 @@ PropertyName   ::= [A-Z] [A-Z0-9_]* ( &#39;.&#39; [A-Z] [A-Z0-9_]* )*</code></pr
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

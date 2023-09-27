@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-GENPKEY 1ossl"
-.TH OPENSSL-GENPKEY 1ossl "2022-11-20" "3.0.7" "OpenSSL"
+.TH OPENSSL-GENPKEY 1ossl "2023-09-27" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -364,7 +364,7 @@ Valid values that are associated with the \fBalgorithm\fR of \fB\*(L"\s-1DHX\*(R
 .IX Item "dh_rfc5114:num"
 If this option is set, then the appropriate \s-1RFC5114\s0 parameters are used
 instead of generating new parameters. The value \fInum\fR can be one of
-1, 2 or 3 that are equivalant to using the option \fBgroup\fR with one of
+1, 2 or 3 that are equivalent to using the option \fBgroup\fR with one of
 \&\*(L"dh_1024_160\*(R", \*(L"dh_2048_224\*(R" or \*(L"dh_2048_256\*(R".
 All other options will be ignored if this value is set.
 .IP "\fBpbits\fR:\fInumbits\fR" 4
@@ -420,7 +420,7 @@ The \fBalgorithm\fR option must be \fB\*(L"\s-1DH\*(R"\s0\fR.
 .el .IP "``default''" 4
 .IX Item "default"
 Selects a default type based on the \fBalgorithm\fR. This is used by the
-OpenSSL default provider to set the type for backwards compatability.
+OpenSSL default provider to set the type for backwards compatibility.
 If \fBalgorithm\fR is \fB\*(L"\s-1DH\*(R"\s0\fR then \fB\*(L"generator\*(R"\fR is used.
 If \fBalgorithm\fR is \fB\*(L"\s-1DHX\*(R"\s0\fR then \fB\*(L"fips186_2\*(R"\fR is used.
 .RE
@@ -608,7 +608,7 @@ The ability to generate X448, \s-1ED25519\s0 and \s-1ED448\s0 keys was added in 
 The \fB\-engine\fR option was deprecated in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2006\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2006\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

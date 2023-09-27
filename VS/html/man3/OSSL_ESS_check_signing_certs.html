@@ -49,7 +49,7 @@
 
 <p>OSSL_ESS_signing_cert_v2_new_init() is the same as OSSL_ESS_signing_cert_new_init() except that it uses the given <i>hash_alg</i> and generates a <b>ESS_SIGNING_CERT_V2</b> structure with <b>ESS_CERT_ID_V2</b> elements.</p>
 
-<p>OSSL_ESS_check_signing_certs() checks if the validation chain <i>chain</i> contains the certificates required by the identifiers given in <i>ss</i> and/or <i>ssv2</i>. If <i>require_signing_cert</i> is nonzero, <i>ss</i> or <i>ssv2</i> must not be NULL. If both <i>ss</i> and <i>ssv2</i> are not NULL, they are evaluated independently. The list of certificate identifiers in <i>ss</i> is of type <b>ESS_CERT_ID</b>, while the list contained in <i>ssv2</i> is of type <b>ESS_CERT_ID_V2</b>. As far as these lists are present, they must be nonempty. The certificate identified by their first entry must be the first element of <i>chain</i>, i.e. the signer certificate. Any further certficates referenced in the list must also be found in <i>chain</i>. The matching is done using the given certificate hash algorithm and value. In addition to the checks required by RFCs 2624 and 5035, if the <b>issuerSerial</b> field is included in an <b>ESSCertID</b> or <b>ESSCertIDv2</b> it must match the certificate issuer and serial number attributes.</p>
+<p>OSSL_ESS_check_signing_certs() checks if the validation chain <i>chain</i> contains the certificates required by the identifiers given in <i>ss</i> and/or <i>ssv2</i>. If <i>require_signing_cert</i> is nonzero, <i>ss</i> or <i>ssv2</i> must not be NULL. If both <i>ss</i> and <i>ssv2</i> are not NULL, they are evaluated independently. The list of certificate identifiers in <i>ss</i> is of type <b>ESS_CERT_ID</b>, while the list contained in <i>ssv2</i> is of type <b>ESS_CERT_ID_V2</b>. As far as these lists are present, they must be nonempty. The certificate identified by their first entry must be the first element of <i>chain</i>, i.e. the signer certificate. Any further certificates referenced in the list must also be found in <i>chain</i>. The matching is done using the given certificate hash algorithm and value. In addition to the checks required by RFCs 2624 and 5035, if the <b>issuerSerial</b> field is included in an <b>ESSCertID</b> or <b>ESSCertIDv2</b> it must match the certificate issuer and serial number attributes.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -71,7 +71,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2021-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

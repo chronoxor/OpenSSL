@@ -734,13 +734,13 @@
 <dt id="ssl3--tls1--tls1_1--tls1_2--tls1_3--no_ssl3--no_tls1--no_tls1_1--no_tls1_2--no_tls1_3"><b>-ssl3</b>, <b>-tls1</b>, <b>-tls1_1</b>, <b>-tls1_2</b>, <b>-tls1_3</b>, <b>-no_ssl3</b>, <b>-no_tls1</b>, <b>-no_tls1_1</b>, <b>-no_tls1_2</b>, <b>-no_tls1_3</b></dt>
 <dd>
 
-<p>These options require or disable the use of the specified SSL or TLS protocols. When a specific TLS version is required, only that version will be offered or accepted. Only one specific protocol can be given and it cannot be combined with any of the <b>no_</b> options.</p>
+<p>These options require or disable the use of the specified SSL or TLS protocols. When a specific TLS version is required, only that version will be offered or accepted. Only one specific protocol can be given and it cannot be combined with any of the <b>no_</b> options. The <b>no_*</b> options do not work with <b>s_time</b> and <b>ciphers</b> commands but work with <b>s_client</b> and <b>s_server</b> commands.</p>
 
 </dd>
 <dt id="dtls--dtls1--dtls1_2"><b>-dtls</b>, <b>-dtls1</b>, <b>-dtls1_2</b></dt>
 <dd>
 
-<p>These options specify to use DTLS instead of DLTS. With <b>-dtls</b>, clients will negotiate any supported DTLS protocol version. Use the <b>-dtls1</b> or <b>-dtls1_2</b> options to support only DTLS1.0 or DTLS1.2, respectively.</p>
+<p>These options specify to use DTLS instead of TLS. With <b>-dtls</b>, clients will negotiate any supported DTLS protocol version. Use the <b>-dtls1</b> or <b>-dtls1_2</b> options to support only DTLS1.0 or DTLS1.2, respectively.</p>
 
 </dd>
 </dl>
@@ -812,7 +812,7 @@
 <dt id="OPENSSL_TRACE-name"><b>OPENSSL_TRACE=</b><i>name</i>[,...]</dt>
 <dd>
 
-<p>Enable tracing output of OpenSSL library, by name. This output will only make sense if you know OpenSSL internals well. Also, it might not give you any output at all, depending on how OpenSSL was built.</p>
+<p>Enable tracing output of OpenSSL library, by name. This output will only make sense if you know OpenSSL internals well. Also, it might not give you any output at all if OpenSSL was built without tracing support.</p>
 
 <p>The value is a comma separated list of names, with the following available:</p>
 
@@ -920,6 +920,12 @@
 <p>Traces decrementing certain ASN.1 structure references.</p>
 
 </dd>
+<dt id="HTTP"><b>HTTP</b></dt>
+<dd>
+
+<p>HTTP client diagnostics</p>
+
+</dd>
 </dl>
 
 </dd>
@@ -941,7 +947,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

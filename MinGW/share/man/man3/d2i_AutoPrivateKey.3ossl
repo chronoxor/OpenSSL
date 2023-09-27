@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "D2I_PRIVATEKEY 3ossl"
-.TH D2I_PRIVATEKEY 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH D2I_PRIVATEKEY 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -238,14 +238,15 @@ a non-NULL \s-1EVP_PKEY\s0 structure assigned an \s-1EC_KEY\s0 structure referen
 The \fBd2i_PrivateKey_ex()\fR, \fBd2i_PrivateKey()\fR, \fBd2i_AutoPrivateKey_ex()\fR,
 \&\fBd2i_AutoPrivateKey()\fR, \fBd2i_PrivateKey_ex_bio()\fR, \fBd2i_PrivateKey_bio()\fR,
 \&\fBd2i_PrivateKey_ex_fp()\fR, \fBd2i_PrivateKey_fp()\fR, \fBd2i_PublicKey()\fR, \fBd2i_KeyParams()\fR
-and \fBd2i_KeyParams_bio()\fR functions return a valid \fB\s-1EVP_PKEY\s0\fR structure or \s-1NULL\s0
-if an error occurs. The error code can be obtained by calling
-\&\fBERR_get_error\fR\|(3).
+and \fBd2i_KeyParams_bio()\fR functions return a valid \fB\s-1EVP_PKEY\s0\fR structure or \s-1NULL\s0 if
+an error occurs. The error code can be obtained by calling \fBERR_get_error\fR\|(3).
 .PP
-\&\fBi2d_PrivateKey()\fR, \fBi2d_PrivateKey_bio()\fR, \fBi2d_PrivateKey_fp()\fR, \fBi2d_PublicKey()\fR,
-\&\fBi2d_KeyParams()\fR \fBi2d_KeyParams_bio()\fR return the number of bytes successfully
-encoded or a negative value if an error occurs. The error code can be obtained
-by calling \fBERR_get_error\fR\|(3).
+\&\fBi2d_PrivateKey()\fR, \fBi2d_PublicKey()\fR and \fBi2d_KeyParams()\fR return the number of
+bytes successfully encoded or a negative value if an error occurs. The error
+code can be obtained by calling \fBERR_get_error\fR\|(3).
+.PP
+\&\fBi2d_PrivateKey_bio()\fR, \fBi2d_PrivateKey_fp()\fR and \fBi2d_KeyParams_bio()\fR return 1 if
+successfully encoded or zero if an error occurs.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBcrypto\fR\|(7),
@@ -256,7 +257,7 @@ by calling \fBERR_get_error\fR\|(3).
 \&\fBd2i_AutoPrivateKey_ex()\fR were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2017\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2017\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-ENCODER 7ossl"
-.TH PROVIDER-ENCODER 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH PROVIDER-ENCODER 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -209,14 +209,14 @@ with provider data coming from the same provider, for example keys
 with the \s-1KEYMGMT\s0 provider.
 .PP
 All \*(L"functions\*(R" mentioned here are passed as function pointers between
-\&\fIlibcrypto\fR and the provider in \fB\s-1OSSL_DISPATCH\s0\fR arrays via
-\&\fB\s-1OSSL_ALGORITHM\s0\fR arrays that are returned by the provider's
+\&\fIlibcrypto\fR and the provider in \s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays via
+\&\s-1\fBOSSL_ALGORITHM\s0\fR\|(3) arrays that are returned by the provider's
 \&\fBprovider_query_operation()\fR function
 (see \*(L"Provider Functions\*(R" in \fBprovider\-base\fR\|(7)).
 .PP
 All these \*(L"functions\*(R" have a corresponding function type definition
 named \fBOSSL_FUNC_{name}_fn\fR, and a helper function to retrieve the
-function pointer from an \fB\s-1OSSL_DISPATCH\s0\fR element named
+function pointer from an \s-1\fBOSSL_DISPATCH\s0\fR\|(3) element named
 \&\fBOSSL_FUNC_{name}\fR.
 For example, the \*(L"function\*(R" \fBOSSL_FUNC_encoder_encode()\fR has these:
 .PP
@@ -231,7 +231,7 @@ For example, the \*(L"function\*(R" \fBOSSL_FUNC_encoder_encode()\fR has these:
 \&     OSSL_FUNC_encoder_encode(const OSSL_DISPATCH *opf);
 .Ve
 .PP
-\&\fB\s-1OSSL_DISPATCH\s0\fR arrays are indexed by numbers that are provided as
+\&\s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays are indexed by numbers that are provided as
 macros in \fBopenssl\-core_dispatch.h\fR\|(7), as follows:
 .PP
 .Vb 2
@@ -329,7 +329,7 @@ from \fIparams\fR that it recognises.  Unrecognised parameters should be
 ignored.
 Passing \s-1NULL\s0 for \fIparams\fR should return true.
 .PP
-\&\fBOSSL_FUNC_encoder_settable_ctx_params()\fR returns a constant \fB\s-1OSSL_PARAM\s0\fR
+\&\fBOSSL_FUNC_encoder_settable_ctx_params()\fR returns a constant \s-1\fBOSSL_PARAM\s0\fR\|(3)
 array describing the parameters that \fBOSSL_FUNC_encoder_set_ctx_params()\fR
 can handle.
 .PP
@@ -356,7 +356,7 @@ passed as \fIobj_raw\fR to \fBOSSL_FUNC_encoder_encode()\fR.
 \&\fIobj_raw\fR) or an object abstraction (in \fIobj_abstract\fR), and should output
 the object in encoded form to the \fB\s-1OSSL_CORE_BIO\s0\fR.  The \fIselection\fR bits,
 if relevant, should determine in greater detail what will be output.
-The encoding functions also take an \fB\s-1OSSL_PASSPHRASE_CALLBACK\s0\fR function
+The encoding functions also take an \s-1\fBOSSL_PASSPHRASE_CALLBACK\s0\fR\|(3) function
 pointer along with a pointer to application data \fIcbarg\fR, which should be
 used when a pass phrase prompt is needed.
 .SS "Encoder operation parameters"
@@ -408,7 +408,7 @@ failure.
 parameter was invalid or caused an error, for which 0 is returned.
 .PP
 \&\fBOSSL_FUNC_encoder_settable_ctx_params()\fR returns a pointer to an array of
-constant \fB\s-1OSSL_PARAM\s0\fR elements.
+constant \s-1\fBOSSL_PARAM\s0\fR\|(3) elements.
 .PP
 \&\fBOSSL_FUNC_encoder_does_selection()\fR returns 1 if the encoder implementation
 supports any of the \fIselection\fR bits, otherwise 0.
@@ -422,7 +422,7 @@ supports any of the \fIselection\fR bits, otherwise 0.
 The \s-1ENCODER\s0 interface was introduced in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

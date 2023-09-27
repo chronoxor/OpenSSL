@@ -27,7 +27,7 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<p><b>openssl speed</b> [<b>-help</b>] [<b>-elapsed</b>] [<b>-evp</b> <i>algo</i>] [<b>-hmac</b> <i>algo</i>] [<b>-cmac</b> <i>algo</i>] [<b>-mb</b>] [<b>-aead</b>] [<b>-multi</b> <i>num</i>] [<b>-async_jobs</b> <i>num</i>] [<b>-misalign</b> <i>num</i>] [<b>-decrypt</b>] [<b>-primes</b> <i>num</i>] [<b>-seconds</b> <i>num</i>] [<b>-bytes</b> <i>num</i>] [<b>-mr</b>] [<b>-rand</b> <i>files</i>] [<b>-writerand</b> <i>file</i>] [<b>-engine</b> <i>id</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>] [<i>algorithm</i> ...]</p>
+<p><b>openssl speed</b> [<b>-help</b>] [<b>-config</b> <i>filename</i>] [<b>-elapsed</b>] [<b>-evp</b> <i>algo</i>] [<b>-hmac</b> <i>algo</i>] [<b>-cmac</b> <i>algo</i>] [<b>-mb</b>] [<b>-aead</b>] [<b>-multi</b> <i>num</i>] [<b>-async_jobs</b> <i>num</i>] [<b>-misalign</b> <i>num</i>] [<b>-decrypt</b>] [<b>-primes</b> <i>num</i>] [<b>-seconds</b> <i>num</i>] [<b>-bytes</b> <i>num</i>] [<b>-mr</b>] [<b>-mlock</b>] [<b>-rand</b> <i>files</i>] [<b>-writerand</b> <i>file</i>] [<b>-engine</b> <i>id</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>] [<i>algorithm</i> ...]</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -41,6 +41,12 @@
 <dd>
 
 <p>Print out a usage message.</p>
+
+</dd>
+<dt id="config-filename"><b>-config</b> <i>filename</i></dt>
+<dd>
+
+<p>Specifies the configuration file to use. Optional; for a description of the default value, see <a href="../man1/openssl.html">&quot;COMMAND SUMMARY&quot; in openssl(1)</a>.</p>
 
 </dd>
 <dt id="elapsed"><b>-elapsed</b></dt>
@@ -127,6 +133,12 @@
 <dd>
 
 <p>Produce the summary in a mechanical, machine-readable, format.</p>
+
+</dd>
+<dt id="mlock"><b>-mlock</b></dt>
+<dd>
+
+<p>Lock memory into RAM for more deterministic measurements.</p>
 
 </dd>
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>

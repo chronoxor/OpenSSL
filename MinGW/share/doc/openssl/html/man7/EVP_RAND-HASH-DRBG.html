@@ -23,6 +23,7 @@
   <li><a href="#EXAMPLES">EXAMPLES</a></li>
   <li><a href="#CONFORMING-TO">CONFORMING TO</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
 </ul>
 
@@ -106,6 +107,32 @@
 
 <h1 id="NOTES">NOTES</h1>
 
+<p>When the FIPS provider is installed using the <b>-no_drbg_truncated_digests</b> option to fipsinstall, only these digests are permitted (as per <a href="https://csrc.nist.gov/CSRC/media/Projects/cryptographic-module-validation-program/documents/fips%20140-3/FIPS%20140-3%20IG.pdf">FIPS 140-3 IG D.R</a>):</p>
+
+<dl>
+
+<dt id="SHA-1">SHA-1</dt>
+<dd>
+
+</dd>
+<dt id="SHA2-256">SHA2-256</dt>
+<dd>
+
+</dd>
+<dt id="SHA2-512">SHA2-512</dt>
+<dd>
+
+</dd>
+<dt id="SHA3-256">SHA3-256</dt>
+<dd>
+
+</dd>
+<dt id="SHA3-512">SHA3-512</dt>
+<dd>
+
+</dd>
+</dl>
+
 <p>A context for HASH DRBG can be obtained by calling:</p>
 
 <pre><code>EVP_RAND *rand = EVP_RAND_fetch(NULL, &quot;HASH-DRBG&quot;, NULL);
@@ -137,11 +164,15 @@ EVP_RAND_CTX_free(rctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_RAND.html">EVP_RAND(3)</a>, <a href="../man3/EVP_RAND.html">&quot;PARAMETERS&quot; in EVP_RAND(3)</a></p>
+<p><a href="../man3/EVP_RAND.html">EVP_RAND(3)</a>, <a href="../man3/EVP_RAND.html">&quot;PARAMETERS&quot; in EVP_RAND(3)</a>, <a href="../man1/openssl-fipsinstall.html">openssl-fipsinstall(1)</a></p>
+
+<h1 id="HISTORY">HISTORY</h1>
+
+<p>OpenSSL 3.1.1 introduced the <b>-no_drbg_truncated_digests</b> option to fipsinstall which restricts the permitted digests when using the FIPS provider in a complaint manner. For details refer to <a href="https://csrc.nist.gov/CSRC/media/Projects/cryptographic-module-validation-program/documents/fips%20140-3/FIPS%20140-3%20IG.pdf">FIPS 140-3 IG D.R</a>.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

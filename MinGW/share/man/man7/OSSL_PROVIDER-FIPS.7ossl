@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_PROVIDER-FIPS 7ossl"
-.TH OSSL_PROVIDER-FIPS 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_PROVIDER-FIPS 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -143,7 +143,7 @@ OSSL_PROVIDER\-FIPS \- OpenSSL FIPS provider
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 The OpenSSL \s-1FIPS\s0 provider is a special provider that conforms to the Federal
-Information Processing Standards (\s-1FIPS\s0) specified in \s-1FIPS 140\-2.\s0 This 'module'
+Information Processing Standards (\s-1FIPS\s0) specified in \s-1FIPS 140\-3.\s0 This 'module'
 contains an approved set of cryptographic algorithms that is validated by an
 accredited testing laboratory.
 .SS "Properties"
@@ -164,14 +164,27 @@ It may be used in a property query string with fetching functions such as
 functions that take a property query string, such as
 \&\fBEVP_PKEY_CTX_new_from_name\fR\|(3).
 .PP
-It isn't mandatory to query for any of these properties, except to
-make sure to get implementations of this provider and none other.
+To be \s-1FIPS\s0 compliant, it is mandatory to include \f(CW\*(C`fips=yes\*(C'\fR as
+part of all property queries.  This ensures that only \s-1FIPS\s0 approved
+implementations are used for cryptographic operations.  The \f(CW\*(C`fips=yes\*(C'\fR
+query may also include other non-crypto support operations that
+are not in the \s-1FIPS\s0 provider, such as asymmetric key encoders, see
+\&\*(L"Asymmetric Key Management\*(R" in \fBOSSL_PROVIDER\-default\fR\|(7).
 .PP
-The \*(L"fips=yes\*(R" property can be use to make sure only \s-1FIPS\s0 approved
-implementations are used for crypto operations.  This may also include
-other non-crypto support operations that are not in the \s-1FIPS\s0 provider,
-such as asymmetric key encoders,
-see \*(L"Asymmetric Key Management\*(R" in \fBOSSL_PROVIDER\-default\fR\|(7).
+It is not mandatory to include \f(CW\*(C`provider=fips\*(C'\fR as part of your property
+query.  Including \f(CW\*(C`provider=fips\*(C'\fR in your property query guarantees
+that the OpenSSL \s-1FIPS\s0 provider is used for cryptographic operations
+rather than other \s-1FIPS\s0 capable providers.
+.SS "Provider parameters"
+.IX Subsection "Provider parameters"
+See \*(L"Provider parameters\*(R" in \fBprovider\-base\fR\|(7) for a list of base parameters.
+Additionally the OpenSSL \s-1FIPS\s0 provider also supports the following gettable
+parameters:
+.ie n .IP """security-checks"" (\fB\s-1OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS\s0\fR) <unsigned integer>" 4
+.el .IP "``security-checks'' (\fB\s-1OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS\s0\fR) <unsigned integer>" 4
+.IX Item "security-checks (OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS) <unsigned integer>"
+For further information refer to the \fBopenssl\-fipsinstall\fR\|(1) option
+\&\fB\-no_security_checks\fR.
 .SH "OPERATIONS AND ALGORITHMS"
 .IX Header "OPERATIONS AND ALGORITHMS"
 The OpenSSL \s-1FIPS\s0 provider supports these operations and algorithms:
@@ -214,16 +227,16 @@ The OpenSSL \s-1FIPS\s0 provider supports these operations and algorithms:
 .PD 0
 .IP "\s-1TLS13\-KDF,\s0 see \s-1\fBEVP_KDF\-TLS13_KDF\s0\fR\|(7)" 4
 .IX Item "TLS13-KDF, see EVP_KDF-TLS13_KDF"
-.IP "\s-1SSKDF,\s0 see \s-1\fBEVP_KDF\-SSKDF\s0\fR\|(7)" 4
-.IX Item "SSKDF, see EVP_KDF-SSKDF"
+.IP "\s-1SSKDF,\s0 see \s-1\fBEVP_KDF\-SS\s0\fR\|(7)" 4
+.IX Item "SSKDF, see EVP_KDF-SS"
 .IP "\s-1PBKDF2,\s0 see \s-1\fBEVP_KDF\-PBKDF2\s0\fR\|(7)" 4
 .IX Item "PBKDF2, see EVP_KDF-PBKDF2"
 .IP "\s-1SSHKDF,\s0 see \s-1\fBEVP_KDF\-SSHKDF\s0\fR\|(7)" 4
 .IX Item "SSHKDF, see EVP_KDF-SSHKDF"
 .IP "\s-1TLS1\-PRF,\s0 see \s-1\fBEVP_KDF\-TLS1_PRF\s0\fR\|(7)" 4
 .IX Item "TLS1-PRF, see EVP_KDF-TLS1_PRF"
-.IP "\s-1KBKDF,\s0 see \s-1\fBEVP_KDF\-KBKDF\s0\fR\|(7)" 4
-.IX Item "KBKDF, see EVP_KDF-KBKDF"
+.IP "\s-1KBKDF,\s0 see \s-1\fBEVP_KDF\-KB\s0\fR\|(7)" 4
+.IX Item "KBKDF, see EVP_KDF-KB"
 .IP "X942KDF\-ASN1, see \s-1\fBEVP_KDF\-X942\-ASN1\s0\fR\|(7)" 4
 .IX Item "X942KDF-ASN1, see EVP_KDF-X942-ASN1"
 .IP "X942KDF\-CONCAT, see \s-1\fBEVP_KDF\-X942\-CONCAT\s0\fR\|(7)" 4
@@ -245,11 +258,9 @@ The OpenSSL \s-1FIPS\s0 provider supports these operations and algorithms:
 .PD
 .SS "Asymmetric Signature"
 .IX Subsection "Asymmetric Signature"
-.IP "\s-1DSA,\s0 see \s-1\fBEVP_KEYEXCH\-DSA\s0\fR\|(7)" 4
-.IX Item "DSA, see EVP_KEYEXCH-DSA"
-.PD 0
 .IP "\s-1RSA,\s0 see \s-1\fBEVP_SIGNATURE\-RSA\s0\fR\|(7)" 4
 .IX Item "RSA, see EVP_SIGNATURE-RSA"
+.PD 0
 .IP "X25519, see \s-1\fBEVP_SIGNATURE\-ED25519\s0\fR\|(7)" 4
 .IX Item "X25519, see EVP_SIGNATURE-ED25519"
 .IP "X448, see \s-1\fBEVP_SIGNATURE\-ED448\s0\fR\|(7)" 4
@@ -261,8 +272,8 @@ The OpenSSL \s-1FIPS\s0 provider supports these operations and algorithms:
 .PD
 .SS "Asymmetric Cipher"
 .IX Subsection "Asymmetric Cipher"
-.IP "\s-1RSA,\s0 see \s-1\fBEVP_KEYEXCH\-RSA\s0\fR\|(7)" 4
-.IX Item "RSA, see EVP_KEYEXCH-RSA"
+.IP "\s-1RSA,\s0 see \s-1\fBEVP_ASYM_CIPHER\-RSA\s0\fR\|(7)" 4
+.IX Item "RSA, see EVP_ASYM_CIPHER-RSA"
 .SS "Asymmetric Key Encapsulation"
 .IX Subsection "Asymmetric Key Encapsulation"
 .PD 0
@@ -287,6 +298,19 @@ The OpenSSL \s-1FIPS\s0 provider supports these operations and algorithms:
 .IP "X448, see \s-1\fBEVP_KEYMGMT\-X448\s0\fR\|(7)" 4
 .IX Item "X448, see EVP_KEYMGMT-X448"
 .PD
+.SS "Random Number Generation"
+.IX Subsection "Random Number Generation"
+.IP "CTR-DRBG, see \s-1\fBEVP_RAND\-CTR\-DRBG\s0\fR\|(7)" 4
+.IX Item "CTR-DRBG, see EVP_RAND-CTR-DRBG"
+.PD 0
+.IP "HASH-DRBG, see \s-1\fBEVP_RAND\-HASH\-DRBG\s0\fR\|(7)" 4
+.IX Item "HASH-DRBG, see EVP_RAND-HASH-DRBG"
+.IP "HMAC-DRBG, see \s-1\fBEVP_RAND\-HMAC\-DRBG\s0\fR\|(7)" 4
+.IX Item "HMAC-DRBG, see EVP_RAND-HMAC-DRBG"
+.IP "TEST-RAND, see \s-1\fBEVP_RAND\-TEST\-RAND\s0\fR\|(7)" 4
+.IX Item "TEST-RAND, see EVP_RAND-TEST-RAND"
+.PD
+TEST-RAND is an unapproved algorithm.
 .SH "SELF TESTING"
 .IX Header "SELF TESTING"
 One of the requirements for the \s-1FIPS\s0 module is self testing. An optional callback
@@ -535,6 +559,30 @@ A simple self test callback is shown below for illustrative purposes.
 \&    return ret;
 \&  }
 .Ve
+.SH "NOTES"
+.IX Header "NOTES"
+Some released versions of OpenSSL do not include a validated
+\&\s-1FIPS\s0 provider.  To determine which versions have undergone
+the validation process, please refer to the
+OpenSSL Downloads page <https://www.openssl.org/source/>.  If you
+require FIPS-approved functionality, it is essential to build your \s-1FIPS\s0
+provider using one of the validated versions listed there.  Normally,
+it is possible to utilize a \s-1FIPS\s0 provider constructed from one of the
+validated versions alongside \fIlibcrypto\fR and \fIlibssl\fR compiled from any
+release within the same major release series.  This flexibility enables
+you to address bug fixes and CVEs that fall outside the \s-1FIPS\s0 boundary.
+.PP
+The \s-1FIPS\s0 provider in OpenSSL 3.1 includes some non-FIPS validated algorithms,
+consequently the property query \f(CW\*(C`fips=yes\*(C'\fR is mandatory for applications that
+want to operate in a \s-1FIPS\s0 approved manner.  The algorithms are:
+.IP "Triple \s-1DES ECB\s0" 4
+.IX Item "Triple DES ECB"
+.PD 0
+.IP "Triple \s-1DES CBC\s0" 4
+.IX Item "Triple DES CBC"
+.IP "EdDSA" 4
+.IX Item "EdDSA"
+.PD
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBopenssl\-fipsinstall\fR\|(1),
@@ -544,13 +592,14 @@ A simple self test callback is shown below for illustrative purposes.
 \&\s-1\fBOSSL_PARAM\s0\fR\|(3),
 \&\fBopenssl\-core.h\fR\|(7),
 \&\fBopenssl\-core_dispatch.h\fR\|(7),
-\&\fBprovider\fR\|(7)
+\&\fBprovider\fR\|(7),
+<https://www.openssl.org/source/>
 .SH "HISTORY"
 .IX Header "HISTORY"
-The type and functions described here were added in OpenSSL 3.0.
+This functionality was added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

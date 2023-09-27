@@ -105,7 +105,7 @@ void OSSL_PARAM_set_all_unmodified(OSSL_PARAM *params);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>A collection of utility functions that simplify and add type safety to the <b>OSSL_PARAM</b> arrays. The following <b><i>TYPE</i></b> names are supported:</p>
+<p>A collection of utility functions that simplify and add type safety to the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays. The following <b><i>TYPE</i></b> names are supported:</p>
 
 <ul>
 
@@ -144,27 +144,27 @@ void OSSL_PARAM_set_all_unmodified(OSSL_PARAM *params);</code></pre>
 </li>
 </ul>
 
-<p>OSSL_PARAM_TYPE() are a series of macros designed to assist initialising an array of <b>OSSL_PARAM</b> structures. Each of these macros defines a parameter of the specified <b><i>TYPE</i></b> with the provided <i>key</i> and parameter variable <i>address</i>.</p>
+<p>OSSL_PARAM_TYPE() are a series of macros designed to assist initialising an array of <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structures. Each of these macros defines a parameter of the specified <b><i>TYPE</i></b> with the provided <i>key</i> and parameter variable <i>address</i>.</p>
 
 <p>OSSL_PARAM_utf8_string(), OSSL_PARAM_octet_string(), OSSL_PARAM_utf8_ptr(), OSSL_PARAM_octet_ptr(), OSSL_PARAM_BN() are macros that provide support for defining UTF8 strings, OCTET strings and big numbers. A parameter with name <i>key</i> is defined. The storage for this parameter is at <i>address</i> and is of <i>size</i> bytes.</p>
 
-<p>OSSL_PARAM_END provides an end of parameter list marker. This should terminate all <b>OSSL_PARAM</b> arrays.</p>
+<p>OSSL_PARAM_END provides an end of parameter list marker. This should terminate all <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays.</p>
 
-<p>The OSSL_PARAM_DEFN() macro provides the ability to construct a single <b>OSSL_PARAM</b> (typically used in the construction of <b>OSSL_PARAM</b> arrays). The <i>key</i>, <i>type</i>, <i>addr</i> and <i>sz</i> arguments correspond to the <i>key</i>, <i>data_type</i>, <i>data</i> and <i>data_size</i> fields of the <b>OSSL_PARAM</b> structure as described on the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> page.</p>
+<p>The OSSL_PARAM_DEFN() macro provides the ability to construct a single <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> (typically used in the construction of <b>OSSL_PARAM</b> arrays). The <i>key</i>, <i>type</i>, <i>addr</i> and <i>sz</i> arguments correspond to the <i>key</i>, <i>data_type</i>, <i>data</i> and <i>data_size</i> fields of the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure as described on the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> page.</p>
 
-<p>OSSL_PARAM_construct_TYPE() are a series of functions that create <b>OSSL_PARAM</b> records dynamically. A parameter with name <i>key</i> is created. The parameter will use storage pointed to by <i>buf</i> and return size of <i>ret</i>.</p>
+<p>OSSL_PARAM_construct_TYPE() are a series of functions that create <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> records dynamically. A parameter with name <i>key</i> is created. The parameter will use storage pointed to by <i>buf</i> and return size of <i>ret</i>.</p>
 
-<p>OSSL_PARAM_construct_BN() is a function that constructs a large integer <b>OSSL_PARAM</b> structure. A parameter with name <i>key</i>, storage <i>buf</i>, size <i>bsize</i> and return size <i>rsize</i> is created.</p>
+<p>OSSL_PARAM_construct_BN() is a function that constructs a large integer <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure. A parameter with name <i>key</i>, storage <i>buf</i>, size <i>bsize</i> and return size <i>rsize</i> is created.</p>
 
-<p>OSSL_PARAM_construct_utf8_string() is a function that constructs a UTF8 string <b>OSSL_PARAM</b> structure. A parameter with name <i>key</i>, storage <i>buf</i> and size <i>bsize</i> is created. If <i>bsize</i> is zero, the string length is determined using strlen(3). Generally pass zero for <i>bsize</i> instead of calling strlen(3) yourself.</p>
+<p>OSSL_PARAM_construct_utf8_string() is a function that constructs a UTF8 string <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure. A parameter with name <i>key</i>, storage <i>buf</i> and size <i>bsize</i> is created. If <i>bsize</i> is zero, the string length is determined using strlen(3). Generally pass zero for <i>bsize</i> instead of calling strlen(3) yourself.</p>
 
-<p>OSSL_PARAM_construct_octet_string() is a function that constructs an OCTET string <b>OSSL_PARAM</b> structure. A parameter with name <i>key</i>, storage <i>buf</i> and size <i>bsize</i> is created.</p>
+<p>OSSL_PARAM_construct_octet_string() is a function that constructs an OCTET string <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure. A parameter with name <i>key</i>, storage <i>buf</i> and size <i>bsize</i> is created.</p>
 
-<p>OSSL_PARAM_construct_utf8_ptr() is a function that constructs a UTF8 string pointer <b>OSSL_PARAM</b> structure. A parameter with name <i>key</i>, storage pointer <i>*buf</i> and size <i>bsize</i> is created.</p>
+<p>OSSL_PARAM_construct_utf8_ptr() is a function that constructs a UTF8 string pointer <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure. A parameter with name <i>key</i>, storage pointer <i>*buf</i> and size <i>bsize</i> is created.</p>
 
-<p>OSSL_PARAM_construct_octet_ptr() is a function that constructs an OCTET string pointer <b>OSSL_PARAM</b> structure. A parameter with name <i>key</i>, storage pointer <i>*buf</i> and size <i>bsize</i> is created.</p>
+<p>OSSL_PARAM_construct_octet_ptr() is a function that constructs an OCTET string pointer <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure. A parameter with name <i>key</i>, storage pointer <i>*buf</i> and size <i>bsize</i> is created.</p>
 
-<p>OSSL_PARAM_construct_end() is a function that constructs the terminating <b>OSSL_PARAM</b> structure.</p>
+<p>OSSL_PARAM_construct_end() is a function that constructs the terminating <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure.</p>
 
 <p>OSSL_PARAM_locate() is a function that searches an <i>array</i> of parameters for the one matching the <i>key</i> name.</p>
 
@@ -178,9 +178,9 @@ void OSSL_PARAM_set_all_unmodified(OSSL_PARAM *params);</code></pre>
 
 <p>OSSL_PARAM_set_BN() stores the BIGNUM <i>val</i> into the parameter <i>p</i>. If the parameter&#39;s <i>data</i> field is NULL, then only its <i>return_size</i> field will be assigned the size the parameter&#39;s <i>data</i> buffer should have.</p>
 
-<p>OSSL_PARAM_get_utf8_string() retrieves a UTF8 string from the parameter pointed to by <i>p</i>. The string is stored into <i>*val</i> with a size limit of <i>max_len</i>, which must be large enough to accomodate a terminating NUL byte, otherwise this function will fail. If <i>*val</i> is NULL, memory is allocated for the string (including the terminating NUL byte) and <i>max_len</i> is ignored. If memory is allocated by this function, it must be freed by the caller.</p>
+<p>OSSL_PARAM_get_utf8_string() retrieves a UTF8 string from the parameter pointed to by <i>p</i>. The string is stored into <i>*val</i> with a size limit of <i>max_len</i>, which must be large enough to accommodate a terminating NUL byte, otherwise this function will fail. If <i>*val</i> is NULL, memory is allocated for the string (including the terminating NUL byte) and <i>max_len</i> is ignored. If memory is allocated by this function, it must be freed by the caller.</p>
 
-<p>OSSL_PARAM_set_utf8_string() sets a UTF8 string from the parameter pointed to by <i>p</i> to the value referenced by <i>val</i>. If the parameter&#39;s <i>data</i> field isn&#39;t NULL, its <i>data_size</i> must indicate that the buffer is large enough to accomodate the string that <i>val</i> points at, not including the terminating NUL byte, or this function will fail. A terminating NUL byte is added only if the parameter&#39;s <i>data_size</i> indicates the buffer is longer than the string length, otherwise the string will not be NUL terminated. If the parameter&#39;s <i>data</i> field is NULL, then only its <i>return_size</i> field will be assigned the minimum size the parameter&#39;s <i>data</i> buffer should have to accomodate the string, not including a terminating NUL byte.</p>
+<p>OSSL_PARAM_set_utf8_string() sets a UTF8 string from the parameter pointed to by <i>p</i> to the value referenced by <i>val</i>. If the parameter&#39;s <i>data</i> field isn&#39;t NULL, its <i>data_size</i> must indicate that the buffer is large enough to accommodate the string that <i>val</i> points at, not including the terminating NUL byte, or this function will fail. A terminating NUL byte is added only if the parameter&#39;s <i>data_size</i> indicates the buffer is longer than the string length, otherwise the string will not be NUL terminated. If the parameter&#39;s <i>data</i> field is NULL, then only its <i>return_size</i> field will be assigned the minimum size the parameter&#39;s <i>data</i> buffer should have to accommodate the string, not including a terminating NUL byte.</p>
 
 <p>OSSL_PARAM_get_octet_string() retrieves an OCTET string from the parameter pointed to by <i>p</i>. The OCTETs are either stored into <i>*val</i> with a length limit of <i>max_len</i> or, in the case when <i>*val</i> is NULL, memory is allocated and <i>max_len</i> is ignored. <i>*used_len</i> is populated with the number of OCTETs stored. If <i>val</i> is NULL then the OCTETS are not stored, but <i>*used_len</i> is still populated. If memory is allocated by this function, it must be freed by the caller.</p>
 
@@ -206,9 +206,9 @@ void OSSL_PARAM_set_all_unmodified(OSSL_PARAM *params);</code></pre>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>OSSL_PARAM_construct_TYPE(), OSSL_PARAM_construct_BN(), OSSL_PARAM_construct_utf8_string(), OSSL_PARAM_construct_octet_string(), OSSL_PARAM_construct_utf8_ptr() and OSSL_PARAM_construct_octet_ptr() return a populated <b>OSSL_PARAM</b> structure.</p>
+<p>OSSL_PARAM_construct_TYPE(), OSSL_PARAM_construct_BN(), OSSL_PARAM_construct_utf8_string(), OSSL_PARAM_construct_octet_string(), OSSL_PARAM_construct_utf8_ptr() and OSSL_PARAM_construct_octet_ptr() return a populated <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure.</p>
 
-<p>OSSL_PARAM_locate() and OSSL_PARAM_locate_const() return a pointer to the matching <b>OSSL_PARAM</b> object. They return NULL on error or when no object matching <i>key</i> exists in the <i>array</i>.</p>
+<p>OSSL_PARAM_locate() and OSSL_PARAM_locate_const() return a pointer to the matching <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> object. They return NULL on error or when no object matching <i>key</i> exists in the <i>array</i>.</p>
 
 <p>OSSL_PARAM_modified() returns 1 if the parameter was set and 0 otherwise.</p>
 
@@ -218,13 +218,13 @@ void OSSL_PARAM_set_all_unmodified(OSSL_PARAM *params);</code></pre>
 
 <p>Native types will be converted as required only if the value is exactly representable by the target type or parameter. Apart from that, the functions must be used appropriately for the expected type of the parameter.</p>
 
-<p>OSSL_PARAM_get_BN() and OSSL_PARAM_set_BN() currently only support nonnegative <b>BIGNUM</b>s, and by consequence, only <b>OSSL_PARAM_UNSIGNED_INTEGER</b>. OSSL_PARAM_construct_BN() currently constructs an <b>OSSL_PARAM</b> structure with the data type <b>OSSL_PARAM_UNSIGNED_INTEGER</b>.</p>
+<p>OSSL_PARAM_get_BN() and OSSL_PARAM_set_BN() currently only support nonnegative <b>BIGNUM</b>s, and by consequence, only <b>OSSL_PARAM_UNSIGNED_INTEGER</b>. OSSL_PARAM_construct_BN() currently constructs an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure with the data type <b>OSSL_PARAM_UNSIGNED_INTEGER</b>.</p>
 
-<p>For OSSL_PARAM_construct_utf8_ptr() and OSSL_PARAM_consstruct_octet_ptr(), <i>bsize</i> is not relevant if the purpose is to send the <b>OSSL_PARAM</b> array to a <i>responder</i>, i.e. to get parameter data back. In that case, <i>bsize</i> can safely be given zero. See <a href="../man3/OSSL_PARAM.html">&quot;DESCRIPTION&quot; in OSSL_PARAM(3)</a> for further information on the possible purposes.</p>
+<p>For OSSL_PARAM_construct_utf8_ptr() and OSSL_PARAM_consstruct_octet_ptr(), <i>bsize</i> is not relevant if the purpose is to send the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array to a <i>responder</i>, i.e. to get parameter data back. In that case, <i>bsize</i> can safely be given zero. See <a href="../man3/OSSL_PARAM.html">&quot;DESCRIPTION&quot; in OSSL_PARAM(3)</a> for further information on the possible purposes.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
-<p>Reusing the examples from <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> to just show how <b>OSSL_PARAM</b> arrays can be handled using the macros and functions defined herein.</p>
+<p>Reusing the examples from <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> to just show how <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays can be handled using the macros and functions defined herein.</p>
 
 <h2 id="Example-1">Example 1</h2>
 
@@ -243,7 +243,7 @@ const OSSL_PARAM set[] = {
 
 <h2 id="Example-2">Example 2</h2>
 
-<p>This example is for requesting parameters on some object, and also demonstrates that the requestor isn&#39;t obligated to request all available parameters:</p>
+<p>This example is for requesting parameters on some object, and also demonstrates that the requester isn&#39;t obligated to request all available parameters:</p>
 
 <pre><code>const char *foo = NULL;
 char bar[1024];
@@ -276,7 +276,7 @@ if ((p = OSSL_PARAM_locate(params, &quot;cookie&quot;)) != NULL)
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

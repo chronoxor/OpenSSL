@@ -141,7 +141,7 @@
 
 <p>OSSL_FUNC_rand_get_ctx_params() gets details of currently set parameter values associated with the given provider side rand context <i>ctx</i> and stores them in <i>params</i>. Passing NULL for <i>params</i> should return true.</p>
 
-<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params(), and OSSL_FUNC_rand_settable_ctx_params() all return constant <b>OSSL_PARAM</b> arrays as descriptors of the parameters that OSSL_FUNC_rand_get_params(), OSSL_FUNC_rand_get_ctx_params(), and OSSL_FUNC_rand_set_ctx_params() can handle, respectively. OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() will return the parameters associated with the provider side context <i>ctx</i> in its current state if it is not NULL. Otherwise, they return the parameters associated with the provider side algorithm <i>provctx</i>.</p>
+<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params(), and OSSL_FUNC_rand_settable_ctx_params() all return constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays as descriptors of the parameters that OSSL_FUNC_rand_get_params(), OSSL_FUNC_rand_get_ctx_params(), and OSSL_FUNC_rand_set_ctx_params() can handle, respectively. OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() will return the parameters associated with the provider side context <i>ctx</i> in its current state if it is not NULL. Otherwise, they return the parameters associated with the provider side algorithm <i>provctx</i>.</p>
 
 <p>Parameters currently recognised by built-in rands are as follows. Not all parameters are relevant to, or are understood by all rands:</p>
 
@@ -245,7 +245,7 @@
 
 <p>OSSL_FUNC_rand_newctx() should return the newly created provider side rand context, or NULL on failure.</p>
 
-<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() should return a constant <b>OSSL_PARAM</b> array, or NULL if none is offered.</p>
+<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() should return a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array, or NULL if none is offered.</p>
 
 <p>OSSL_FUNC_rand_nonce() returns the size of the generated nonce, or 0 on error.</p>
 
@@ -267,7 +267,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

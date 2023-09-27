@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_KDF-KB 7ossl"
-.TH EVP_KDF-KB 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH EVP_KDF-KB 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -161,7 +161,7 @@ used if unspecified.
 .ie n .IP """mac"" (\fB\s-1OSSL_KDF_PARAM_MAC\s0\fR) <\s-1UTF8\s0 string>" 4
 .el .IP "``mac'' (\fB\s-1OSSL_KDF_PARAM_MAC\s0\fR) <\s-1UTF8\s0 string>" 4
 .IX Item "mac (OSSL_KDF_PARAM_MAC) <UTF8 string>"
-The value is either \s-1CMAC\s0 or \s-1HMAC.\s0
+The value is either \s-1CMAC, HMAC, KMAC128\s0 or \s-1KMAC256.\s0
 .ie n .IP """digest"" (\fB\s-1OSSL_KDF_PARAM_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
 .el .IP "``digest'' (\fB\s-1OSSL_KDF_PARAM_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
 .IX Item "digest (OSSL_KDF_PARAM_DIGEST) <UTF8 string>"
@@ -196,9 +196,16 @@ The default value of \fB1\fR will be used if unspecified.
 Set to \fB0\fR to disable use of the optional Fixed Input data 'zero separator'
 (see \s-1SP800\-108\s0) that is placed between the Label and Context.
 The default value of \fB1\fR will be used if unspecified.
+.ie n .IP """r"" (\fB\s-1OSSL_KDF_PARAM_KBKDF_R\s0\fR) <integer>" 4
+.el .IP "``r'' (\fB\s-1OSSL_KDF_PARAM_KBKDF_R\s0\fR) <integer>" 4
+.IX Item "r (OSSL_KDF_PARAM_KBKDF_R) <integer>"
+Set the fixed value 'r', indicating the length of the counter in bits.
+.Sp
+Supported values are \fB8\fR, \fB16\fR, \fB24\fR, and \fB32\fR.
+The default value of \fB32\fR will be used if unspecified.
 .PP
 Depending on whether mac is \s-1CMAC\s0 or \s-1HMAC,\s0 either digest or cipher is required
-(respectively) and the other is unused.
+(respectively) and the other is unused. They are unused for \s-1KMAC128\s0 and \s-1KMAC256.\s0
 .PP
 The parameters key, salt, info, and seed correspond to \s-1KI,\s0 Label, Context, and
 \&\s-1IV\s0 (respectively) in \s-1SP800\-108.\s0  As in that document, salt, info, and seed are
@@ -295,10 +302,12 @@ Label \*(L"label\*(R", and \s-1IV\s0 \*(L"sixteen bytes iv\*(R".
 \&\*(L"\s-1PARAMETERS\*(R"\s0 in \s-1\fBEVP_KDF\s0\fR\|(3)
 .SH "HISTORY"
 .IX Header "HISTORY"
-This functionality was added to OpenSSL 3.0.
+This functionality was added in OpenSSL 3.0.
+.PP
+Support for \s-1KMAC\s0 was added in OpenSSL 3.1.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
 Copyright 2019 Red Hat, Inc.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use

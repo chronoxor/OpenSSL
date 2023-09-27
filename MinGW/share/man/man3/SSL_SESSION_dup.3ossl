@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "SSL_SESSION_FREE 3ossl"
-.TH SSL_SESSION_FREE 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH SSL_SESSION_FREE 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -158,8 +158,8 @@ SSL_SESSION_free \- create, free and manage SSL_SESSION structures
 \&\fBSSL_SESSION_new()\fR creates a new \s-1SSL_SESSION\s0 structure and returns a pointer to
 it.
 .PP
-\&\fBSSL_SESSION_dup()\fR copies the contents of the \s-1SSL_SESSION\s0 structure in \fBsrc\fR
-and returns a pointer to it.
+\&\fBSSL_SESSION_dup()\fR creates a new \s-1SSL_SESSION\s0 structure that is a copy of \fBsrc\fR.
+The copy is not owned by any cache that \fBsrc\fR may have been in.
 .PP
 \&\fBSSL_SESSION_up_ref()\fR increments the reference count on the given \s-1SSL_SESSION\s0
 structure.
@@ -197,6 +197,8 @@ incorrect reference counts and therefore program failures.
 SSL_SESSION_new returns a pointer to the newly allocated \s-1SSL_SESSION\s0 structure
 or \s-1NULL\s0 on error.
 .PP
+SSL_SESSION_dup returns a pointer to the new copy or \s-1NULL\s0 on error.
+.PP
 SSL_SESSION_up_ref returns 1 on success or 0 on error.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
@@ -209,7 +211,7 @@ SSL_SESSION_up_ref returns 1 on success or 0 on error.
 The \fBSSL_SESSION_dup()\fR function was added in OpenSSL 1.1.1.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2000\-2016 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2000\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

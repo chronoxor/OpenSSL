@@ -26,6 +26,7 @@
     </ul>
   </li>
   <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
   <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
 </ul>
@@ -69,13 +70,13 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <p>The functions described here are mainly interesting for those who provide OpenSSL functionality, either in OpenSSL itself or in engine modules or similar.</p>
 
-<p>If tracing is enabled (see <a href="#NOTES">&quot;NOTES&quot;</a> below), these functions are used to generate free text tracing output.</p>
+<p>If the tracing facility is enabled (see <a href="#Configure-Tracing">&quot;Configure Tracing&quot;</a> below), these functions are used to generate free text tracing output.</p>
 
 <p>The tracing output is divided into types which are enabled individually by the application. The tracing types are described in detail in <a href="../man3/OSSL_trace_set_callback.html">&quot;Trace types&quot; in OSSL_trace_set_callback(3)</a>. The fallback type <b>OSSL_TRACE_CATEGORY_ALL</b> should <i>not</i> be used with the functions described here.</p>
 
-<p>Tracing for a specific category is enabled if a so called <i>trace channel</i> is attached to it. A trace channel is simply a BIO object to which the application can write its trace output.</p>
+<p>Tracing for a specific category is enabled at run-time if a so-called <i>trace channel</i> is attached to it. A trace channel is simply a BIO object to which the application can write its trace output.</p>
 
-<p>The application has two different ways of registering a trace channel, either by directly providing a BIO object using OSSL_trace_set_channel(), or by providing a callback routine using OSSL_trace_set_callback(). The latter is wrapped internally by a dedicated BIO object, so for the tracing code both channel types are effectively indistinguishable. We call them a <i>simple trace channel</i> and a <i>callback trace channel</i>, respectively.</p>
+<p>The application has two different ways of registering a trace channel, either by directly providing a BIO object using <a href="../man3/OSSL_trace_set_channel.html">OSSL_trace_set_channel(3)</a>, or by providing a callback routine using <a href="../man3/OSSL_trace_set_callback.html">OSSL_trace_set_callback(3)</a>. The latter is wrapped internally by a dedicated BIO object, so for the tracing code both channel types are effectively indistinguishable. We call them a <i>simple trace channel</i> and a <i>callback trace channel</i>, respectively.</p>
 
 <p>To produce trace output, it is necessary to obtain a pointer to the trace channel (i.e., the BIO object) using OSSL_trace_begin(), write to it using arbitrary BIO output routines, and finally releases the channel using OSSL_trace_end(). The OSSL_trace_begin()/OSSL_trace_end() calls surrounding the trace output create a group, which acts as a critical section (guarded by a mutex) to ensure that the trace output of different threads does not get mixed up.</p>
 
@@ -83,7 +84,7 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <h2 id="Functions">Functions</h2>
 
-<p>OSSL_trace_enabled() can be used to check if tracing for the given <i>category</i> is enabled.</p>
+<p>OSSL_trace_enabled() can be used to check if tracing for the given <i>category</i> is enabled, i.e., if the tracing facility has been statically enabled (see <a href="#Configure-Tracing">&quot;Configure Tracing&quot;</a> below) and a trace channel has been registered using <a href="../man3/OSSL_trace_set_channel.html">OSSL_trace_set_channel(3)</a> or <a href="../man3/OSSL_trace_set_callback.html">OSSL_trace_set_callback(3)</a>.</p>
 
 <p>OSSL_trace_begin() is used to starts a tracing section, and get the channel for the given <i>category</i> in form of a BIO. This BIO can only be used for output.</p>
 
@@ -99,7 +100,7 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <pre><code>OSSL_TRACE_BEGIN(TLS) {
 
-    BIO_fprintf(trc_out, ... );
+    BIO_printf(trc_out, ... );
 
 } OSSL_TRACE_END(TLS);</code></pre>
 
@@ -109,7 +110,7 @@ if (OSSL_TRACE_ENABLED(category)) {
     BIO *trc_out = OSSL_trace_begin(OSSL_TRACE_CATEGORY_TLS);
     if (trc_out != NULL) {
         ...
-        BIO_fprintf(trc_out, ...);
+        BIO_printf(trc_out, ...);
     }
     OSSL_trace_end(OSSL_TRACE_CATEGORY_TLS, trc_out);
 } while (0);</code></pre>
@@ -122,7 +123,7 @@ if (OSSL_TRACE_ENABLED(category)) {
         OSSL_TRACE_CANCEL(TLS);
         goto err;
     }
-    BIO_fprintf(trc_out, ... );
+    BIO_printf(trc_out, ... );
 
 } OSSL_TRACE_END(TLS);</code></pre>
 
@@ -135,7 +136,7 @@ if (OSSL_TRACE_ENABLED(category)) {
             OSSL_trace_end(OSSL_TRACE_CATEGORY_TLS, trc_out);
             goto err;
         }
-        BIO_fprintf(trc_out, ... );
+        BIO_printf(trc_out, ... );
     }
     OSSL_trace_end(OSSL_TRACE_CATEGORY_TLS, trc_out);
 } while (0);</code></pre>
@@ -209,7 +210,7 @@ if (OSSL_TRACE_ENABLED(category)) {
         OSSL_TRACE_CANCEL(TLS);
         goto err;
     }
-    BIO_fprintf(trc_out, ... );
+    BIO_printf(trc_out, ... );
 
 } OSSL_TRACE_END(TLS);</code></pre>
 
@@ -222,7 +223,7 @@ if (OSSL_TRACE_ENABLED(category)) {
             ((void)0);
             goto err;
         }
-        BIO_fprintf(trc_out, ... );
+        BIO_printf(trc_out, ... );
     }
 } while (0);</code></pre>
 
@@ -235,13 +236,17 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <p>OSSL_trace_begin() returns a <b>BIO</b> pointer if the given <i>type</i> is enabled, otherwise NULL.</p>
 
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../man3/OSSL_trace_set_channel.html">OSSL_trace_set_channel(3)</a>, <a href="../man3/OSSL_trace_set_callback.html">OSSL_trace_set_callback(3)</a></p>
+
 <h1 id="HISTORY">HISTORY</h1>
 
 <p>The OpenSSL Tracing API was added in OpenSSL 3.0.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

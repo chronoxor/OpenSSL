@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-ASYM_CIPHER 7ossl"
-.TH PROVIDER-ASYM_CIPHER 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH PROVIDER-ASYM_CIPHER 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -189,14 +189,14 @@ via the \s-1API\s0 functions \fBEVP_PKEY_encrypt\fR\|(3),
 other related functions).
 .PP
 All \*(L"functions\*(R" mentioned here are passed as function pointers between
-\&\fIlibcrypto\fR and the provider in \fB\s-1OSSL_DISPATCH\s0\fR arrays via
-\&\fB\s-1OSSL_ALGORITHM\s0\fR arrays that are returned by the provider's
+\&\fIlibcrypto\fR and the provider in \s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays via
+\&\s-1\fBOSSL_ALGORITHM\s0\fR\|(3) arrays that are returned by the provider's
 \&\fBprovider_query_operation()\fR function
 (see \*(L"Provider Functions\*(R" in \fBprovider\-base\fR\|(7)).
 .PP
 All these \*(L"functions\*(R" have a corresponding function type definition
 named \fBOSSL_FUNC_{name}_fn\fR, and a helper function to retrieve the
-function pointer from an \fB\s-1OSSL_DISPATCH\s0\fR element named
+function pointer from an \s-1\fBOSSL_DISPATCH\s0\fR\|(3) element named
 \&\fBOSSL_FUNC_{name}\fR.
 For example, the \*(L"function\*(R" \fBOSSL_FUNC_asym_cipher_newctx()\fR has these:
 .PP
@@ -206,7 +206,7 @@ For example, the \*(L"function\*(R" \fBOSSL_FUNC_asym_cipher_newctx()\fR has the
 \&     OSSL_FUNC_asym_cipher_newctx(const OSSL_DISPATCH *opf);
 .Ve
 .PP
-\&\fB\s-1OSSL_DISPATCH\s0\fR arrays are indexed by numbers that are provided as
+\&\s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays are indexed by numbers that are provided as
 macros in \fBopenssl\-core_dispatch.h\fR\|(7), as follows:
 .PP
 .Vb 3
@@ -264,8 +264,7 @@ pointer to a provider key object in the \fIprovkey\fR parameter.
 The \fIparams\fR, if not \s-1NULL,\s0 should be set on the context in a manner similar to
 using \fBOSSL_FUNC_asym_cipher_set_ctx_params()\fR.
 The key object should have been previously generated, loaded or imported into
-the provider using the key management (\s-1OSSL_OP_KEYMGMT\s0) operation (see
-\&\fBprovider\-keymgmt\fR\|(7)>.
+the provider using the key management (\s-1OSSL_OP_KEYMGMT\s0) operation (see \fBprovider\-keymgmt\fR\|(7)).
 \&\fBOSSL_FUNC_asym_cipher_encrypt()\fR performs the actual encryption itself.
 A previously initialised asymmetric cipher context is passed in the \fIctx\fR
 parameter.
@@ -286,7 +285,7 @@ The \fIparams\fR, if not \s-1NULL,\s0 should be set on the context in a manner s
 using \fBOSSL_FUNC_asym_cipher_set_ctx_params()\fR.
 The key object should have been previously generated, loaded or imported into
 the provider using the key management (\s-1OSSL_OP_KEYMGMT\s0) operation (see
-\&\fBprovider\-keymgmt\fR\|(7)>.
+\&\fBprovider\-keymgmt\fR\|(7)).
 .PP
 \&\fBOSSL_FUNC_asym_cipher_decrypt()\fR performs the actual decryption itself.
 A previously initialised asymmetric cipher context is passed in the \fIctx\fR
@@ -319,15 +318,11 @@ Parameters currently recognised by built-in asymmetric cipher algorithms are as
 follows.
 Not all parameters are relevant to, or are understood by all asymmetric cipher
 algorithms:
-.ie n .IP """pad-mode"" (\fB\s-1OSSL_ASYM_CIPHER_PARAM_PAD_MODE\s0\fR) <integer>" 4
-.el .IP "``pad-mode'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_PAD_MODE\s0\fR) <integer>" 4
-.IX Item "pad-mode (OSSL_ASYM_CIPHER_PARAM_PAD_MODE) <integer>"
+.ie n .IP """pad-mode"" (\fB\s-1OSSL_ASYM_CIPHER_PARAM_PAD_MODE\s0\fR) <\s-1UTF8\s0 string> \s-1OR\s0 <integer>" 4
+.el .IP "``pad-mode'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_PAD_MODE\s0\fR) <\s-1UTF8\s0 string> \s-1OR\s0 <integer>" 4
+.IX Item "pad-mode (OSSL_ASYM_CIPHER_PARAM_PAD_MODE) <UTF8 string> OR <integer>"
 The type of padding to be used. The interpretation of this value will depend
-on the algorithm in use. The default provider understands these \s-1RSA\s0 padding
-modes: 1 (\s-1RSA_PKCS1_PADDING\s0), 3 (\s-1RSA_NO_PADDING\s0),
-4 (\s-1RSA_PKCS1_OAEP_PADDING\s0), 5 (\s-1RSA_X931_PADDING\s0), 6 (\s-1RSA_PKCS1_PSS_PADDING\s0) and
-7 (\s-1RSA_PKCS1_WITH_TLS_PADDING\s0). See \fBEVP_PKEY_CTX_set_rsa_padding\fR\|(3) for
-further details.
+on the algorithm in use.
 .ie n .IP """digest"" (\fB\s-1OSSL_ASYM_CIPHER_PARAM_OAEP_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
 .el .IP "``digest'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_OAEP_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
 .IX Item "digest (OSSL_ASYM_CIPHER_PARAM_OAEP_DIGEST) <UTF8 string>"
@@ -355,26 +350,27 @@ is in use.
 .el .IP "``mgf1\-digest\-props'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_MGF1_DIGEST_PROPS\s0\fR) <\s-1UTF8\s0 string>" 4
 .IX Item "mgf1-digest-props (OSSL_ASYM_CIPHER_PARAM_MGF1_DIGEST_PROPS) <UTF8 string>"
 Gets or sets the properties to use when fetching the \s-1MGF1\s0 digest algorithm.
+.ie n .IP """oaep-label"" (\fB\s-1OSSL_ASYM_CIPHER_PARAM_OAEP_LABEL\s0\fR) <octet string ptr>" 4
+.el .IP "``oaep-label'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_OAEP_LABEL\s0\fR) <octet string ptr>" 4
+.IX Item "oaep-label (OSSL_ASYM_CIPHER_PARAM_OAEP_LABEL) <octet string ptr>"
+Gets the \s-1OAEP\s0 label used when \s-1OAEP\s0 padding is in use.
 .ie n .IP """oaep-label"" (\fB\s-1OSSL_ASYM_CIPHER_PARAM_OAEP_LABEL\s0\fR) <octet string>" 4
 .el .IP "``oaep-label'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_OAEP_LABEL\s0\fR) <octet string>" 4
 .IX Item "oaep-label (OSSL_ASYM_CIPHER_PARAM_OAEP_LABEL) <octet string>"
-Gets or sets the \s-1OAEP\s0 label used when \s-1OAEP\s0 padding is in use.
+Sets the \s-1OAEP\s0 label used when \s-1OAEP\s0 padding is in use.
 .ie n .IP """tls-client-version"" (\fB\s-1OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION\s0\fR) <unsigned integer>" 4
 .el .IP "``tls-client-version'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION\s0\fR) <unsigned integer>" 4
 .IX Item "tls-client-version (OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION) <unsigned integer>"
-The \s-1TLS\s0 protocol version first requested by the client. See
-\&\fB\s-1RSA_PKCS1_WITH_TLS_PADDING\s0\fR on the page \fBEVP_PKEY_CTX_set_rsa_padding\fR\|(3).
+The \s-1TLS\s0 protocol version first requested by the client.
 .ie n .IP """tls-negotiated-version"" (\fB\s-1OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION\s0\fR) <unsigned integer>" 4
 .el .IP "``tls-negotiated-version'' (\fB\s-1OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION\s0\fR) <unsigned integer>" 4
 .IX Item "tls-negotiated-version (OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION) <unsigned integer>"
-The negotiated \s-1TLS\s0 protocol version. See
-\&\fB\s-1RSA_PKCS1_WITH_TLS_PADDING\s0\fR on the page \fBEVP_PKEY_CTX_set_rsa_padding\fR\|(3).
+The negotiated \s-1TLS\s0 protocol version.
 .PP
 \&\fBOSSL_FUNC_asym_cipher_gettable_ctx_params()\fR and \fBOSSL_FUNC_asym_cipher_settable_ctx_params()\fR
-get a constant \fB\s-1OSSL_PARAM\s0\fR array that describes the gettable and settable
+get a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array that describes the gettable and settable
 parameters, i.e. parameters that can be used with \fBOSSL_FUNC_asym_cipherget_ctx_params()\fR
 and \fBOSSL_FUNC_asym_cipher_set_ctx_params()\fR respectively.
-See \s-1\fBOSSL_PARAM\s0\fR\|(3) for the use of \fB\s-1OSSL_PARAM\s0\fR as parameter descriptor.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\fBOSSL_FUNC_asym_cipher_newctx()\fR and \fBOSSL_FUNC_asym_cipher_dupctx()\fR should return the newly
@@ -389,7 +385,7 @@ All other functions should return 1 for success or 0 on error.
 The provider \s-1ASYM_CIPHER\s0 interface was introduced in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

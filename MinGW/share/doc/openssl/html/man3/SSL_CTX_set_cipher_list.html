@@ -85,7 +85,7 @@ const char *OSSL_default_ciphersuites(void);</code></pre>
 
 <p>It should be noted, that inclusion of a cipher to be used into the list is a necessary condition. On the client side, the inclusion into the list is also sufficient unless the security level excludes it. On the server side, additional restrictions apply. All ciphers have additional requirements. ADH ciphers don&#39;t need a certificate, but DH-parameters must have been set. All other ciphers need a corresponding certificate and key.</p>
 
-<p>A RSA cipher can only be chosen, when a RSA certificate is available. RSA ciphers using DHE need a certificate and key and additional DH-parameters (see <a href="../man3/SSL_CTX_set_tmp_dh_callback.html">SSL_CTX_set_tmp_dh_callback(3)</a>).</p>
+<p>An RSA cipher can only be chosen, when an RSA certificate is available. RSA ciphers using DHE need a certificate and key and additional DH-parameters (see <a href="../man3/SSL_CTX_set_tmp_dh_callback.html">SSL_CTX_set_tmp_dh_callback(3)</a>).</p>
 
 <p>A DSA cipher can only be chosen, when a DSA certificate is available. DSA ciphers always use DH key exchange and therefore need DH-parameters (see <a href="../man3/SSL_CTX_set_tmp_dh_callback.html">SSL_CTX_set_tmp_dh_callback(3)</a>).</p>
 
@@ -109,7 +109,7 @@ const char *OSSL_default_ciphersuites(void);</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

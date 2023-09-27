@@ -34,7 +34,7 @@
 
 <h2 id="Common-EC-parameters">Common EC parameters</h2>
 
-<p>The normal way of specifying domain parameters for an EC curve is via the curve name &quot;group&quot;. For curves with no curve name, explicit parameters can be used that specify &quot;field-type&quot;, &quot;p&quot;, &quot;a&quot;, &quot;b&quot;, &quot;generator&quot; and &quot;order&quot;. Explicit parameters are supported for backwards compability reasons, but they are not compliant with multiple standards (including RFC5915) which only allow named curves.</p>
+<p>The normal way of specifying domain parameters for an EC curve is via the curve name &quot;group&quot;. For curves with no curve name, explicit parameters can be used that specify &quot;field-type&quot;, &quot;p&quot;, &quot;a&quot;, &quot;b&quot;, &quot;generator&quot; and &quot;order&quot;. Explicit parameters are supported for backwards compatibility reasons, but they are not compliant with multiple standards (including RFC5915) which only allow named curves.</p>
 
 <p>The following KeyGen/Gettable/Import/Export types are available for the built-in EC algorithm:</p>
 
@@ -91,13 +91,15 @@
 <dt id="decoded-from-explicit-OSSL_PKEY_PARAM_EC_DECODED_FROM_EXPLICIT_PARAMS-integer">&quot;decoded-from-explicit&quot; (<b>OSSL_PKEY_PARAM_EC_DECODED_FROM_EXPLICIT_PARAMS</b>) &lt;integer&gt;</dt>
 <dd>
 
-<p>Gets a flag indicating wether the key or parameters were decoded from explicit curve parameters. Set to 1 if so or 0 if a named curve was used.</p>
+<p>Gets a flag indicating whether the key or parameters were decoded from explicit curve parameters. Set to 1 if so or 0 if a named curve was used.</p>
 
 </dd>
 <dt id="use-cofactor-flag-OSSL_PKEY_PARAM_USE_COFACTOR_ECDH-integer">&quot;use-cofactor-flag&quot; (<b>OSSL_PKEY_PARAM_USE_COFACTOR_ECDH</b>) &lt;integer&gt;</dt>
 <dd>
 
 <p>Enable Cofactor DH (ECC CDH) if this value is 1, otherwise it uses normal EC DH if the value is zero. The cofactor variant multiplies the shared secret by the EC curve&#39;s cofactor (note for some curves the cofactor is 1).</p>
+
+<p>See also <a href="../man7/EVP_KEYEXCH-ECDH.html">EVP_KEYEXCH-ECDH(7)</a> for the related <b>OSSL_EXCHANGE_PARAM_EC_ECDH_COFACTOR_MODE</b> parameter that can be set on a per-operation basis.</p>
 
 </dd>
 <dt id="encoding-OSSL_PKEY_PARAM_EC_ENCODING-UTF8-string">&quot;encoding&quot; (<b>OSSL_PKEY_PARAM_EC_ENCODING</b>) &lt;UTF8 string&gt;</dt>
@@ -115,7 +117,7 @@
 <dt id="group-check-OSSL_PKEY_PARAM_EC_GROUP_CHECK_TYPE-UTF8-string">&quot;group-check&quot; (<b>OSSL_PKEY_PARAM_EC_GROUP_CHECK_TYPE</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
-<p>Sets or Gets the type of group check done when EVP_PKEY_param_check() is called. Valid values are &quot;default&quot;, &quot;named&quot; and &quot;named-nist&quot;. The &quot;named&quot; type checks that the domain parameters match the inbuilt curve parameters, &quot;named-nist&quot; is similiar but also checks that the named curve is a nist curve. The &quot;default&quot; type does domain parameter validation for the OpenSSL default provider, but is equivalent to &quot;named-nist&quot; for the OpenSSL FIPS provider.</p>
+<p>Sets or Gets the type of group check done when EVP_PKEY_param_check() is called. Valid values are &quot;default&quot;, &quot;named&quot; and &quot;named-nist&quot;. The &quot;named&quot; type checks that the domain parameters match the inbuilt curve parameters, &quot;named-nist&quot; is similar but also checks that the named curve is a nist curve. The &quot;default&quot; type does domain parameter validation for the OpenSSL default provider, but is equivalent to &quot;named-nist&quot; for the OpenSSL FIPS provider.</p>
 
 </dd>
 <dt id="include-public-OSSL_PKEY_PARAM_EC_INCLUDE_PUBLIC-integer">&quot;include-public&quot; (<b>OSSL_PKEY_PARAM_EC_INCLUDE_PUBLIC</b>) &lt;integer&gt;</dt>
@@ -123,13 +125,13 @@
 
 <p>Setting this value to 0 indicates that the public key should not be included when encoding the private key. The default value of 1 will include the public key.</p>
 
-<p>See also <a href="../man7/EVP_KEYEXCH-ECDH.html">EVP_KEYEXCH-ECDH(7)</a> for the related <b>OSSL_EXCHANGE_PARAM_EC_ECDH_COFACTOR_MODE</b> parameter that can be set on a per-operation basis.</p>
-
 </dd>
 <dt id="pub-OSSL_PKEY_PARAM_PUB_KEY-octet-string">&quot;pub&quot; (<b>OSSL_PKEY_PARAM_PUB_KEY</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>The public key value in encoded EC point format. This parameter is used when importing or exporting the public key value with the EVP_PKEY_fromdata() and EVP_PKEY_todata() functions.</p>
+<p>The public key value in encoded EC point format conforming to Sec. 2.3.3 and 2.3.4 of the SECG SEC 1 (&quot;Elliptic Curve Cryptography&quot;) standard. This parameter is used when importing or exporting the public key value with the EVP_PKEY_fromdata() and EVP_PKEY_todata() functions.</p>
+
+<p>Note, in particular, that the choice of point compression format used for encoding the exported value via EVP_PKEY_todata() depends on the underlying provider implementation. Before OpenSSL 3.0.8, the implementation of providers included with OpenSSL always opted for an encoding in compressed format, unconditionally. Since OpenSSL 3.0.8, the implementation has been changed to honor the <b>OSSL_PKEY_PARAM_EC_POINT_CONVERSION_FORMAT</b> parameter, if set, or to default to uncompressed format.</p>
 
 </dd>
 <dt id="priv-OSSL_PKEY_PARAM_PRIV_KEY-unsigned-integer">&quot;priv&quot; (<b>OSSL_PKEY_PARAM_PRIV_KEY</b>) &lt;unsigned integer&gt;</dt>
@@ -156,7 +158,7 @@
 <p>Used for getting the EC public key Y component.</p>
 
 </dd>
-<dt id="OSSL_PKEY_PARAM_DEFAULT_DIGEST-UTF8-string">(<b>OSSL_PKEY_PARAM_DEFAULT_DIGEST</b>) &lt;UTF8 string&gt;</dt>
+<dt id="default-digest-OSSL_PKEY_PARAM_DEFAULT_DIGEST-UTF8-string">&quot;default-digest&quot; (<b>OSSL_PKEY_PARAM_DEFAULT_DIGEST</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
 <p>Getter that returns the default digest name. (Currently returns &quot;SHA256&quot; as of OpenSSL 3.0).</p>
@@ -278,7 +280,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

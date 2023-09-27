@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "ERR_GET_LIB 3ossl"
-.TH ERR_GET_LIB 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH ERR_GET_LIB 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -177,6 +177,13 @@ be sure to also compare the library number.
 The library number, reason code, and whether the error
 is fatal, respectively.
 Starting with OpenSSL 3.0.0, the function code is always set to zero.
+.SH "NOTES"
+.IX Header "NOTES"
+Applications should not make control flow decisions based on specific error
+codes. Error codes are subject to change at any time (even in patch releases of
+OpenSSL). A particular error code can only be considered meaningful for control
+flow decisions if it is explicitly documented as such. New failure codes may
+still appear at any time.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBERR_get_error\fR\|(3)
@@ -187,7 +194,7 @@ Starting with OpenSSL 3.0.0, the function code is always set to zero.
 \&\s-1\fBERR_GET_FUNC\s0()\fR was removed in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2000\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2000\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

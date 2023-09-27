@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_MAC-KMAC 7ossl"
-.TH EVP_MAC-KMAC 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH EVP_MAC-KMAC 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -172,11 +172,12 @@ Likewise, the \*(L"block-size\*(R" parameter can be retrieved with
 .IX Item "key (OSSL_MAC_PARAM_KEY) <octet string>"
 Sets the \s-1MAC\s0 key.
 Setting this parameter is identical to passing a \fIkey\fR to \fBEVP_MAC_init\fR\|(3).
+The length of the key (in bytes) must be in the range 4...512.
 .ie n .IP """custom"" (\fB\s-1OSSL_MAC_PARAM_CUSTOM\s0\fR) <octet string>" 4
 .el .IP "``custom'' (\fB\s-1OSSL_MAC_PARAM_CUSTOM\s0\fR) <octet string>" 4
 .IX Item "custom (OSSL_MAC_PARAM_CUSTOM) <octet string>"
 Sets the custom value.
-It is an optional value of at most 256 bytes, and is empty by default.
+It is an optional value with a length of at most 512 bytes, and is empty by default.
 .ie n .IP """size"" (\fB\s-1OSSL_MAC_PARAM_SIZE\s0\fR) <unsigned integer>" 4
 .el .IP "``size'' (\fB\s-1OSSL_MAC_PARAM_SIZE\s0\fR) <unsigned integer>" 4
 .IX Item "size (OSSL_MAC_PARAM_SIZE) <unsigned integer>"
@@ -269,7 +270,7 @@ set before it instead.
 \&\*(L"\s-1PARAMETERS\*(R"\s0 in \s-1\fBEVP_MAC\s0\fR\|(3), \s-1\fBOSSL_PARAM\s0\fR\|(3)
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2018\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2018\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

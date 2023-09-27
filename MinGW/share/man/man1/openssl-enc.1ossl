@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-ENC 1ossl"
-.TH OPENSSL-ENC 1ossl "2022-11-20" "3.0.7" "OpenSSL"
+.TH OPENSSL-ENC 1ossl "2023-09-27" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -248,7 +248,8 @@ High values increase the time required to brute-force the resulting file.
 This option enables the use of \s-1PBKDF2\s0 algorithm to derive the key.
 .IP "\fB\-pbkdf2\fR" 4
 .IX Item "-pbkdf2"
-Use \s-1PBKDF2\s0 algorithm with default iteration count unless otherwise specified.
+Use \s-1PBKDF2\s0 algorithm with a default iteration count of 10000
+unless otherwise specified by the \fB\-iter\fR command line option.
 .IP "\fB\-nosalt\fR" 4
 .IX Item "-nosalt"
 Don't use a salt in the key derivation routines. This option \fB\s-1SHOULD NOT\s0\fR be
@@ -368,6 +369,19 @@ block length.
 All \s-1RC2\s0 ciphers have the same key and effective key length.
 .PP
 Blowfish and \s-1RC5\s0 algorithms use a 128 bit key.
+.PP
+Please note that OpenSSL 3.0 changed the effect of the \fB\-S\fR option.
+Any explicit salt value specified via this option is no longer prepended to the
+ciphertext when encrypting, and must again be explicitly provided when decrypting.
+Conversely, when the \fB\-S\fR option is used during decryption, the ciphertext
+is expected to not have a prepended salt value.
+.PP
+When using OpenSSL 3.0 or later to decrypt data that was encrypted with an
+explicit salt under OpenSSL 1.1.1 do not use the \fB\-S\fR option, the salt will
+then be read from the ciphertext.
+To generate ciphertext that can be decrypted with OpenSSL 1.1.1 do not use
+the \fB\-S\fR option, the salt will be then be generated randomly and prepended
+to the output.
 .SH "SUPPORTED CIPHERS"
 .IX Header "SUPPORTED CIPHERS"
 Note that some of these ciphers can be disabled at compile time
@@ -556,7 +570,7 @@ The \fB\-list\fR option was added in OpenSSL 1.1.1e.
 The \fB\-ciphers\fR and \fB\-engine\fR options were deprecated in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2000\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2000\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

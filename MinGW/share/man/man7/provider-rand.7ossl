@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-RAND 7ossl"
-.TH PROVIDER-RAND 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH PROVIDER-RAND 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -298,7 +298,7 @@ in \fIparams\fR.
 Passing \s-1NULL\s0 for \fIparams\fR should return true.
 .PP
 \&\fBOSSL_FUNC_rand_gettable_params()\fR, \fBOSSL_FUNC_rand_gettable_ctx_params()\fR,
-and \fBOSSL_FUNC_rand_settable_ctx_params()\fR all return constant \fB\s-1OSSL_PARAM\s0\fR
+and \fBOSSL_FUNC_rand_settable_ctx_params()\fR all return constant \s-1\fBOSSL_PARAM\s0\fR\|(3)
 arrays as descriptors of the parameters that \fBOSSL_FUNC_rand_get_params()\fR,
 \&\fBOSSL_FUNC_rand_get_ctx_params()\fR, and \fBOSSL_FUNC_rand_set_ctx_params()\fR
 can handle, respectively.  \fBOSSL_FUNC_rand_gettable_ctx_params()\fR
@@ -395,7 +395,7 @@ considered valid.
 provider side rand context, or \s-1NULL\s0 on failure.
 .PP
 \&\fBOSSL_FUNC_rand_gettable_params()\fR, \fBOSSL_FUNC_rand_gettable_ctx_params()\fR and
-\&\fBOSSL_FUNC_rand_settable_ctx_params()\fR should return a constant \fB\s-1OSSL_PARAM\s0\fR
+\&\fBOSSL_FUNC_rand_settable_ctx_params()\fR should return a constant \s-1\fBOSSL_PARAM\s0\fR\|(3)
 array, or \s-1NULL\s0 if none is offered.
 .PP
 \&\fBOSSL_FUNC_rand_nonce()\fR returns the size of the generated nonce, or 0 on error.
@@ -421,7 +421,7 @@ the \s-1EVP\s0 layer will begin enforcing the listed transitions.
 The provider \s-1RAND\s0 interface was introduced in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2020\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2020\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

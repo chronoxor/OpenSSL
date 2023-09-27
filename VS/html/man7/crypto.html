@@ -27,7 +27,8 @@
     <ul>
       <li><a href="#Property-query-strings">Property query strings</a></li>
       <li><a href="#Explicit-fetching">Explicit fetching</a></li>
-      <li><a href="#Implicit-fetch">Implicit fetch</a></li>
+      <li><a href="#Implicit-fetching">Implicit fetching</a></li>
+      <li><a href="#Performance">Performance</a></li>
     </ul>
   </li>
   <li><a href="#FETCHING-EXAMPLES">FETCHING EXAMPLES</a></li>
@@ -106,7 +107,7 @@
 
 <p>When fetching an algorithm it is possible to specify a property query string to guide the selection process. For example a property query string of &quot;provider=default&quot; could be used to force the selection to only consider algorithm implementations in the default provider.</p>
 
-<p>Property query strings can be specified explicitly as an argument to a function. It is also possible to specify a default property query string for the whole library context using the <a href="../man3/EVP_set_default_properties.html">EVP_set_default_properties(3)</a> function. Where both default properties and function specific properties are specified then they are combined. Function specific properties will override default properties where there is a conflict.</p>
+<p>Property query strings can be specified explicitly as an argument to a function. It is also possible to specify a default property query string for the whole library context using the <a href="../man3/EVP_set_default_properties.html">EVP_set_default_properties(3)</a> or <a href="../man3/EVP_default_properties_enable_fips.html">EVP_default_properties_enable_fips(3)</a> functions. Where both default properties and function specific properties are specified then they are combined. Function specific properties will override default properties where there is a conflict.</p>
 
 <p>See <a href="../man7/property.html">property(7)</a> for more information about properties.</p>
 
@@ -140,7 +141,7 @@
 
 <p>The algorithm implementation that is fetched can then be used with other diverse functions that use them. For example the <a href="../man3/EVP_DigestInit_ex.html">EVP_DigestInit_ex(3)</a> function takes as a parameter an <b>EVP_MD</b> object which may have been returned from an earlier call to <a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a>.</p>
 
-<h2 id="Implicit-fetch">Implicit fetch</h2>
+<h2 id="Implicit-fetching">Implicit fetching</h2>
 
 <p>OpenSSL has a number of functions that return an algorithm object with no associated implementation, such as <a href="../man3/EVP_sha256.html">EVP_sha256(3)</a>, <a href="../man3/EVP_aes_128_cbc.html">EVP_aes_128_cbc(3)</a>, <a href="../man3/EVP_get_cipherbyname.html">EVP_get_cipherbyname(3)</a> or <a href="../man3/EVP_get_digestbyname.html">EVP_get_digestbyname(3)</a>. These are present for compatibility with OpenSSL before version 3.0 where explicit fetching was not available.</p>
 
@@ -159,10 +160,82 @@
 <p>If anything in this step fails, the next step is used as a fallback.</p>
 
 </li>
-<li><p>As a fallback, try to fetch the operation type implementation from the same provider as the original <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>&#39;s <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>, still using the propery string from the <b>EVP_PKEY_CTX</b>.</p>
+<li><p>As a fallback, try to fetch the operation type implementation from the same provider as the original <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>&#39;s <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>, still using the property string from the <b>EVP_PKEY_CTX</b>.</p>
 
 </li>
 </ol>
+
+<h2 id="Performance">Performance</h2>
+
+<p>If you perform the same operation many times then it is recommended to use <a href="#Explicit-fetching">&quot;Explicit fetching&quot;</a> to prefetch an algorithm once initially, and then pass this created object to any operations that are currently using <a href="#Implicit-fetching">&quot;Implicit fetching&quot;</a>. See an example of Explicit fetching in <a href="#USING-ALGORITHMS-IN-APPLICATIONS">&quot;USING ALGORITHMS IN APPLICATIONS&quot;</a>.</p>
+
+<p>Prior to OpenSSL 3.0, constant method tables (such as EVP_sha256()) were used directly to access methods. If you pass one of these convenience functions to an operation the fixed methods are ignored, and only the name is used to internally fetch methods from a provider.</p>
+
+<p>If the prefetched object is not passed to operations, then any implicit fetch will use the internally cached prefetched object, but it will still be slower than passing the prefetched object directly.</p>
+
+<p>Fetching via a provider offers more flexibility, but it is slower than the old method, since it must search for the algorithm in all loaded providers, and then populate the method table using provider supplied methods. Internally OpenSSL caches similar algorithms on the first fetch (so loading a digest caches all digests).</p>
+
+<p>The following methods can be used for prefetching:</p>
+
+<dl>
+
+<dt id="EVP_MD_fetch-3"><a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="EVP_CIPHER_fetch-3"><a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="EVP_KDF_fetch-3"><a href="../man3/EVP_KDF_fetch.html">EVP_KDF_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="EVP_MAC_fetch-3"><a href="../man3/EVP_MAC_fetch.html">EVP_MAC_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="EVP_KEM_fetch-3"><a href="../man3/EVP_KEM_fetch.html">EVP_KEM_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="OSSL_ENCODER_fetch-3"><a href="../man3/OSSL_ENCODER_fetch.html">OSSL_ENCODER_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="OSSL_DECODER_fetch-3"><a href="../man3/OSSL_DECODER_fetch.html">OSSL_DECODER_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="EVP_RAND_fetch-3"><a href="../man3/EVP_RAND_fetch.html">EVP_RAND_fetch(3)</a></dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>The following methods are used internally when performing operations:</p>
+
+<dl>
+
+<dt id="EVP_KEYMGMT_fetch-3"><a href="../man3/EVP_KEYMGMT_fetch.html">EVP_KEYMGMT_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="EVP_KEYEXCH_fetch-3"><a href="../man3/EVP_KEYEXCH_fetch.html">EVP_KEYEXCH_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="EVP_SIGNATURE_fetch-3"><a href="../man3/EVP_SIGNATURE_fetch.html">EVP_SIGNATURE_fetch(3)</a></dt>
+<dd>
+
+</dd>
+<dt id="OSSL_STORE_LOADER_fetch-3"><a href="../man3/OSSL_STORE_LOADER_fetch.html">OSSL_STORE_LOADER_fetch(3)</a></dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>See <a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a>, <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a> and <a href="../man7/OSSL_PROVIDER-legacy.html">OSSL_PROVIDER-legacy(7)</a> for a list of algorithm names that can be fetched.</p>
 
 <h1 id="FETCHING-EXAMPLES">FETCHING EXAMPLES</h1>
 
@@ -265,7 +338,7 @@
 
 <p>Cryptographic algorithms are made available to applications through use of the &quot;EVP&quot; APIs. Each of the various operations such as encryption, digesting, message authentication codes, etc., have a set of EVP function calls that can be invoked to use them. See the <a href="../man7/evp.html">evp(7)</a> page for further details.</p>
 
-<p>Most of these follow a common pattern. A &quot;context&quot; object is first created. For example for a digest operation you would use an <b>EVP_MD_CTX</b>, and for an encryption/decryption operation you would use an <b>EVP_CIPHER_CTX</b>. The operation is then initialised ready for use via an &quot;init&quot; function - optionally passing in a set of parameters (using the <b>OSSL_PARAM</b> type) to configure how the operation should behave. Next data is fed into the operation in a series of &quot;update&quot; calls. The operation is finalised using a &quot;final&quot; call which will typically provide some kind of output. Finally the context is cleaned up and freed.</p>
+<p>Most of these follow a common pattern. A &quot;context&quot; object is first created. For example for a digest operation you would use an <b>EVP_MD_CTX</b>, and for an encryption/decryption operation you would use an <b>EVP_CIPHER_CTX</b>. The operation is then initialised ready for use via an &quot;init&quot; function - optionally passing in a set of parameters (using the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> type) to configure how the operation should behave. Next data is fed into the operation in a series of &quot;update&quot; calls. The operation is finalised using a &quot;final&quot; call which will typically provide some kind of output. Finally the context is cleaned up and freed.</p>
 
 <p>The following shows a complete example for doing this process for digesting data using SHA256. The process is similar for other operations such as encryption/decryption, signatures, message authentication codes, etc.</p>
 
@@ -296,6 +369,8 @@
       * we&#39;re not supplying any particular search criteria for our SHA256
       * implementation (second NULL parameter). Any SHA256 implementation will
       * do.
+      * In a larger application this fetch would just be done once, and could
+      * be used for multiple calls to other operations such as EVP_DigestInit_ex().
       */
      sha256 = EVP_MD_fetch(NULL, &quot;SHA256&quot;, NULL);
      if (sha256 == NULL)
@@ -371,7 +446,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

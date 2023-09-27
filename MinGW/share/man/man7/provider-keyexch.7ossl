@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-KEYEXCH 7ossl"
-.TH PROVIDER-KEYEXCH 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH PROVIDER-KEYEXCH 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -183,14 +183,14 @@ exchange algorithms and make them available to applications via
 other related functions).
 .PP
 All \*(L"functions\*(R" mentioned here are passed as function pointers between
-\&\fIlibcrypto\fR and the provider in \fB\s-1OSSL_DISPATCH\s0\fR arrays via
-\&\fB\s-1OSSL_ALGORITHM\s0\fR arrays that are returned by the provider's
+\&\fIlibcrypto\fR and the provider in \s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays via
+\&\s-1\fBOSSL_ALGORITHM\s0\fR\|(3) arrays that are returned by the provider's
 \&\fBprovider_query_operation()\fR function
 (see \*(L"Provider Functions\*(R" in \fBprovider\-base\fR\|(7)).
 .PP
 All these \*(L"functions\*(R" have a corresponding function type definition
 named \fBOSSL_FUNC_{name}_fn\fR, and a helper function to retrieve the
-function pointer from an \fB\s-1OSSL_DISPATCH\s0\fR element named
+function pointer from an \s-1\fBOSSL_DISPATCH\s0\fR\|(3) element named
 \&\fBOSSL_FUNC_{name}\fR.
 For example, the \*(L"function\*(R" \fBOSSL_FUNC_keyexch_newctx()\fR has these:
 .PP
@@ -200,7 +200,7 @@ For example, the \*(L"function\*(R" \fBOSSL_FUNC_keyexch_newctx()\fR has these:
 \&     OSSL_FUNC_keyexch_newctx(const OSSL_DISPATCH *opf);
 .Ve
 .PP
-\&\fB\s-1OSSL_DISPATCH\s0\fR arrays are indexed by numbers that are provided as
+\&\s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays are indexed by numbers that are provided as
 macros in \fBopenssl\-core_dispatch.h\fR\|(7), as follows:
 .PP
 .Vb 3
@@ -282,17 +282,16 @@ given provider side key exchange context \fIctx\fR into \fIparams\fR,
 see \*(L"Common Key Exchange parameters\*(R".
 Passing \s-1NULL\s0 for \fIparams\fR should return true.
 .PP
-\&\fBOSSL_FUNC_keyexch_settable_ctx_params()\fR yields a constant \fB\s-1OSSL_PARAM\s0\fR array that
+\&\fBOSSL_FUNC_keyexch_settable_ctx_params()\fR yields a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array that
 describes the settable parameters, i.e. parameters that can be used with
 \&\fBOP_signature_set_ctx_params()\fR.
 If \fBOSSL_FUNC_keyexch_settable_ctx_params()\fR is present, \fBOSSL_FUNC_keyexch_set_ctx_params()\fR must
 also be present, and vice versa.
-Similarly, \fBOSSL_FUNC_keyexch_gettable_ctx_params()\fR yields a constant \fB\s-1OSSL_PARAM\s0\fR
+Similarly, \fBOSSL_FUNC_keyexch_gettable_ctx_params()\fR yields a constant \s-1\fBOSSL_PARAM\s0\fR\|(3)
 array that describes the gettable parameters, i.e. parameters that can be
 handled by \fBOP_signature_get_ctx_params()\fR.
 If \fBOSSL_FUNC_keyexch_gettable_ctx_params()\fR is present, \fBOSSL_FUNC_keyexch_get_ctx_params()\fR must
 also be present, and vice versa.
-See \s-1\fBOSSL_PARAM\s0\fR\|(3) for the use of \fB\s-1OSSL_PARAM\s0\fR as parameter descriptor.
 .PP
 Notice that not all settable parameters are also gettable, and vice versa.
 .SS "Common Key Exchange parameters"
@@ -347,7 +346,7 @@ provider side key exchange context, or \s-1NULL\s0 on failure.
 or 0 on error.
 .PP
 \&\fBOSSL_FUNC_keyexch_settable_ctx_params()\fR and \fBOSSL_FUNC_keyexch_gettable_ctx_params()\fR should
-always return a constant \fB\s-1OSSL_PARAM\s0\fR array.
+always return a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBprovider\fR\|(7)

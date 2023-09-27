@@ -29,6 +29,7 @@
       <li><a href="#Asymmetric-Cipher">Asymmetric Cipher</a></li>
       <li><a href="#Asymmetric-Key-Encapsulation">Asymmetric Key Encapsulation</a></li>
       <li><a href="#Asymmetric-Key-Management">Asymmetric Key Management</a></li>
+      <li><a href="#Random-Number-Generation">Random Number Generation</a></li>
       <li><a href="#Asymmetric-Key-Encoder">Asymmetric Key Encoder</a></li>
     </ul>
   </li>
@@ -113,6 +114,10 @@
 <dd>
 
 </dd>
+<dt id="NULL-see-EVP_MD-NULL-7">NULL, see <a href="../man7/EVP_MD-NULL.html">EVP_MD-NULL(7)</a></dt>
+<dd>
+
+</dd>
 </dl>
 
 <h2 id="Symmetric-Ciphers">Symmetric Ciphers</h2>
@@ -148,6 +153,10 @@
 
 </dd>
 <dt id="ChaCha20-Poly1305-see-EVP_CIPHER-CHACHA-7">ChaCha20-Poly1305, see <a href="../man7/EVP_CIPHER-CHACHA.html">EVP_CIPHER-CHACHA(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="NULL-see-EVP_CIPHER-NULL-7">NULL, see <a href="../man7/EVP_CIPHER-NULL.html">EVP_CIPHER-NULL(7)</a></dt>
 <dd>
 
 </dd>
@@ -351,6 +360,32 @@
 </dd>
 </dl>
 
+<h2 id="Random-Number-Generation">Random Number Generation</h2>
+
+<dl>
+
+<dt id="CTR-DRBG-see-EVP_RAND-CTR-DRBG-7">CTR-DRBG, see <a href="../man7/EVP_RAND-CTR-DRBG.html">EVP_RAND-CTR-DRBG(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="HASH-DRBG-see-EVP_RAND-HASH-DRBG-7">HASH-DRBG, see <a href="../man7/EVP_RAND-HASH-DRBG.html">EVP_RAND-HASH-DRBG(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="HMAC-DRBG-see-EVP_RAND-HMAC-DRBG-7">HMAC-DRBG, see <a href="../man7/EVP_RAND-HMAC-DRBG.html">EVP_RAND-HMAC-DRBG(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="SEED-SRC-see-EVP_RAND-SEED-SRC-7">SEED-SRC, see <a href="../man7/EVP_RAND-SEED-SRC.html">EVP_RAND-SEED-SRC(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="TEST-RAND-see-EVP_RAND-TEST-RAND-7">TEST-RAND, see <a href="../man7/EVP_RAND-TEST-RAND.html">EVP_RAND-TEST-RAND(7)</a></dt>
+<dd>
+
+</dd>
+</dl>
+
 <h2 id="Asymmetric-Key-Encoder">Asymmetric Key Encoder</h2>
 
 <p>The default provider also includes all of the encoding algorithms present in the base provider. Some of these have the property &quot;fips=yes&quot;, to allow them to be used together with the FIPS provider.</p>
@@ -391,9 +426,11 @@
 
 <p>The RIPEMD160 digest was added to the default provider in OpenSSL 3.0.7.</p>
 
+<p>All other functionality was added in OpenSSL 3.0.</p>
+
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

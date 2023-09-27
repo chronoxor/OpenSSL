@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_PKEY_CTX_CTRL 3ossl"
-.TH EVP_PKEY_CTX_CTRL 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH EVP_PKEY_CTX_CTRL 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -408,8 +408,8 @@ buffer is expected to be the algorithm identifier byte.
 .PP
 \&\fBEVP_PKEY_CTX_set_rsa_pss_saltlen()\fR sets the \s-1RSA PSS\s0 salt length to \fIsaltlen\fR.
 As its name implies it is only supported for \s-1PSS\s0 padding. If this function is
-not called then the maximum salt length is used when signing and auto detection
-when verifying. Three special values are supported:
+not called then the salt length is maximized up to the digest length when
+signing and auto detection when verifying. Four special values are supported:
 .IP "\fB\s-1RSA_PSS_SALTLEN_DIGEST\s0\fR" 4
 .IX Item "RSA_PSS_SALTLEN_DIGEST"
 sets the salt length to the digest length.
@@ -421,6 +421,12 @@ sets the salt length to the maximum permissible value.
 causes the salt length to be automatically determined based on the
 \&\fB\s-1PSS\s0\fR block structure when verifying.  When signing, it has the same
 meaning as \fB\s-1RSA_PSS_SALTLEN_MAX\s0\fR.
+.IP "\fB\s-1RSA_PSS_SALTLEN_AUTO_DIGEST_MAX\s0\fR" 4
+.IX Item "RSA_PSS_SALTLEN_AUTO_DIGEST_MAX"
+causes the salt length to be automatically determined based on the \fB\s-1PSS\s0\fR block
+structure when verifying, like \fB\s-1RSA_PSS_SALTLEN_AUTO\s0\fR.  When signing, the salt
+length is maximized up to a maximum of the digest length to comply with \s-1FIPS
+186\-4\s0 section 5.5.
 .PP
 \&\fBEVP_PKEY_CTX_get_rsa_pss_saltlen()\fR gets the \s-1RSA PSS\s0 salt length for \fIctx\fR.
 The padding mode must already have been set to \fB\s-1RSA_PKCS1_PSS_PADDING\s0\fR.
@@ -792,7 +798,7 @@ From OpenSSL 3.0 they are all functions.
 and \fBEVP_PKEY_CTX_get0_ecdh_kdf_ukm()\fR were deprecated in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2006\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2006\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

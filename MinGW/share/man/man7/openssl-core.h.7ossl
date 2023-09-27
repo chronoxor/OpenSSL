@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-CORE.H 7ossl"
-.TH OPENSSL-CORE.H 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OPENSSL-CORE.H 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -154,94 +154,20 @@ These types are designed to minimise the need for intimate knowledge
 of internal structures between the OpenSSL libraries and the providers.
 .PP
 The types are:
-.IP "\fB\s-1OSSL_DISPATCH\s0\fR" 4
+.IP "\s-1\fBOSSL_DISPATCH\s0\fR\|(3)" 4
 .IX Item "OSSL_DISPATCH"
-This type is a tuple of function identity and function pointer.
-Arrays of this type are passed between the OpenSSL libraries and the
-providers to describe what functionality one side provides to the
-other.
-Arrays of this type must be terminated with a tuple having function
-identity zero and function pointer \s-1NULL.\s0
-.Sp
-The available function identities and corresponding function
-signatures are defined in \fBopenssl\-core_dispatch.h\fR\|(7).
-.Sp
-Any function identity not recognised by the recipient of this type
-will be ignored.
-This ensures that providers built with one OpenSSL version in mind
-will work together with any other OpenSSL version that supports this
-mechanism.
-.IP "\fB\s-1OSSL_ITEM\s0\fR" 4
+.PD 0
+.IP "\s-1\fBOSSL_ITEM\s0\fR\|(3)" 4
 .IX Item "OSSL_ITEM"
-This type is a tuple of integer and pointer.
-It's a generic type used as a generic descriptor, its exact meaning
-being defined by how it's used.
-Arrays of this type are passed between the OpenSSL libraries and the
-providers, and must be terminated with a tuple where the integer is
-zero and the pointer \s-1NULL.\s0
-.IP "\fB\s-1OSSL_ALGORITHM\s0\fR" 4
+.IP "\s-1\fBOSSL_ALGORITHM\s0\fR\|(3)" 4
 .IX Item "OSSL_ALGORITHM"
-This type is a tuple of an algorithm name (string), a property
-definition (string) and a dispatch table (array of \fB\s-1OSSL_DISPATCH\s0\fR).
-Arrays of this type are passed on demand from the providers to the
-OpenSSL libraries to describe what algorithms the providers provide
-implementations of, and with what properties.
-Arrays of this type must be terminated with a tuple having function
-identity zero and function pointer \s-1NULL.\s0
-.Sp
-The algorithm names and property definitions are defined by the
-providers.
-.Sp
-The OpenSSL libraries use the first of the algorithm names as the main
-or canonical name, on a per algorithm implementation basis.
-.IP "\fB\s-1OSSL_PARAM\s0\fR" 4
+.IP "\s-1\fBOSSL_PARAM\s0\fR\|(3)" 4
 .IX Item "OSSL_PARAM"
-This type is a structure that allows passing arbitrary object data
-between two parties that have no or very little shared knowledge about
-their respective internal structures for that object.
-It's normally passed in arrays, where the array is terminated with an
-element where all fields are zero (for non-pointers) or \s-1NULL\s0 (for
-pointers).
-.Sp
-These arrays can be used to set parameters for some object, to request
-parameters, and to describe parameters.
-.Sp
-\&\fB\s-1OSSL_PARAM\s0\fR is further described in \s-1\fBOSSL_PARAM\s0\fR\|(3)
-.IP "\fB\s-1OSSL_CALLBACK\s0\fR" 4
+.IP "\s-1\fBOSSL_CALLBACK\s0\fR\|(3)" 4
 .IX Item "OSSL_CALLBACK"
-This is a function type for a generic feedback callback function:
-.Sp
-.Vb 1
-\&    typedef int (OSSL_CALLBACK)(const OSSL_PARAM params[], void *arg);
-.Ve
-.Sp
-A function that takes a pointer of this type should also take a
-pointer to caller data.  When calling this callback, the function is
-expected to build an \fB\s-1OSSL_PARAM\s0\fR array of data it wants or is
-expected to pass back, and pass that as \fIparams\fR, as well as
-the caller data pointer it received, as \fIarg\fR.
-.IP "\fB\s-1OSSL_PASSPHRASE_CALLBACK\s0\fR" 4
+.IP "\s-1\fBOSSL_PASSPHRASE_CALLBACK\s0\fR\|(3)" 4
 .IX Item "OSSL_PASSPHRASE_CALLBACK"
-This is a function type for a generic pass phrase callback function:
-.Sp
-.Vb 4
-\&    typedef int (OSSL_PASSPHRASE_CALLBACK)(char *pass, size_t pass_size,
-\&                                           size_t *pass_len,
-\&                                           const OSSL_PARAM params[],
-\&                                           void *arg);
-.Ve
-.Sp
-This callback can be used to prompt the user for a passphrase.  When
-calling it, a buffer to store the pass phrase needs to be given with
-\&\fIpass\fR, and its size with \fIpass_size\fR.  The length of the prompted
-pass phrase will be given back in \fI*pass_len\fR.
-.Sp
-Additional parameters can be passed with the \fB\s-1OSSL_PARAM\s0\fR array
-\&\fIparams\fR.
-.Sp
-A function that takes a pointer of this type should also take a
-pointer to caller data, which should be passed as \fIarg\fR to this
-callback.
+.PD
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBopenssl\-core_dispatch.h\fR\|(7)
@@ -250,7 +176,7 @@ callback.
 The types described here were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

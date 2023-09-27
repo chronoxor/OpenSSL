@@ -72,7 +72,7 @@
 
 <h2 id="Functions">Functions</h2>
 
-<p>OSSL_STORE_open_ex() takes a uri or path <i>uri</i>, password UI method <i>ui_method</i> with associated data <i>ui_data</i>, and post processing callback <i>post_process</i> with associated data <i>post_process_data</i>, a library context <i>libctx</i> with an associated property query <i>propq</i>, and opens a channel to the data located at the URI and returns a <b>OSSL_STORE_CTX</b> with all necessary internal information. The given <i>ui_method</i> and <i>ui_data</i> will be reused by all functions that use <b>OSSL_STORE_CTX</b> when interaction is needed, for instance to provide a password. The auxiliary <b>OSSL_PARAM</b> parameters in <i>params</i> can be set to further modify the store operation. The given <i>post_process</i> and <i>post_process_data</i> will be reused by OSSL_STORE_load() to manipulate or drop the value to be returned. The <i>post_process</i> function drops values by returning NULL, which will cause OSSL_STORE_load() to start its process over with loading the next object, until <i>post_process</i> returns something other than NULL, or the end of data is reached as indicated by OSSL_STORE_eof().</p>
+<p>OSSL_STORE_open_ex() takes a uri or path <i>uri</i>, password UI method <i>ui_method</i> with associated data <i>ui_data</i>, and post processing callback <i>post_process</i> with associated data <i>post_process_data</i>, a library context <i>libctx</i> with an associated property query <i>propq</i>, and opens a channel to the data located at the URI and returns a <b>OSSL_STORE_CTX</b> with all necessary internal information. The given <i>ui_method</i> and <i>ui_data</i> will be reused by all functions that use <b>OSSL_STORE_CTX</b> when interaction is needed, for instance to provide a password. The auxiliary <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> parameters in <i>params</i> can be set to further modify the store operation. The given <i>post_process</i> and <i>post_process_data</i> will be reused by OSSL_STORE_load() to manipulate or drop the value to be returned. The <i>post_process</i> function drops values by returning NULL, which will cause OSSL_STORE_load() to start its process over with loading the next object, until <i>post_process</i> returns something other than NULL, or the end of data is reached as indicated by OSSL_STORE_eof().</p>
 
 <p>OSSL_STORE_open() is similar to OSSL_STORE_open_ex() but uses NULL for the <i>params</i>, the library context <i>libctx</i> and property query <i>propq</i>.</p>
 
@@ -136,7 +136,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2016-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2016-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -61,16 +61,16 @@
 
 <p>Examples of functions that the OpenSSL library can pass the abstraction to include OSSL_FUNC_keymgmt_load() (<a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>), OSSL_FUNC_store_export_object() (which exports the object in parameterized form).</p>
 
-<p>All &quot;functions&quot; mentioned here are passed as function pointers between <i>libcrypto</i> and the provider in <b>OSSL_DISPATCH</b> arrays via <b>OSSL_ALGORITHM</b> arrays that are returned by the provider&#39;s provider_query_operation() function (see <a href="../man7/provider-base.html">&quot;Provider Functions&quot; in provider-base(7)</a>).</p>
+<p>All &quot;functions&quot; mentioned here are passed as function pointers between <i>libcrypto</i> and the provider in <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> arrays via <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a> arrays that are returned by the provider&#39;s provider_query_operation() function (see <a href="../man7/provider-base.html">&quot;Provider Functions&quot; in provider-base(7)</a>).</p>
 
-<p>All these &quot;functions&quot; have a corresponding function type definition named <b>OSSL_FUNC_{name}_fn</b>, and a helper function to retrieve the function pointer from a <b>OSSL_DISPATCH</b> element named <b>OSSL_get_{name}</b>. For example, the &quot;function&quot; OSSL_FUNC_store_attach() has these:</p>
+<p>All these &quot;functions&quot; have a corresponding function type definition named <b>OSSL_FUNC_{name}_fn</b>, and a helper function to retrieve the function pointer from a <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> element named <b>OSSL_get_{name}</b>. For example, the &quot;function&quot; OSSL_FUNC_store_attach() has these:</p>
 
 <pre><code> typedef void *(OSSL_FUNC_store_attach_fn)(void *provctx,
                                            OSSL_CORE_BIO * bio);
  static ossl_inline OSSL_FUNC_store_attach_fn
      OSSL_FUNC_store_attach(const OSSL_DISPATCH *opf);</code></pre>
 
-<p><b>OSSL_DISPATCH</b> arrays are indexed by numbers that are provided as macros in <a href="../man7/openssl-core_dispatch.h.html">openssl-core_dispatch.h(7)</a>, as follows:</p>
+<p><a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> arrays are indexed by numbers that are provided as macros in <a href="../man7/openssl-core_dispatch.h.html">openssl-core_dispatch.h(7)</a>, as follows:</p>
 
 <pre><code> OSSL_FUNC_store_open                 OSSL_FUNC_STORE_OPEN
  OSSL_FUNC_store_attach               OSSL_FUNC_STORE_ATTACH
@@ -87,7 +87,7 @@
 
 <p>OSSL_FUNC_store_attach() should create a provider side context with the core <b>BIO</b> <i>bio</i> attached. This is an alternative to using a URI to find storage, supporting <a href="../man3/OSSL_STORE_attach.html">OSSL_STORE_attach(3)</a>.</p>
 
-<p>OSSL_FUNC_store_settable_ctx_params() should return a constant array of descriptor <b>OSSL_PARAM</b>, for parameters that OSSL_FUNC_store_set_ctx_params() can handle.</p>
+<p>OSSL_FUNC_store_settable_ctx_params() should return a constant array of descriptor <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a>, for parameters that OSSL_FUNC_store_set_ctx_params() can handle.</p>
 
 <p>OSSL_FUNC_store_set_ctx_params() should set additional parameters, such as what kind of data to expect, search criteria, and so on. More on those below, in <a href="#Load-Parameters">&quot;Load Parameters&quot;</a>. Whether unrecognised parameters are an error or simply ignored is at the implementation&#39;s discretion. Passing NULL for <i>params</i> should return true.</p>
 
@@ -99,7 +99,7 @@
 
 <p>When a provider-native object is created by a store manager it would be unsuitable for direct use with a foreign provider. The export function allows for exporting the object to that foreign provider if the foreign provider supports the type of the object and provides an import function.</p>
 
-<p>OSSL_FUNC_store_export_object() should export the object of size <i>objref_sz</i> referenced by <i>objref</i> as an <b>OSSL_PARAM</b> array and pass that to the <i>export_cb</i> as well as the given <i>export_cbarg</i>.</p>
+<p>OSSL_FUNC_store_export_object() should export the object of size <i>objref_sz</i> referenced by <i>objref</i> as an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array and pass that to the <i>export_cb</i> as well as the given <i>export_cbarg</i>.</p>
 
 <h2 id="Load-Parameters">Load Parameters</h2>
 

@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_PKEY-RSA 7ossl"
-.TH EVP_PKEY-RSA 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH EVP_PKEY-RSA 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -156,15 +156,18 @@ supports the following.
 .ie n .IP """n"" (\fB\s-1OSSL_PKEY_PARAM_RSA_N\s0\fR) <unsigned integer>" 4
 .el .IP "``n'' (\fB\s-1OSSL_PKEY_PARAM_RSA_N\s0\fR) <unsigned integer>" 4
 .IX Item "n (OSSL_PKEY_PARAM_RSA_N) <unsigned integer>"
-The \s-1RSA\s0 \*(L"n\*(R" value.
+The \s-1RSA\s0 modulus \*(L"n\*(R" value.
 .ie n .IP """e"" (\fB\s-1OSSL_PKEY_PARAM_RSA_E\s0\fR) <unsigned integer>" 4
 .el .IP "``e'' (\fB\s-1OSSL_PKEY_PARAM_RSA_E\s0\fR) <unsigned integer>" 4
 .IX Item "e (OSSL_PKEY_PARAM_RSA_E) <unsigned integer>"
-The \s-1RSA\s0 \*(L"e\*(R" value.
+The \s-1RSA\s0 public exponent \*(L"e\*(R" value.
+This value must always be set when creating a raw key using \fBEVP_PKEY_fromdata\fR\|(3).
+Note that when a decryption operation is performed, that this value is used for
+blinding purposes to prevent timing attacks.
 .ie n .IP """d"" (\fB\s-1OSSL_PKEY_PARAM_RSA_D\s0\fR) <unsigned integer>" 4
 .el .IP "``d'' (\fB\s-1OSSL_PKEY_PARAM_RSA_D\s0\fR) <unsigned integer>" 4
 .IX Item "d (OSSL_PKEY_PARAM_RSA_D) <unsigned integer>"
-The \s-1RSA\s0 \*(L"d\*(R" value.
+The \s-1RSA\s0 private exponent \*(L"d\*(R" value.
 .ie n .IP """rsa\-factor1"" (\fB\s-1OSSL_PKEY_PARAM_RSA_FACTOR1\s0\fR) <unsigned integer>" 4
 .el .IP "``rsa\-factor1'' (\fB\s-1OSSL_PKEY_PARAM_RSA_FACTOR1\s0\fR) <unsigned integer>" 4
 .IX Item "rsa-factor1 (OSSL_PKEY_PARAM_RSA_FACTOR1) <unsigned integer>"
@@ -346,7 +349,7 @@ both return 1 unconditionally.
 .PP
 For \s-1RSA\s0 keys, \fBEVP_PKEY_public_check\fR\|(3) conforms to the SP800\-56Br1 \fIpublic key
 check\fR when the OpenSSL \s-1FIPS\s0 provider is used. The OpenSSL default provider
-performs similiar tests but relaxes the keysize restrictions for backwards
+performs similar tests but relaxes the keysize restrictions for backwards
 compatibility.
 .PP
 For \s-1RSA\s0 keys, \fBEVP_PKEY_public_check_quick\fR\|(3) is the same as
@@ -418,7 +421,7 @@ An \fB\s-1RSA\s0\fR key can be generated with key generation parameters:
 \&\fBEVP_RSA_gen\fR\|(3), \s-1\fBEVP_KEYMGMT\s0\fR\|(3), \s-1\fBEVP_PKEY\s0\fR\|(3), \fBprovider\-keymgmt\fR\|(7)
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2020\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2020\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

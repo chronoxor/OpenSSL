@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_HTTP_REQ_CTX 3ossl"
-.TH OSSL_HTTP_REQ_CTX 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_HTTP_REQ_CTX 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -209,12 +209,16 @@ which collects the \s-1HTTP\s0 request header lines.
 \&\fBOSSL_HTTP_REQ_CTX_free()\fR frees up the \s-1HTTP\s0 request context \fIrctx\fR.
 The \fIrbio\fR is not free'd, \fIwbio\fR will be free'd if \fIfree_wbio\fR is set.
 .PP
-\&\fBOSSL_HTTP_REQ_CTX_set_request_line()\fR adds the \s-1HTTP\s0 request line to the context.
+\&\fBOSSL_HTTP_REQ_CTX_set_request_line()\fR adds the 1st \s-1HTTP\s0 request line to \fIrctx\fR.
 The \s-1HTTP\s0 method is determined by \fImethod_POST\fR,
 which should be 1 to indicate \f(CW\*(C`POST\*(C'\fR or 0 to indicate \f(CW\*(C`GET\*(C'\fR.
-\&\fIserver\fR and \fIport\fR may be set to indicate a proxy server and port
-that the request should go through, otherwise they should be left \s-1NULL.\s0
-\&\fIpath\fR is the \s-1HTTP\s0 request path; if left \s-1NULL,\s0 \f(CW\*(C`/\*(C'\fR is used.
+\&\fIserver\fR and \fIport\fR may be set to give the server and the optional port that
+an \s-1HTTP\s0 proxy shall forward the request to, otherwise they must be left \s-1NULL.\s0
+\&\fIpath\fR provides the \s-1HTTP\s0 request path; if left \s-1NULL,\s0 \f(CW\*(C`/\*(C'\fR is used.
+For backward compatibility, \fIpath\fR may begin with \f(CW\*(C`http://\*(C'\fR and thus convey
+an absoluteURI. In this case it indicates \s-1HTTP\s0 proxy use and provides also the
+server (and optionally the port) that the proxy shall forward the request to.
+In this case the \fIserver\fR and \fIport\fR arguments must be \s-1NULL.\s0
 .PP
 \&\fBOSSL_HTTP_REQ_CTX_add1_header()\fR adds header \fIname\fR with value \fIvalue\fR to the
 context \fIrctx\fR. It can be called more than once to add multiple header lines.
@@ -272,7 +276,7 @@ The function may need to be called again if its result is \-1, which indicates
 \&\fBBIO_should_retry\fR\|(3).  In such a case it is advisable to sleep a little in
 between, using \fBBIO_wait\fR\|(3) on the read \s-1BIO\s0 to prevent a busy loop.
 .PP
-\&\fBOSSL_HTTP_REQ_CTX_nbio_d2i()\fR is like \fBOSSL_HTTP_REQ_CTX_nbio()\fR but on successs
+\&\fBOSSL_HTTP_REQ_CTX_nbio_d2i()\fR is like \fBOSSL_HTTP_REQ_CTX_nbio()\fR but on success
 in addition parses the response, which must be a DER-encoded \s-1ASN.1\s0 structure,
 using the \s-1ASN.1\s0 template \fIit\fR and places the result in \fI*pval\fR.
 .PP
@@ -340,6 +344,12 @@ This may be omitted if the \s-1GET\s0 method is used and \*(L"keep-alive\*(R" is
 .PP
 When the request context is fully prepared, the \s-1HTTP\s0 exchange may be performed
 with \fBOSSL_HTTP_REQ_CTX_nbio()\fR or \fBOSSL_HTTP_REQ_CTX_exchange()\fR.
+.SH "NOTES"
+.IX Header "NOTES"
+When built with tracing enabled, \fBOSSL_HTTP_REQ_CTX_nbio()\fR and all functions
+using it, such as \fBOSSL_HTTP_REQ_CTX_exchange()\fR and \fBOSSL_HTTP_transfer\fR\|(3),
+may be traced using \fB\s-1OSSL_TRACE_CATEGORY_HTTP\s0\fR.
+See also \fBOSSL_trace_enabled\fR\|(3) and \*(L"\s-1ENVIRONMENT\*(R"\s0 in \fBopenssl\fR\|(1).
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\fBOSSL_HTTP_REQ_CTX_new()\fR returns a pointer to a \fB\s-1OSSL_HTTP_REQ_CTX\s0\fR, or \s-1NULL\s0
@@ -374,13 +384,14 @@ and the server did not disagree on keeping the connection open, else 0.
 \&\fBOSSL_HTTP_open\fR\|(3),
 \&\fBOSSL_HTTP_get\fR\|(3),
 \&\fBOSSL_HTTP_transfer\fR\|(3),
-\&\fBOSSL_HTTP_close\fR\|(3)
+\&\fBOSSL_HTTP_close\fR\|(3),
+\&\fBOSSL_trace_enabled\fR\|(3)
 .SH "HISTORY"
 .IX Header "HISTORY"
 The functions described here were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2015\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2015\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

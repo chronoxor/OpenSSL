@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "X509V3_GET_EXT_BY_NID 3ossl"
-.TH X509V3_GET_EXT_BY_NID 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH X509V3_GET_EXT_BY_NID 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -256,13 +256,15 @@ They return an \fBX509_EXTENSION\fR object which must be explicitly freed
 using \fBX509_EXTENSION_free()\fR.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
-\&\fBX509v3_get_ext_count()\fR returns the extension count.
+\&\fBX509v3_get_ext_count()\fR returns the extension count or 0 for failure.
 .PP
 \&\fBX509v3_get_ext()\fR, \fBX509v3_delete_ext()\fR and \fBX509_delete_ext()\fR return an
 \&\fBX509_EXTENSION\fR structure or \s-1NULL\s0 if an error occurs.
 .PP
-\&\fBX509v3_get_ext_by_NID()\fR, \fBX509v3_get_ext_by_OBJ()\fR and
-\&\fBX509v3_get_ext_by_critical()\fR return the extension index or \-1 if an
+\&\fBX509v3_get_ext_by_OBJ()\fR and \fBX509v3_get_ext_by_critical()\fR return
+the extension index or \-1 if an error occurs.
+.PP
+\&\fBX509v3_get_ext_by_NID()\fR returns the extension index or negative values if an
 error occurs.
 .PP
 \&\fBX509v3_add_ext()\fR returns a \s-1STACK\s0 of extensions or \s-1NULL\s0 on error.

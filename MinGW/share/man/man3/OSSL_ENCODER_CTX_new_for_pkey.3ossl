@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_ENCODER_CTX_NEW_FOR_PKEY 3ossl"
-.TH OSSL_ENCODER_CTX_NEW_FOR_PKEY 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_ENCODER_CTX_NEW_FOR_PKEY 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -215,8 +215,8 @@ following functions.
 \&\fBOSSL_ENCODER_CTX_set_pem_password_cb()\fR, \fBOSSL_ENCODER_CTX_set_passphrase_ui()\fR
 and \fBOSSL_ENCODER_CTX_set_passphrase_cb()\fR sets up a callback method that the
 implementation can use to prompt for a pass phrase, giving the caller the
-choice of prefered pass phrase callback form.  These are called indirectly,
-through an internal \fB\s-1OSSL_PASSPHRASE_CALLBACK\s0\fR function.
+choice of preferred pass phrase callback form.  These are called indirectly,
+through an internal \s-1\fBOSSL_PASSPHRASE_CALLBACK\s0\fR\|(3) function.
 .SS "Output types"
 .IX Subsection "Output types"
 The possible \fB\s-1EVP_PKEY\s0\fR output types depends on the available
@@ -263,7 +263,7 @@ failure.
 The functions described here were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

@@ -73,7 +73,7 @@
 
 <p>EVP_PKEY_get_base_id() returns the type of <i>pkey</i>. For example an RSA key will return <b>EVP_PKEY_RSA</b>.</p>
 
-<p>EVP_PKEY_get_id() returns the actual OID associated with <i>pkey</i>. Historically keys using the same algorithm could use different OIDs. For example an RSA key could use the OIDs corresponding to the NIDs <b>NID_rsaEncryption</b> (equivalent to <b>EVP_PKEY_RSA</b>) or <b>NID_rsa</b> (equivalent to <b>EVP_PKEY_RSA2</b>). The use of alternative non-standard OIDs is now rare so <b>EVP_PKEY_RSA2</b> et al are not often seen in practice.</p>
+<p>EVP_PKEY_get_id() returns the actual NID associated with <i>pkey</i> only if the <i>pkey</i> type isn&#39;t implemented just in a <a href="../man7/provider.html">provider(7)</a>. Historically keys using the same algorithm could use different NIDs. For example an RSA key could use the NIDs corresponding to the NIDs <b>NID_rsaEncryption</b> (equivalent to <b>EVP_PKEY_RSA</b>) or <b>NID_rsa</b> (equivalent to <b>EVP_PKEY_RSA2</b>). The use of alternative non-standard NIDs is now rare so <b>EVP_PKEY_RSA2</b> et al are not often seen in practice. EVP_PKEY_get_id() returns -1 (<b>EVP_PKEY_KEYMGMT</b>) if the <i>pkey</i> is only implemented in a <a href="../man7/provider.html">provider(7)</a>.</p>
 
 <p>EVP_PKEY_type() returns the underlying type of the NID <i>type</i>. For example EVP_PKEY_type(EVP_PKEY_RSA2) will return <b>EVP_PKEY_RSA</b>.</p>
 
@@ -98,6 +98,8 @@
 <p>EVP_PKEY_get_id(), EVP_PKEY_get_base_id(), EVP_PKEY_type()</p>
 
 <p>For EVP_PKEY key type checking purposes, <a href="../man3/EVP_PKEY_is_a.html">EVP_PKEY_is_a(3)</a> is more generic.</p>
+
+<p>For purposes of retrieving the name of the <b>EVP_PKEY</b> the function <a href="../man3/EVP_PKEY_get0_type_name.html">EVP_PKEY_get0_type_name(3)</a> is more generally useful.</p>
 
 <p>The keys returned from the functions EVP_PKEY_get0_RSA(), EVP_PKEY_get0_DSA(), EVP_PKEY_get0_DH() and EVP_PKEY_get0_EC_KEY() were changed to have a &quot;const&quot; return type in OpenSSL 3.0. As described above the keys returned may be cached copies of the key held in a provider. Due to this, and unlike in earlier versions of OpenSSL, they should be considered read-only copies of the key. Updates to these keys will not be reflected back in the provider side key. The EVP_PKEY_get1_RSA(), EVP_PKEY_get1_DSA(), EVP_PKEY_get1_DH() and EVP_PKEY_get1_EC_KEY() functions were not changed to have a &quot;const&quot; return type in order that applications can &quot;free&quot; the return value. However applications should still consider them as read-only copies.</p>
 
@@ -143,7 +145,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2002-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2002-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

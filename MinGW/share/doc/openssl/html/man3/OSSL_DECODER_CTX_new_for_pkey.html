@@ -57,7 +57,7 @@ int OSSL_DECODER_CTX_set_passphrase_cb(OSSL_DECODER_CTX *ctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>OSSL_DECODER_CTX_new_for_pkey() is a utility function that creates a <b>OSSL_DECODER_CTX</b>, finds all applicable decoder implementations and sets them up, so all the caller has to do next is call functions like <a href="../man3/OSSL_DECODER_from_bio.html">OSSL_DECODER_from_bio(3)</a>. The caller may use the optional <i>input_type</i>, <i>input_struct</i>, <i>keytype</i> and <i>selection</i> to specify what the input is expected to contain. The <i>pkey</i> must reference an <b>EVP_PKEY *</b> variable that will be set to the newly created <b>EVP_PKEY</b> on succesfull decoding. The referenced variable must be initialized to NULL before calling the function.</p>
+<p>OSSL_DECODER_CTX_new_for_pkey() is a utility function that creates a <b>OSSL_DECODER_CTX</b>, finds all applicable decoder implementations and sets them up, so all the caller has to do next is call functions like <a href="../man3/OSSL_DECODER_from_bio.html">OSSL_DECODER_from_bio(3)</a>. The caller may use the optional <i>input_type</i>, <i>input_struct</i>, <i>keytype</i> and <i>selection</i> to specify what the input is expected to contain. The <i>pkey</i> must reference an <b>EVP_PKEY *</b> variable that will be set to the newly created <b>EVP_PKEY</b> on successful decoding. The referenced variable must be initialized to NULL before calling the function.</p>
 
 <p>Internally OSSL_DECODER_CTX_new_for_pkey() searches for all available <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a> implementations, and then builds a list of all potential decoder implementations that may be able to process the encoded input into data suitable for <b>EVP_PKEY</b>s. All these implementations are implicitly fetched using <i>libctx</i> and <i>propquery</i>.</p>
 
@@ -69,9 +69,9 @@ int OSSL_DECODER_CTX_set_passphrase_cb(OSSL_DECODER_CTX *ctx,
 
 <p>OSSL_DECODER_CTX_set_passphrase() gives the implementation a pass phrase to use when decrypting the encoded private key. Alternatively, a pass phrase callback may be specified with the following functions.</p>
 
-<p>OSSL_DECODER_CTX_set_pem_password_cb(), OSSL_DECODER_CTX_set_passphrase_ui() and OSSL_DECODER_CTX_set_passphrase_cb() set up a callback method that the implementation can use to prompt for a pass phrase, giving the caller the choice of prefered pass phrase callback form. These are called indirectly, through an internal <b>OSSL_PASSPHRASE_CALLBACK</b> function.</p>
+<p>OSSL_DECODER_CTX_set_pem_password_cb(), OSSL_DECODER_CTX_set_passphrase_ui() and OSSL_DECODER_CTX_set_passphrase_cb() set up a callback method that the implementation can use to prompt for a pass phrase, giving the caller the choice of preferred pass phrase callback form. These are called indirectly, through an internal <a href="../man3/OSSL_PASSPHRASE_CALLBACK.html">OSSL_PASSPHRASE_CALLBACK(3)</a> function.</p>
 
-<p>The internal <b>OSSL_PASSPHRASE_CALLBACK</b> function caches the pass phrase, to be re-used in all decodings that are performed in the same decoding run (for example, within one <a href="../man3/OSSL_DECODER_from_bio.html">OSSL_DECODER_from_bio(3)</a> call).</p>
+<p>The internal <a href="../man3/OSSL_PASSPHRASE_CALLBACK.html">OSSL_PASSPHRASE_CALLBACK(3)</a> function caches the pass phrase, to be re-used in all decodings that are performed in the same decoding run (for example, within one <a href="../man3/OSSL_DECODER_from_bio.html">OSSL_DECODER_from_bio(3)</a> call).</p>
 
 <h2 id="Input-Types">Input Types</h2>
 
@@ -107,7 +107,7 @@ int OSSL_DECODER_CTX_set_passphrase_cb(OSSL_DECODER_CTX *ctx,
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-SIGNATURE 7ossl"
-.TH PROVIDER-SIGNATURE 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH PROVIDER-SIGNATURE 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -185,7 +185,7 @@ provider\-signature \- The signature library <\-> provider functions
 \& int OSSL_FUNC_signature_digest_sign_final(void *ctx, unsigned char *sig,
 \&                                           size_t *siglen, size_t sigsize);
 \& int OSSL_FUNC_signature_digest_sign(void *ctx,
-\&                              unsigned char *sigret, size_t *siglen,
+\&                              unsigned char *sig, size_t *siglen,
 \&                              size_t sigsize, const unsigned char *tbs,
 \&                              size_t tbslen);
 \&
@@ -228,14 +228,14 @@ and \fBEVP_PKEY_verify_recover\fR\|(3) (as well
 as other related functions).
 .PP
 All \*(L"functions\*(R" mentioned here are passed as function pointers between
-\&\fIlibcrypto\fR and the provider in \fB\s-1OSSL_DISPATCH\s0\fR arrays via
-\&\fB\s-1OSSL_ALGORITHM\s0\fR arrays that are returned by the provider's
+\&\fIlibcrypto\fR and the provider in \s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays via
+\&\s-1\fBOSSL_ALGORITHM\s0\fR\|(3) arrays that are returned by the provider's
 \&\fBprovider_query_operation()\fR function
 (see \*(L"Provider Functions\*(R" in \fBprovider\-base\fR\|(7)).
 .PP
 All these \*(L"functions\*(R" have a corresponding function type definition
 named \fBOSSL_FUNC_{name}_fn\fR, and a helper function to retrieve the
-function pointer from an \fB\s-1OSSL_DISPATCH\s0\fR element named
+function pointer from an \s-1\fBOSSL_DISPATCH\s0\fR\|(3) element named
 \&\fBOSSL_FUNC_{name}\fR.
 For example, the \*(L"function\*(R" \fBOSSL_FUNC_signature_newctx()\fR has these:
 .PP
@@ -245,7 +245,7 @@ For example, the \*(L"function\*(R" \fBOSSL_FUNC_signature_newctx()\fR has these
 \&     OSSL_FUNC_signature_newctx(const OSSL_DISPATCH *opf);
 .Ve
 .PP
-\&\fB\s-1OSSL_DISPATCH\s0\fR arrays are indexed by numbers that are provided as
+\&\s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays are indexed by numbers that are provided as
 macros in \fBopenssl\-core_dispatch.h\fR\|(7), as follows:
 .PP
 .Vb 3
@@ -292,8 +292,8 @@ set of \*(L"signature\*(R" functions, i.e. at least one of:
 .PD 0
 .IP "OSSL_FUNC_signature_verify_init and OSSL_FUNC_signature_verify" 4
 .IX Item "OSSL_FUNC_signature_verify_init and OSSL_FUNC_signature_verify"
-.IP "OSSL_FUNC_signature_verify_recover_init and OSSL_FUNC_signature_verify_init" 4
-.IX Item "OSSL_FUNC_signature_verify_recover_init and OSSL_FUNC_signature_verify_init"
+.IP "OSSL_FUNC_signature_verify_recover_init and OSSL_FUNC_signature_verify_recover" 4
+.IX Item "OSSL_FUNC_signature_verify_recover_init and OSSL_FUNC_signature_verify_recover"
 .IP "OSSL_FUNC_signature_digest_sign_init, OSSL_FUNC_signature_digest_sign_update and OSSL_FUNC_signature_digest_sign_final" 4
 .IX Item "OSSL_FUNC_signature_digest_sign_init, OSSL_FUNC_signature_digest_sign_update and OSSL_FUNC_signature_digest_sign_final"
 .IP "OSSL_FUNC_signature_digest_verify_init, OSSL_FUNC_signature_digest_verify_update and OSSL_FUNC_signature_digest_verify_final" 4
@@ -505,10 +505,9 @@ Known answer tests can be performed if the random generator is overridden to
 supply known values that either pass or fail.
 .PP
 \&\fBOSSL_FUNC_signature_gettable_ctx_params()\fR and \fBOSSL_FUNC_signature_settable_ctx_params()\fR get a
-constant \fB\s-1OSSL_PARAM\s0\fR array that describes the gettable and settable parameters,
+constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array that describes the gettable and settable parameters,
 i.e. parameters that can be used with \fBOSSL_FUNC_signature_get_ctx_params()\fR and
 \&\fBOSSL_FUNC_signature_set_ctx_params()\fR respectively.
-See \s-1\fBOSSL_PARAM\s0\fR\|(3) for the use of \fB\s-1OSSL_PARAM\s0\fR as parameter descriptor.
 .SS "\s-1MD\s0 parameters"
 .IX Subsection "MD parameters"
 See \s-1\fBOSSL_PARAM\s0\fR\|(3) for further details on the parameters structure used by
@@ -529,19 +528,18 @@ as those for built-in digest algorithms. See
 \&\*(L"Digest Parameters\*(R" in \fBprovider\-digest\fR\|(7) for further information.
 .PP
 \&\fBOSSL_FUNC_signature_gettable_md_ctx_params()\fR and \fBOSSL_FUNC_signature_settable_md_ctx_params()\fR
-get a constant \fB\s-1OSSL_PARAM\s0\fR array that describes the gettable and settable
+get a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array that describes the gettable and settable
 digest parameters, i.e. parameters that can be used with
 \&\fBOSSL_FUNC_signature_get_md_ctx_params()\fR and \fBOSSL_FUNC_signature_set_md_ctx_params()\fR
-respectively. See \s-1\fBOSSL_PARAM\s0\fR\|(3) for the use of \fB\s-1OSSL_PARAM\s0\fR as parameter
-descriptor.
+respectively.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\fBOSSL_FUNC_signature_newctx()\fR and \fBOSSL_FUNC_signature_dupctx()\fR should return the newly created
-provider side signature, or \s-1NULL\s0 on failure.
+provider side signature context, or \s-1NULL\s0 on failure.
 .PP
 \&\fBOSSL_FUNC_signature_gettable_ctx_params()\fR, \fBOSSL_FUNC_signature_settable_ctx_params()\fR,
 \&\fBOSSL_FUNC_signature_gettable_md_ctx_params()\fR and \fBOSSL_FUNC_signature_settable_md_ctx_params()\fR,
-return the gettable or settable parameters in a constant \fB\s-1OSSL_PARAM\s0\fR array.
+return the gettable or settable parameters in a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array.
 .PP
 All other functions should return 1 for success or 0 on error.
 .SH "SEE ALSO"
@@ -552,7 +550,7 @@ All other functions should return 1 for success or 0 on error.
 The provider \s-1SIGNATURE\s0 interface was introduced in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

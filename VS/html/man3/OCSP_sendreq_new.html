@@ -48,7 +48,7 @@
 
 <p>These functions perform an OCSP POST request / response transfer over HTTP, using the HTTP request functions described in <a href="../man3/OSSL_HTTP_REQ_CTX.html">OSSL_HTTP_REQ_CTX(3)</a>.</p>
 
-<p>The function OCSP_sendreq_new() builds a complete <b>OSSL_HTTP_REQ_CTX</b> structure with the <b>BIO</b> <i>io</i> to be used for requests and reponse, the URL path <i>path</i>, optionally the OCSP request <i>req</i>, and a response header maximum line length of <i>buf_size</i>. If <i>buf_size</i> is zero a default value of 4KiB is used. The <i>req</i> may be set to NULL and provided later using OCSP_REQ_CTX_set1_req() or <a href="../man3/OSSL_HTTP_REQ_CTX_set1_req.html">OSSL_HTTP_REQ_CTX_set1_req(3)</a>. The <i>io</i> and <i>path</i> arguments to OCSP_sendreq_new() correspond to the components of the URL. For example if the responder URL is <code>http://example.com/ocspreq</code> the BIO <i>io</i> should haven been connected to host <code>example.com</code> on port 80 and <i>path</i> should be set to <code>/ocspreq</code>.</p>
+<p>The function OCSP_sendreq_new() builds a complete <b>OSSL_HTTP_REQ_CTX</b> structure with the <b>BIO</b> <i>io</i> to be used for requests and response, the URL path <i>path</i>, optionally the OCSP request <i>req</i>, and a response header maximum line length of <i>buf_size</i>. If <i>buf_size</i> is zero a default value of 4KiB is used. The <i>req</i> may be set to NULL and provided later using OCSP_REQ_CTX_set1_req() or <a href="../man3/OSSL_HTTP_REQ_CTX_set1_req.html">OSSL_HTTP_REQ_CTX_set1_req(3)</a>. The <i>io</i> and <i>path</i> arguments to OCSP_sendreq_new() correspond to the components of the URL. For example if the responder URL is <code>http://example.com/ocspreq</code> the BIO <i>io</i> should haven been connected to host <code>example.com</code> on port 80 and <i>path</i> should be set to <code>/ocspreq</code>.</p>
 
 <p>OCSP_sendreq_nbio() attempts to send the request prepared in <i>rctx</i> and to gather the response via HTTP, using the BIO <i>io</i> and <i>path</i> that were given when calling OCSP_sendreq_new(). If the operation gets completed it assigns the response, a pointer to a <b>OCSP_RESPONSE</b> structure, in <i>*presp</i>. The function may need to be called again if its result is -1, which indicates <a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a>. In such a case it is advisable to sleep a little in between, using <a href="../man3/BIO_wait.html">BIO_wait(3)</a> on the read BIO to prevent a busy loop.</p>
 
@@ -84,7 +84,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2015-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2015-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -28,7 +28,7 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<p><b>openssl fipsinstall</b> [<b>-help</b>] [<b>-in</b> <i>configfilename</i>] [<b>-out</b> <i>configfilename</i>] [<b>-module</b> <i>modulefilename</i>] [<b>-provider_name</b> <i>providername</i>] [<b>-section_name</b> <i>sectionname</i>] [<b>-verify</b>] [<b>-mac_name</b> <i>macname</i>] [<b>-macopt</b> <i>nm</i>:<i>v</i>] [<b>-noout</b>] [<b>-quiet</b>] [<b>-no_conditional_errors</b>] [<b>-no_security_checks</b>] [<b>-self_test_onload</b>] [<b>-corrupt_desc</b> <i>selftest_description</i>] [<b>-corrupt_type</b> <i>selftest_type</i>] [<b>-config</b> <i>parent_config</i>]</p>
+<p><b>openssl fipsinstall</b> [<b>-help</b>] [<b>-in</b> <i>configfilename</i>] [<b>-out</b> <i>configfilename</i>] [<b>-module</b> <i>modulefilename</i>] [<b>-provider_name</b> <i>providername</i>] [<b>-section_name</b> <i>sectionname</i>] [<b>-verify</b>] [<b>-mac_name</b> <i>macname</i>] [<b>-macopt</b> <i>nm</i>:<i>v</i>] [<b>-noout</b>] [<b>-quiet</b>] [<b>-pedantic</b>] [<b>-no_conditional_errors</b>] [<b>-no_security_checks</b>] [<b>-ems_check</b>] [<b>-no_drbg_truncated_digests</b>] [<b>-self_test_onload</b>] [<b>-self_test_oninstall</b>] [<b>-corrupt_desc</b> <i>selftest_description</i>] [<b>-corrupt_type</b> <i>selftest_type</i>] [<b>-config</b> <i>parent_config</i>]</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -154,6 +154,12 @@
 <p>Disable logging of the self tests.</p>
 
 </dd>
+<dt id="pedantic"><b>-pedantic</b></dt>
+<dd>
+
+<p>Configure the module so that it is strictly FIPS compliant rather than being backwards compatible. This enables conditional errors, security checks etc. Note that any previous configuration options will be overwritten and any subsequent configuration options that violate FIPS compliance will result in an error.</p>
+
+</dd>
 <dt id="no_conditional_errors"><b>-no_conditional_errors</b></dt>
 <dd>
 
@@ -165,11 +171,33 @@
 
 <p>Configure the module to not perform run-time security checks as described above.</p>
 
+<p>Enabling the configuration option &quot;no-fips-securitychecks&quot; provides another way to turn off the check at compile time.</p>
+
+</dd>
+<dt id="ems_check"><b>-ems_check</b></dt>
+<dd>
+
+<p>Configure the module to enable a run-time Extended Master Secret (EMS) check when using the TLS1_PRF KDF algorithm. This check is disabled by default. See RFC 7627 for information related to EMS.</p>
+
+</dd>
+<dt id="no_drbg_truncated_digests"><b>-no_drbg_truncated_digests</b></dt>
+<dd>
+
+<p>Configure the module to not allow truncated digests to be used with Hash and HMAC DRBGs. See FIPS 140-3 IG D.R for details.</p>
+
 </dd>
 <dt id="self_test_onload"><b>-self_test_onload</b></dt>
 <dd>
 
 <p>Do not write the two fields related to the &quot;test status indicator&quot; and &quot;MAC status indicator&quot; to the output configuration file. Without these fields the self tests KATS will run each time the module is loaded. This option could be used for cross compiling, since the self tests need to run at least once on each target machine. Once the self tests have run on the target machine the user could possibly then add the 2 fields into the configuration using some other mechanism.</p>
+
+<p>This is the default.</p>
+
+</dd>
+<dt id="self_test_oninstall"><b>-self_test_oninstall</b></dt>
+<dd>
+
+<p>The converse of <b>-self_test_oninstall</b>. The two fields related to the &quot;test status indicator&quot; and &quot;MAC status indicator&quot; are written to the output configuration file.</p>
 
 </dd>
 <dt id="quiet"><b>-quiet</b></dt>
@@ -195,6 +223,10 @@
 <h1 id="NOTES">NOTES</h1>
 
 <p>Self tests results are logged by default if the options <b>-quiet</b> and <b>-noout</b> are not specified, or if either of the options <b>-corrupt_desc</b> or <b>-corrupt_type</b> are used. If the base configuration file is set up to autoload the fips module, then the fips module will be loaded and self tested BEFORE the fipsinstall application has a chance to set up its own self test callback. As a result of this the self test output and the options <b>-corrupt_desc</b> and <b>-corrupt_type</b> will be ignored. For normal usage the base configuration file should use the default provider when generating the fips configuration file.</p>
+
+<p>The <b>-self_test_oninstall</b> option was added and the <b>-self_test_onload</b> option was made the default in OpenSSL 3.1.</p>
+
+<p>The command and all remaining options were added in OpenSSL 3.0.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -223,7 +255,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_TRACE_ENABLED 3ossl"
-.TH OSSL_TRACE_ENABLED 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_TRACE_ENABLED 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -184,8 +184,8 @@ The functions described here are mainly interesting for those who provide
 OpenSSL functionality, either in OpenSSL itself or in engine modules
 or similar.
 .PP
-If tracing is enabled (see \*(L"\s-1NOTES\*(R"\s0 below), these functions are used to
-generate free text tracing output.
+If the tracing facility is enabled (see \*(L"Configure Tracing\*(R" below),
+these functions are used to generate free text tracing output.
 .PP
 The tracing output is divided into types which are enabled
 individually by the application.
@@ -194,13 +194,13 @@ The tracing types are described in detail in
 The fallback type \fB\s-1OSSL_TRACE_CATEGORY_ALL\s0\fR should \fInot\fR be used
 with the functions described here.
 .PP
-Tracing for a specific category is enabled if a so called
+Tracing for a specific category is enabled at run-time if a so-called
 \&\fItrace channel\fR is attached to it. A trace channel is simply a
 \&\s-1BIO\s0 object to which the application can write its trace output.
 .PP
 The application has two different ways of registering a trace channel,
-either by directly providing a \s-1BIO\s0 object using \fBOSSL_trace_set_channel()\fR,
-or by providing a callback routine using \fBOSSL_trace_set_callback()\fR.
+either by directly providing a \s-1BIO\s0 object using \fBOSSL_trace_set_channel\fR\|(3),
+or by providing a callback routine using \fBOSSL_trace_set_callback\fR\|(3).
 The latter is wrapped internally by a dedicated \s-1BIO\s0 object, so for the
 tracing code both channel types are effectively indistinguishable.
 We call them a \fIsimple trace channel\fR and a \fIcallback trace channel\fR,
@@ -219,7 +219,9 @@ but rather uses a set of convenience macros, see the \*(L"Macros\*(R" section be
 .SS "Functions"
 .IX Subsection "Functions"
 \&\fBOSSL_trace_enabled()\fR can be used to check if tracing for the given
-\&\fIcategory\fR is enabled.
+\&\fIcategory\fR is enabled, i.e., if the tracing facility has been statically
+enabled (see \*(L"Configure Tracing\*(R" below) and a trace channel has been
+registered using \fBOSSL_trace_set_channel\fR\|(3) or \fBOSSL_trace_set_callback\fR\|(3).
 .PP
 \&\fBOSSL_trace_begin()\fR is used to starts a tracing section, and get the
 channel for the given \fIcategory\fR in form of a \s-1BIO.\s0
@@ -242,7 +244,7 @@ used as follows to wrap a trace section:
 .Vb 1
 \& OSSL_TRACE_BEGIN(TLS) {
 \&
-\&     BIO_fprintf(trc_out, ... );
+\&     BIO_printf(trc_out, ... );
 \&
 \& } OSSL_TRACE_END(TLS);
 .Ve
@@ -254,7 +256,7 @@ This will normally expand to:
 \&     BIO *trc_out = OSSL_trace_begin(OSSL_TRACE_CATEGORY_TLS);
 \&     if (trc_out != NULL) {
 \&         ...
-\&         BIO_fprintf(trc_out, ...);
+\&         BIO_printf(trc_out, ...);
 \&     }
 \&     OSSL_trace_end(OSSL_TRACE_CATEGORY_TLS, trc_out);
 \& } while (0);
@@ -270,7 +272,7 @@ trace section:
 \&         OSSL_TRACE_CANCEL(TLS);
 \&         goto err;
 \&     }
-\&     BIO_fprintf(trc_out, ... );
+\&     BIO_printf(trc_out, ... );
 \&
 \& } OSSL_TRACE_END(TLS);
 .Ve
@@ -285,7 +287,7 @@ This will normally expand to:
 \&             OSSL_trace_end(OSSL_TRACE_CATEGORY_TLS, trc_out);
 \&             goto err;
 \&         }
-\&         BIO_fprintf(trc_out, ... );
+\&         BIO_printf(trc_out, ... );
 \&     }
 \&     OSSL_trace_end(OSSL_TRACE_CATEGORY_TLS, trc_out);
 \& } while (0);
@@ -389,7 +391,7 @@ For example, take this example from \*(L"Macros\*(R" section above:
 \&         OSSL_TRACE_CANCEL(TLS);
 \&         goto err;
 \&     }
-\&     BIO_fprintf(trc_out, ... );
+\&     BIO_printf(trc_out, ... );
 \&
 \& } OSSL_TRACE_END(TLS);
 .Ve
@@ -404,7 +406,7 @@ When the tracing \s-1API\s0 isn't operational, that will expand to:
 \&             ((void)0);
 \&             goto err;
 \&         }
-\&         BIO_fprintf(trc_out, ... );
+\&         BIO_printf(trc_out, ... );
 \&     }
 \& } while (0);
 .Ve
@@ -415,12 +417,15 @@ operational and enabled, otherwise 0.
 .PP
 \&\fBOSSL_trace_begin()\fR returns a \fB\s-1BIO\s0\fR pointer if the given \fItype\fR is enabled,
 otherwise \s-1NULL.\s0
+.SH "SEE ALSO"
+.IX Header "SEE ALSO"
+\&\fBOSSL_trace_set_channel\fR\|(3), \fBOSSL_trace_set_callback\fR\|(3)
 .SH "HISTORY"
 .IX Header "HISTORY"
 The OpenSSL Tracing \s-1API\s0 was added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

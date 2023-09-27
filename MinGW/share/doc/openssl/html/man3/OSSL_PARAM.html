@@ -71,7 +71,7 @@ struct ossl_param_st {
 </li>
 <li><p>Request parameters of some object</p>
 
-<p>The caller (the <i>requestor</i>) sets up the <b>OSSL_PARAM</b> array and calls some function (the <i>responder</i>) that has intimate knowledge about the object, which can take the internal data of the object and copy (possibly convert) that to the memory prepared by the <i>requestor</i> and pointed at with the <b>OSSL_PARAM</b> <i>data</i>.</p>
+<p>The caller (the <i>requester</i>) sets up the <b>OSSL_PARAM</b> array and calls some function (the <i>responder</i>) that has intimate knowledge about the object, which can take the internal data of the object and copy (possibly convert) that to the memory prepared by the <i>requester</i> and pointed at with the <b>OSSL_PARAM</b> <i>data</i>.</p>
 
 </li>
 <li><p>Request parameter descriptors</p>
@@ -122,9 +122,9 @@ struct ossl_param_st {
 
 <p><i>data</i> is a pointer to the memory where the parameter data is (when setting parameters) or shall (when requesting parameters) be stored, and <i>data_size</i> is its size in bytes. The organization of the data depends on the parameter type and flag.</p>
 
-<p>The <i>data_size</i> needs special attention with the parameter type <b>OSSL_PARAM_UTF8_STRING</b> in relation to C strings. When setting parameters, the size should be set to the length of the string, not counting the terminating NUL byte. When requesting parameters, the size should be set to the size of the buffer to be populated, which should accomodate enough space for a terminating NUL byte.</p>
+<p>The <i>data_size</i> needs special attention with the parameter type <b>OSSL_PARAM_UTF8_STRING</b> in relation to C strings. When setting parameters, the size should be set to the length of the string, not counting the terminating NUL byte. When requesting parameters, the size should be set to the size of the buffer to be populated, which should accommodate enough space for a terminating NUL byte.</p>
 
-<p>When <i>requesting parameters</i>, it&#39;s acceptable for <i>data</i> to be NULL. This can be used by the <i>requestor</i> to figure out dynamically exactly how much buffer space is needed to store the parameter data. In this case, <i>data_size</i> is ignored.</p>
+<p>When <i>requesting parameters</i>, it&#39;s acceptable for <i>data</i> to be NULL. This can be used by the <i>requester</i> to figure out dynamically exactly how much buffer space is needed to store the parameter data. In this case, <i>data_size</i> is ignored.</p>
 
 <p>When the <b>OSSL_PARAM</b> is used as a parameter descriptor, <i>data</i> should be ignored. If <i>data_size</i> is zero, it means that an arbitrary data size is accepted, otherwise it specifies the maximum size allowed.</p>
 
@@ -231,6 +231,9 @@ struct ossl_param_st {
 <p>The called function may also try to convert the data to a suitable form (for example, it&#39;s plausible to pass a large number as an octet string, so even though a given key is defined as an <b>OSSL_PARAM_UNSIGNED_INTEGER</b>, is plausible to pass the value as an <b>OSSL_PARAM_OCTET_STRING</b>), but this is in no way mandatory.</p>
 
 </li>
+<li><p>If <i>data</i> for a <b>OSSL_PARAM_OCTET_STRING</b> or a <b>OSSL_PARAM_UTF8_STRING</b> is NULL, the <i>responder</i> should set <i>return_size</i> to the size of the item to be returned and return success. Later the responder will be called again with <i>data</i> pointing at the place for the value to be put.</p>
+
+</li>
 <li><p>If a <i>responder</i> finds that some data sizes are too small for the requested data, it must set <i>return_size</i> for each such <b>OSSL_PARAM</b> item to the minimum required size, and eventually return an error.</p>
 
 </li>
@@ -299,7 +302,7 @@ for (i = 0; params[i].key != NULL; i++) {
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

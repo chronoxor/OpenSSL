@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "X509_VERIFY_PARAM_SET_FLAGS 3ossl"
-.TH X509_VERIFY_PARAM_SET_FLAGS 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH X509_VERIFY_PARAM_SET_FLAGS 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -227,6 +227,7 @@ See the \fB\s-1INHERITANCE FLAGS\s0\fR section for a description of these bits.
 \&\fBX509_VERIFY_PARAM_set_purpose()\fR sets the verification purpose in \fBparam\fR
 to \fBpurpose\fR. This determines the acceptable purpose of the certificate
 chain, for example \fBX509_PURPOSE_SSL_CLIENT\fR.
+The purpose requirement is cleared if \fBpurpose\fR is 0.
 .PP
 \&\fBX509_VERIFY_PARAM_set_trust()\fR sets the trust setting in \fBparam\fR to
 \&\fBtrust\fR.
@@ -234,8 +235,9 @@ chain, for example \fBX509_PURPOSE_SSL_CLIENT\fR.
 \&\fBX509_VERIFY_PARAM_set_time()\fR sets the verification time in \fBparam\fR to
 \&\fBt\fR. Normally the current time is used.
 .PP
-\&\fBX509_VERIFY_PARAM_add0_policy()\fR enables policy checking (it is disabled
-by default) and adds \fBpolicy\fR to the acceptable policy set.
+\&\fBX509_VERIFY_PARAM_add0_policy()\fR adds \fBpolicy\fR to the acceptable policy set.
+Contrary to preexisting documentation of this function it does not enable
+policy checking.
 .PP
 \&\fBX509_VERIFY_PARAM_set1_policies()\fR enables policy checking (it is disabled
 by default) and sets the acceptable policy set to \fBpolicies\fR. Any existing
@@ -357,7 +359,7 @@ IPv6.  The condensed \*(L"::\*(R" notation is supported for IPv6 addresses.
 failure.
 .PP
 \&\fBX509_VERIFY_PARAM_get0_host()\fR, \fBX509_VERIFY_PARAM_get0_email()\fR, and
-\&\fBX509_VERIFY_PARAM_get1_ip_asc()\fR, return the string pointers pecified above
+\&\fBX509_VERIFY_PARAM_get1_ip_asc()\fR, return the string pointers specified above
 or \s-1NULL\s0 if the respective value has not been set or on error.
 .PP
 \&\fBX509_VERIFY_PARAM_get_flags()\fR returns the current verification flags.
@@ -529,9 +531,13 @@ The \fBX509_VERIFY_PARAM_get_hostflags()\fR function was added in OpenSSL 1.1.0i
 .PP
 The \fBX509_VERIFY_PARAM_get0_host()\fR, \fBX509_VERIFY_PARAM_get0_email()\fR,
 and \fBX509_VERIFY_PARAM_get1_ip_asc()\fR functions were added in OpenSSL 3.0.
+.PP
+The function \fBX509_VERIFY_PARAM_add0_policy()\fR was historically documented as
+enabling policy checking however the implementation has never done this.
+The documentation was changed to align with the implementation.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2009\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2009\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

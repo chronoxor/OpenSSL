@@ -66,7 +66,7 @@ int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p><b>EVP_PKEY</b> is a generic structure to hold diverse types of asymmetric keys (also known as &quot;key pairs&quot;), and can be used for diverse operations, like signing, verifying signatures, key derivation, etc. The asymmetric keys themselves are often refered to as the &quot;internal key&quot;, and are handled by backends, such as providers (through <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>) or <b>ENGINE</b>s.</p>
+<p><b>EVP_PKEY</b> is a generic structure to hold diverse types of asymmetric keys (also known as &quot;key pairs&quot;), and can be used for diverse operations, like signing, verifying signatures, key derivation, etc. The asymmetric keys themselves are often referred to as the &quot;internal key&quot;, and are handled by backends, such as providers (through <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>) or <b>ENGINE</b>s.</p>
 
 <p>Conceptually, an <b>EVP_PKEY</b> internal key may hold a private key, a public key, or both (a keypair), and along with those, key parameters if the key type requires them. The presence of these components determine what operations can be made; for example, signing normally requires the presence of a private key, and verifying normally requires the presence of a public key.</p>
 
@@ -134,7 +134,7 @@ int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2002-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2002-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

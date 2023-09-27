@@ -54,7 +54,7 @@ int PKCS7_ISSUER_AND_SERIAL_digest(PKCS7_ISSUER_AND_SERIAL *data,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>X509_digest_sig() calculates a digest of the given certificate <i>cert</i> using the same hash algorithm as in its signature, if the digest is an integral part of the certificate signature algorithm identifier. Otherwise, a fallback hash algorithm is determined as follows: SHA512 if the signature alorithm is ED25519, SHAKE256 if it is ED448, otherwise SHA256. The output parmeters are assigned as follows. Unless <i>md_used</i> is NULL, the hash algorithm used is provided in <i>*md_used</i> and must be freed by the caller (if it is not NULL). Unless <i>md_is_fallback</i> is NULL, the <i>*md_is_fallback</i> is set to 1 if the hash algorithm used is a fallback, otherwise to 0.</p>
+<p>X509_digest_sig() calculates a digest of the given certificate <i>cert</i> using the same hash algorithm as in its signature, if the digest is an integral part of the certificate signature algorithm identifier. Otherwise, a fallback hash algorithm is determined as follows: SHA512 if the signature algorithm is ED25519, SHAKE256 if it is ED448, otherwise SHA256. The output parameters are assigned as follows. Unless <i>md_used</i> is NULL, the hash algorithm used is provided in <i>*md_used</i> and must be freed by the caller (if it is not NULL). Unless <i>md_is_fallback</i> is NULL, the <i>*md_is_fallback</i> is set to 1 if the hash algorithm used is a fallback, otherwise to 0.</p>
 
 <p>X509_pubkey_digest() returns a digest of the DER representation of the public key in the specified X509 <i>data</i> object.</p>
 
@@ -78,7 +78,7 @@ int PKCS7_ISSUER_AND_SERIAL_digest(PKCS7_ISSUER_AND_SERIAL *data,
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2017-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2017-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

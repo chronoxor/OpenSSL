@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EC_GROUP_COPY 3ossl"
-.TH EC_GROUP_COPY 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH EC_GROUP_COPY 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -270,7 +270,7 @@ point_conversion_form_t is an enum defined as follows:
 For \s-1POINT_CONVERSION_UNCOMPRESSED\s0 the point is encoded as an octet signifying the \s-1UNCOMPRESSED\s0 form has been used followed by
 the octets for x, followed by the octets for y.
 .PP
-For any given x co-ordinate for a point on a curve it is possible to derive two possible y values. For
+For any given x coordinate for a point on a curve it is possible to derive two possible y values. For
 \&\s-1POINT_CONVERSION_COMPRESSED\s0 the point is encoded as an octet signifying that the \s-1COMPRESSED\s0 form has been used \s-1AND\s0 which of
 the two possible solutions for y has been used, followed by the octets for x.
 .PP
@@ -385,11 +385,11 @@ trinomial or pentanomial respectively. Alternatively in the event of an error a 
 .SH "HISTORY"
 .IX Header "HISTORY"
 \&\fBEC_GROUP_method_of()\fR was deprecated in OpenSSL 3.0.
-.PP
-\&\fBEC_GROUP_check_named_curve()\fR and \fBEC_GROUP_get_field_type()\fR were added in OpenSSL 3.0.
+\&\fBEC_GROUP_get0_field()\fR, \fBEC_GROUP_check_named_curve()\fR and \fBEC_GROUP_get_field_type()\fR were added in OpenSSL 3.0.
+\&\fBEC_GROUP_get0_order()\fR, \fBEC_GROUP_order_bits()\fR and \fBEC_GROUP_get0_cofactor()\fR were added in OpenSSL 1.1.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2013\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2013\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

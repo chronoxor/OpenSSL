@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_TRACE_SET_CHANNEL 3ossl"
-.TH OSSL_TRACE_SET_CHANNEL 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_TRACE_SET_CHANNEL 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -156,13 +156,13 @@ OSSL_trace_set_callback, OSSL_trace_cb \- Enabling trace output
 .Ve
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
-If available (see \*(L"\s-1NOTES\*(R"\s0 below), the application can request
+If available (see \*(L"Configure Tracing\*(R" below), the application can request
 internal trace output.
 This output comes in form of free text for humans to read.
 .PP
 The trace output is divided into categories which can be
 enabled individually.
-Every category can be enabled individually by attaching a so called
+Every category can be enabled individually by attaching a so-called
 \&\fItrace channel\fR to it, which in the simplest case is just a \s-1BIO\s0 object
 to which the application can write the tracing output for this category.
 Alternatively, the application can provide a tracer callback in order to
@@ -172,15 +172,22 @@ internally by a dedicated \s-1BIO\s0 object.
 For the tracing code, both trace channel types are indistinguishable.
 These are called a \fIsimple trace channel\fR and a \fIcallback trace channel\fR,
 respectively.
+.PP
+\&\s-1\fBOSSL_TRACE_ENABLED\s0\fR\|(3) can be used to check whether tracing is currently
+enabled for the given category.
+Functions like \s-1\fBOSSL_TRACE1\s0\fR\|(3) and macros like \s-1\fBOSSL_TRACE_BEGIN\s0\fR\|(3)
+can be used for producing free-text trace output.
 .SS "Functions"
 .IX Subsection "Functions"
 \&\fBOSSL_trace_set_channel()\fR is used to enable the given trace \f(CW\*(C`category\*(C'\fR
 by attaching the \fB\s-1BIO\s0\fR \fIbio\fR object as (simple) trace channel.
+On success the ownership of the \s-1BIO\s0 is transferred to the channel,
+so the caller must not free it directly.
 .PP
 \&\fBOSSL_trace_set_prefix()\fR and \fBOSSL_trace_set_suffix()\fR can be used to add
 an extra line for each channel, to be output before and after group of
 tracing output.
-What constitues an output group is decided by the code that produces
+What constitutes an output group is decided by the code that produces
 the output.
 The lines given here are considered immutable; for more dynamic
 tracing prefixes, consider setting a callback with
@@ -190,7 +197,7 @@ tracing prefixes, consider setting a callback with
 \&\fIcategory\fR by giving it the tracer callback \fIcb\fR with the associated
 data \fIdata\fR, which will simply be passed through to \fIcb\fR whenever
 it's called. The callback function is internally wrapped by a
-dedicated \s-1BIO\s0 object, the so called \fIcallback trace channel\fR.
+dedicated \s-1BIO\s0 object, the so-called \fIcallback trace channel\fR.
 This should be used when it's desirable to do form the trace output to
 something suitable for application needs where a prefix and suffix
 line aren't enough.
@@ -420,6 +427,10 @@ necessary to configure and build OpenSSL with the 'enable\-trace' option.
 When the library is built with tracing disabled, the macro
 \&\fB\s-1OPENSSL_NO_TRACE\s0\fR is defined in \fI<openssl/opensslconf.h>\fR and all
 functions described here are inoperational, i.e. will do nothing.
+.SH "SEE ALSO"
+.IX Header "SEE ALSO"
+\&\s-1\fBOSSL_TRACE_ENABLED\s0\fR\|(3), \s-1\fBOSSL_TRACE_BEGIN\s0\fR\|(3), \s-1\fBOSSL_TRACE1\s0\fR\|(3),
+\&\fBatexit\fR\|(3)
 .SH "HISTORY"
 .IX Header "HISTORY"
 \&\fBOSSL_trace_set_channel()\fR, \fBOSSL_trace_set_prefix()\fR,
@@ -427,7 +438,7 @@ functions described here are inoperational, i.e. will do nothing.
 in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

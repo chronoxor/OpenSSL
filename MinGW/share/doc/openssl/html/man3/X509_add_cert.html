@@ -45,7 +45,7 @@ int X509_add_certs(STACK_OF(X509) *sk, STACK_OF(X509) *certs, int flags);</code>
 
 <p>If <b>X509_ADD_FLAG_UP_REF</b> is set then the reference counts of those certificates added successfully are increased.</p>
 
-<p>If <b>X509_ADD_FLAG_PREPEND</b> is set then the certifcates are prepended to <i>sk</i>. By default they are appended to <i>sk</i>. In both cases the original order of the added certificates is preserved.</p>
+<p>If <b>X509_ADD_FLAG_PREPEND</b> is set then the certificates are prepended to <i>sk</i>. By default they are appended to <i>sk</i>. In both cases the original order of the added certificates is preserved.</p>
 
 <p>If <b>X509_ADD_FLAG_NO_DUP</b> is set then certificates already contained in <i>sk</i>, which is determined using <a href="../man3/X509_cmp.html">X509_cmp(3)</a>, are ignored.</p>
 
@@ -71,7 +71,7 @@ int X509_add_certs(STACK_OF(X509) *sk, STACK_OF(X509) *certs, int flags);</code>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

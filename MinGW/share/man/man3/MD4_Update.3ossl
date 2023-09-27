@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "MD5 3ossl"
-.TH MD5 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH MD5 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -222,8 +222,8 @@ etc. instead of calling the hash functions directly.
 .SH "NOTE"
 .IX Header "NOTE"
 \&\s-1MD2, MD4,\s0 and \s-1MD5\s0 are recommended only for compatibility with existing
-applications. In new applications, \s-1SHA\-1\s0 or \s-1RIPEMD\-160\s0 should be
-preferred.
+applications. In new applications, hashes from the \s-1SHA\-2\s0 or \s-1SHA\-3\s0 family
+should be preferred.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\s-1\fBMD2\s0()\fR, \s-1\fBMD4\s0()\fR, and \s-1\fBMD5\s0()\fR return pointers to the hash value.
@@ -236,13 +236,13 @@ success, 0 otherwise.
 \&\s-1RFC 1319, RFC 1320, RFC 1321\s0
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
-\&\fBEVP_DigestInit\fR\|(3)
+\&\fBEVP_DigestInit\fR\|(3), \s-1\fBEVP_MD\-SHA2\s0\fR\|(7), \s-1\fBEVP_MD\-SHA3\s0\fR\|(7)
 .SH "HISTORY"
 .IX Header "HISTORY"
 All of these functions were deprecated in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2000\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2000\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

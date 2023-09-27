@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER 7ossl"
-.TH PROVIDER 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH PROVIDER 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -166,8 +166,8 @@ See \fBcrypto\fR\|(7) for further details.
 .SS "Provider"
 .IX Subsection "Provider"
 A \fIprovider\fR offers an initialization function, as a set of base
-functions in the form of an \fB\s-1OSSL_DISPATCH\s0\fR array, and by extension,
-a set of \fB\s-1OSSL_ALGORITHM\s0\fRs (see \fBopenssl\-core.h\fR\|(7)).
+functions in the form of an \s-1\fBOSSL_DISPATCH\s0\fR\|(3) array, and by extension,
+a set of \s-1\fBOSSL_ALGORITHM\s0\fR\|(3)s (see \fBopenssl\-core.h\fR\|(7)).
 It may be a dynamically loadable module, or may be built-in, in
 OpenSSL libraries or in the application.
 If it's a dynamically loadable module, the initialization function
@@ -228,7 +228,7 @@ nonzero, signifies that the OpenSSL libraries will not store a
 reference to the returned data in their internal store of
 implementations.
 .PP
-The returned \fB\s-1OSSL_ALGORITHM\s0\fR is the foundation of any OpenSSL
+The returned \s-1\fBOSSL_ALGORITHM\s0\fR\|(3) is the foundation of any OpenSSL
 library \s-1API\s0 that uses providers for their implementation, most
 commonly in the \fIfetching\fR type of functions
 (see \*(L"\s-1ALGORITHM FETCHING\*(R"\s0 in \fBcrypto\fR\|(7)).

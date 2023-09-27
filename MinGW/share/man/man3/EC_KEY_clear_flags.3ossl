@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EC_KEY_NEW 3ossl"
-.TH EC_KEY_NEW 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH EC_KEY_NEW 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -267,7 +267,7 @@ curve by the private key.
 confirm that it is valid.
 .PP
 \&\fBEC_KEY_set_public_key_affine_coordinates()\fR sets the public key for \fIkey\fR based
-on its affine co-ordinates; i.e., it constructs an \s-1EC_POINT\s0 object based on
+on its affine coordinates; i.e., it constructs an \s-1EC_POINT\s0 object based on
 the supplied \fIx\fR and \fIy\fR values and sets the public key to be this
 \&\s-1EC_POINT.\s0 It also performs certain sanity checks on the key to confirm
 that it is valid.
@@ -370,7 +370,7 @@ All other functions described here were deprecated in OpenSSL 3.0.
 For replacement see \s-1\fBEVP_PKEY\-EC\s0\fR\|(7).
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2013\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2013\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

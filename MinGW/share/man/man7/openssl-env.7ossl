@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-ENV 7ossl"
-.TH OPENSSL-ENV 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OPENSSL-ENV 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -196,8 +196,8 @@ See \fBSSL_CTX_load_verify_locations\fR\|(3).
 .IP "\fB\s-1TSGET\s0\fR" 4
 .IX Item "TSGET"
 Additional arguments for the \fBtsget\fR\|(1) command.
-.IP "\fBOPENSSL_ia32cap\fR, \fBOPENSSL_sparcv9cap\fR, \fBOPENSSL_ppccap\fR, \fBOPENSSL_armcap\fR, \fBOPENSSL_s390xcap\fR" 4
-.IX Item "OPENSSL_ia32cap, OPENSSL_sparcv9cap, OPENSSL_ppccap, OPENSSL_armcap, OPENSSL_s390xcap"
+.IP "\fBOPENSSL_ia32cap\fR, \fBOPENSSL_sparcv9cap\fR, \fBOPENSSL_ppccap\fR, \fBOPENSSL_armcap\fR, \fBOPENSSL_s390xcap\fR, \fBOPENSSL_riscvcap\fR" 4
+.IX Item "OPENSSL_ia32cap, OPENSSL_sparcv9cap, OPENSSL_ppccap, OPENSSL_armcap, OPENSSL_s390xcap, OPENSSL_riscvcap"
 OpenSSL supports a number of different algorithm implementations for
 various machines and, by default, it determines which to use based on the
 processor capabilities and run time feature enquiry.  These environment
@@ -209,7 +209,7 @@ Specify a proxy hostname.
 See \fBOSSL_HTTP_parse_url\fR\|(3).
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

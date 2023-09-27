@@ -27,11 +27,11 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<p><b>openssl</b> <b>storeutl</b> [<b>-help</b>] [<b>-out</b> <i>file</i>] [<b>-noout</b>] [<b>-passin</b> <i>arg</i>] [<b>-text</b> <i>arg</i>] [<b>-r</b>] [<b>-certs</b>] [<b>-keys</b>] [<b>-crls</b>] [<b>-subject</b> <i>arg</i>] [<b>-issuer</b> <i>arg</i>] [<b>-serial</b> <i>arg</i>] [<b>-alias</b> <i>arg</i>] [<b>-fingerprint</b> <i>arg</i>] [<b>-<i>digest</i></b>] [<b>-engine</b> <i>id</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>] <i>uri</i> ...</p>
+<p><b>openssl</b> <b>storeutl</b> [<b>-help</b>] [<b>-out</b> <i>file</i>] [<b>-noout</b>] [<b>-passin</b> <i>arg</i>] [<b>-text</b> <i>arg</i>] [<b>-r</b>] [<b>-certs</b>] [<b>-keys</b>] [<b>-crls</b>] [<b>-subject</b> <i>arg</i>] [<b>-issuer</b> <i>arg</i>] [<b>-serial</b> <i>arg</i>] [<b>-alias</b> <i>arg</i>] [<b>-fingerprint</b> <i>arg</i>] [<b>-<i>digest</i></b>] [<b>-engine</b> <i>id</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>] <i>uri</i></p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>This command can be used to display the contents (after decryption as the case may be) fetched from the given URIs.</p>
+<p>This command can be used to display the contents (after decryption as the case may be) fetched from the given URI.</p>
 
 <h1 id="OPTIONS">OPTIONS</h1>
 
@@ -85,6 +85,8 @@
 <dd>
 
 <p>Only select the certificates, keys or CRLs from the given URI. However, if this URI would return a set of names (URIs), those are always returned.</p>
+
+<p>Note that all options must be given before the <i>uri</i> argument. Otherwise they are ignored.</p>
 
 </dd>
 <dt id="subject-arg"><b>-subject</b> <i>arg</i></dt>
@@ -161,7 +163,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2016-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2016-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

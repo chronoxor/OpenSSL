@@ -15,6 +15,11 @@
   <li><a href="#NAME">NAME</a></li>
   <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
   <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPENSSL-3.1">OPENSSL 3.1</a>
+    <ul>
+      <li><a href="#Main-Changes-from-OpenSSL-3.0">Main Changes from OpenSSL 3.0</a></li>
+    </ul>
+  </li>
   <li><a href="#OPENSSL-3.0">OPENSSL 3.0</a>
     <ul>
       <li><a href="#Main-Changes-from-OpenSSL-1.1.1">Main Changes from OpenSSL 1.1.1</a>
@@ -33,10 +38,12 @@
               <li><a href="#HTTP-S-client">HTTP(S) client</a></li>
               <li><a href="#Key-Derivation-Function-API-EVP_KDF">Key Derivation Function API (EVP_KDF)</a></li>
               <li><a href="#Message-Authentication-Code-API-EVP_MAC">Message Authentication Code API (EVP_MAC)</a></li>
+              <li><a href="#Algorithm-Fetching">Algorithm Fetching</a></li>
               <li><a href="#Support-for-Linux-Kernel-TLS">Support for Linux Kernel TLS</a></li>
               <li><a href="#New-Algorithms">New Algorithms</a></li>
               <li><a href="#CMS-and-PKCS-7-updates">CMS and PKCS#7 updates</a></li>
               <li><a href="#PKCS-12-API-updates">PKCS#12 API updates</a></li>
+              <li><a href="#PKCS-12-KDF-versus-FIPS">PKCS#12 KDF versus FIPS</a></li>
               <li><a href="#Windows-thread-synchronization-changes">Windows thread synchronization changes</a></li>
               <li><a href="#Trace-API">Trace API</a></li>
               <li><a href="#Key-validation-updates">Key validation updates</a></li>
@@ -62,6 +69,7 @@
               <li><a href="#EVP_CIPHER_CTX_set_flags-ordering-change">EVP_CIPHER_CTX_set_flags() ordering change</a></li>
               <li><a href="#Validation-of-operation-context-parameters">Validation of operation context parameters</a></li>
               <li><a href="#Removal-of-function-code-from-the-error-codes">Removal of function code from the error codes</a></li>
+              <li><a href="#ChaCha20-Poly1305-cipher-does-not-allow-a-truncated-IV-length-to-be-used">ChaCha20-Poly1305 cipher does not allow a truncated IV length to be used</a></li>
             </ul>
           </li>
         </ul>
@@ -88,7 +96,7 @@
           </li>
           <li><a href="#Providers">Providers</a></li>
           <li><a href="#Fetching-algorithms-and-property-queries">Fetching algorithms and property queries</a></li>
-          <li><a href="#Mapping-EVP-controls-and-flags-to-provider-OSSL_PARAM-parameters">Mapping EVP controls and flags to provider OSSL_PARAM parameters</a></li>
+          <li><a href="#Mapping-EVP-controls-and-flags-to-provider-OSSL_PARAM-3-parameters">Mapping EVP controls and flags to provider OSSL_PARAM(3) parameters</a></li>
           <li><a href="#Deprecation-of-Low-Level-Functions">Deprecation of Low Level Functions</a>
             <ul>
               <li><a href="#Providers-are-a-replacement-for-engines-and-low-level-method-overrides">Providers are a replacement for engines and low-level method overrides</a></li>
@@ -109,6 +117,7 @@
             </ul>
           </li>
           <li><a href="#Deprecated-function-mappings">Deprecated function mappings</a></li>
+          <li><a href="#NID-handling-for-provided-keys-and-algorithms">NID handling for provided keys and algorithms</a></li>
         </ul>
       </li>
       <li><a href="#Using-the-FIPS-Module-in-applications">Using the FIPS Module in applications</a></li>
@@ -126,6 +135,7 @@
     </ul>
   </li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
 </ul>
 
@@ -139,7 +149,31 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>This guide details the changes required to migrate to new versions of OpenSSL. Currently this covers OpenSSL 3.0. For earlier versions refer to <a href="https://github.com/openssl/openssl/blob/master/CHANGES.md">https://github.com/openssl/openssl/blob/master/CHANGES.md</a>. For an overview of some of the key concepts introduced in OpenSSL 3.0 see <a href="../man7/crypto.html">crypto(7)</a>.</p>
+<p>This guide details the changes required to migrate to new versions of OpenSSL. Currently this covers OpenSSL 3.0 &amp; 3.1. For earlier versions refer to <a href="https://github.com/openssl/openssl/blob/master/CHANGES.md">https://github.com/openssl/openssl/blob/master/CHANGES.md</a>. For an overview of some of the key concepts introduced in OpenSSL 3.0 see <a href="../man7/crypto.html">crypto(7)</a>.</p>
+
+<h1 id="OPENSSL-3.1">OPENSSL 3.1</h1>
+
+<h2 id="Main-Changes-from-OpenSSL-3.0">Main Changes from OpenSSL 3.0</h2>
+
+<p>The FIPS provider in OpenSSL 3.1 includes some non-FIPS validated algorithms, consequently the property query <code>fips=yes</code> is mandatory for applications that want to operate in a FIPS approved manner. The algorithms are:</p>
+
+<dl>
+
+<dt id="Triple-DES-ECB">Triple DES ECB</dt>
+<dd>
+
+</dd>
+<dt id="Triple-DES-CBC">Triple DES CBC</dt>
+<dd>
+
+</dd>
+<dt id="EdDSA">EdDSA</dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>There are no other changes requiring additional migration measures since OpenSSL 3.0.</p>
 
 <h1 id="OPENSSL-3.0">OPENSSL 3.0</h1>
 
@@ -185,7 +219,7 @@
 
 <p>New algorithms provided via engines will still work.</p>
 
-<p>Engine-backed keys can be loaded via custom <b>OSSL_STORE</b> implementation. In this case the <b>EVP_PKEY</b> objects created via <a href="../man3/ENGINE_load_private_key.html">ENGINE_load_private_key(3)</a> will be concidered legacy and will continue to work.</p>
+<p>Engine-backed keys can be loaded via custom <b>OSSL_STORE</b> implementation. In this case the <b>EVP_PKEY</b> objects created via <a href="../man3/ENGINE_load_private_key.html">ENGINE_load_private_key(3)</a> will be considered legacy and will continue to work.</p>
 
 <p>To ensure the future compatibility, the engines should be turned to providers. To prefer the provider-based hardware offload, you can specify the default properties to prefer your provider.</p>
 
@@ -222,6 +256,10 @@
 <p>This includes a generic EVP_PKEY to EVP_MAC bridge, to facilitate the continued use of MACs through raw private keys in functionality such as <a href="../man3/EVP_DigestSign.html">EVP_DigestSign(3)</a> and <a href="../man3/EVP_DigestVerify.html">EVP_DigestVerify(3)</a>.</p>
 
 <p>All new applications should use the new <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a> interface. See also <a href="../man7/OSSL_PROVIDER-default.html">&quot;Message Authentication Code (MAC)&quot; in OSSL_PROVIDER-default(7)</a> and <a href="../man7/OSSL_PROVIDER-FIPS.html">&quot;Message Authentication Code (MAC)&quot; in OSSL_PROVIDER-FIPS(7)</a>.</p>
+
+<h4 id="Algorithm-Fetching">Algorithm Fetching</h4>
+
+<p>Using calls to convenience functions such as EVP_sha256() and EVP_aes_256_gcm() may incur a performance penalty when using providers. Retrieving algorithms from providers involves searching for an algorithm by name. This is much slower than directly accessing a method table. It is recommended to prefetch algorithms if an algorithm is used many times. See <a href="../man7/crypto.html">&quot;Performance&quot; in crypto(7)</a>, <a href="../man7/crypto.html">&quot;Explicit fetching&quot; in crypto(7)</a> and <a href="../man7/crypto.html">&quot;Implicit fetching&quot; in crypto(7)</a>.</p>
 
 <h4 id="Support-for-Linux-Kernel-TLS">Support for Linux Kernel TLS</h4>
 
@@ -293,6 +331,12 @@
 
 <p>As part of this change the EVP_PBE_xxx APIs can also accept a library context and property query and will call an extended version of the key/IV derivation function which supports these parameters. This includes <a href="../man3/EVP_PBE_CipherInit_ex.html">EVP_PBE_CipherInit_ex(3)</a>, <a href="../man3/EVP_PBE_find_ex.html">EVP_PBE_find_ex(3)</a> and <a href="../man3/EVP_PBE_scrypt_ex.html">EVP_PBE_scrypt_ex(3)</a>.</p>
 
+<h4 id="PKCS-12-KDF-versus-FIPS">PKCS#12 KDF versus FIPS</h4>
+
+<p>Unlike in 1.x.y, the PKCS12KDF algorithm used when a PKCS#12 structure is created with a MAC that does not work with the FIPS provider as the PKCS12KDF is not a FIPS approvable mechanism.</p>
+
+<p>See <a href="../man7/EVP_KDF-PKCS12KDF.html">EVP_KDF-PKCS12KDF(7)</a>, <a href="../man3/PKCS12_create.html">PKCS12_create(3)</a>, <a href="../man1/openssl-pkcs12.html">openssl-pkcs12(1)</a>, <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a>.</p>
+
 <h4 id="Windows-thread-synchronization-changes">Windows thread synchronization changes</h4>
 
 <p>Windows thread synchronization uses read/write primitives (SRWLock) when supported by the OS, otherwise CriticalSection continues to be used.</p>
@@ -315,7 +359,7 @@
 
 <h4 id="STACK-and-HASH-macros-have-been-cleaned-up">STACK and HASH macros have been cleaned up</h4>
 
-<p>The type-safe wrappers are declared everywhere and implemented once. See <a href="../man3/DEFINE_STACK_OF.html">DEFINE_STACK_OF(3)</a> and <a href="../man3/DECLARE_LHASH_OF.html">DECLARE_LHASH_OF(3)</a>.</p>
+<p>The type-safe wrappers are declared everywhere and implemented once. See <a href="../man3/DEFINE_STACK_OF.html">DEFINE_STACK_OF(3)</a> and <a href="../man3/DEFINE_LHASH_OF_EX.html">DEFINE_LHASH_OF_EX(3)</a>.</p>
 
 <h4 id="The-RAND_DRBG-subsystem-has-been-removed">The RAND_DRBG subsystem has been removed</h4>
 
@@ -394,6 +438,10 @@
 <h4 id="Removal-of-function-code-from-the-error-codes">Removal of function code from the error codes</h4>
 
 <p>The function code part of the error code is now always set to 0. For that reason the ERR_GET_FUNC() macro was removed. Applications must resolve the error codes only using the library number and the reason code.</p>
+
+<h4 id="ChaCha20-Poly1305-cipher-does-not-allow-a-truncated-IV-length-to-be-used">ChaCha20-Poly1305 cipher does not allow a truncated IV length to be used</h4>
+
+<p>In OpenSSL 3.0 setting the IV length to any value other than 12 will result in an error. Prior to OpenSSL 3.0 the ivlen could be smaller that the required 12 byte length, using EVP_CIPHER_CTX_ctrl(ctx, EVP_CRTL_AEAD_SET_IVLEN, ivlen, NULL). This resulted in an IV that had leading zero padding.</p>
 
 <h2 id="Installation-and-Compilation">Installation and Compilation</h2>
 
@@ -493,7 +541,7 @@
 
 <p>Some functions can be passed an object that has already been set up with a library context such as <a href="../man3/d2i_X509.html">d2i_X509(3)</a>, <a href="../man3/d2i_X509_CRL.html">d2i_X509_CRL(3)</a>, <a href="../man3/d2i_X509_REQ.html">d2i_X509_REQ(3)</a> and <a href="../man3/d2i_X509_PUBKEY.html">d2i_X509_PUBKEY(3)</a>. If NULL is passed instead then the created object will be set up with the default library context. Use <a href="../man3/X509_new_ex.html">X509_new_ex(3)</a>, <a href="../man3/X509_CRL_new_ex.html">X509_CRL_new_ex(3)</a>, <a href="../man3/X509_REQ_new_ex.html">X509_REQ_new_ex(3)</a> and <a href="../man3/X509_PUBKEY_new_ex.html">X509_PUBKEY_new_ex(3)</a> if a library context is required.</p>
 
-<p>All functions listed below with a <i>NAME</i> have a replacment function <i>NAME_ex</i> that takes <b>OSSL_LIB_CTX</b> as an additional argument. Functions that have other mappings are listed along with the respective name.</p>
+<p>All functions listed below with a <i>NAME</i> have a replacement function <i>NAME_ex</i> that takes <b>OSSL_LIB_CTX</b> as an additional argument. Functions that have other mappings are listed along with the respective name.</p>
 
 <ul>
 
@@ -734,7 +782,7 @@
 
 <p>Implicit and Explicit Fetching is described in detail here <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>.</p>
 
-<h3 id="Mapping-EVP-controls-and-flags-to-provider-OSSL_PARAM-parameters">Mapping EVP controls and flags to provider <b>OSSL_PARAM</b> parameters</h3>
+<h3 id="Mapping-EVP-controls-and-flags-to-provider-OSSL_PARAM-3-parameters">Mapping EVP controls and flags to provider <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> parameters</h3>
 
 <p>The existing functions for controls (such as <a href="../man3/EVP_CIPHER_CTX_ctrl.html">EVP_CIPHER_CTX_ctrl(3)</a>) and manipulating flags (such as <a href="../man3/EVP_MD_CTX_set_flags.html">EVP_MD_CTX_set_flags(3)</a>)internally use <b>OSSL_PARAMS</b> to pass information to/from provider objects. See <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for additional information related to parameters.</p>
 
@@ -750,7 +798,7 @@
 
 <p>Any accessor that uses an ENGINE is deprecated (such as EVP_PKEY_set1_engine()). Applications using engines should instead use providers.</p>
 
-<p>Before providers were added algorithms were overriden by changing the methods used by algorithms. All these methods such as RSA_new_method() and RSA_meth_new() are now deprecated and can be replaced by using providers instead.</p>
+<p>Before providers were added algorithms were overridden by changing the methods used by algorithms. All these methods such as RSA_new_method() and RSA_meth_new() are now deprecated and can be replaced by using providers instead.</p>
 
 <h4 id="Deprecated-i2d-and-d2i-functions-for-low-level-key-types">Deprecated i2d and d2i functions for low-level key types</h4>
 
@@ -792,7 +840,7 @@
 
 <p>Low-level mac functions such as <a href="../man3/CMAC_Init.html">CMAC_Init(3)</a> are deprecated. Applications should instead use the new <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a> interface, using <a href="../man3/EVP_MAC_CTX_new.html">EVP_MAC_CTX_new(3)</a>, <a href="../man3/EVP_MAC_CTX_free.html">EVP_MAC_CTX_free(3)</a>, <a href="../man3/EVP_MAC_init.html">EVP_MAC_init(3)</a>, <a href="../man3/EVP_MAC_update.html">EVP_MAC_update(3)</a> and <a href="../man3/EVP_MAC_final.html">EVP_MAC_final(3)</a> or the single-shot MAC function <a href="../man3/EVP_Q_mac.html">EVP_Q_mac(3)</a>. See <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a>, <a href="../man7/EVP_MAC-HMAC.html">EVP_MAC-HMAC(7)</a>, <a href="../man7/EVP_MAC-CMAC.html">EVP_MAC-CMAC(7)</a>, <a href="../man7/EVP_MAC-GMAC.html">EVP_MAC-GMAC(7)</a>, <a href="../man7/EVP_MAC-KMAC.html">EVP_MAC-KMAC(7)</a>, <a href="../man7/EVP_MAC-BLAKE2.html">EVP_MAC-BLAKE2(7)</a>, <a href="../man7/EVP_MAC-Poly1305.html">EVP_MAC-Poly1305(7)</a> and <a href="../man7/EVP_MAC-Siphash.html">EVP_MAC-Siphash(7)</a> for additional information.</p>
 
-<p>Note that the one-shot method HMAC() is still available for compatability purposes.</p>
+<p>Note that the one-shot method HMAC() is still available for compatibility purposes, but this can also be replaced by using EVP_Q_MAC if a library context is required.</p>
 
 <h4 id="Deprecated-low-level-validation-functions">Deprecated low-level validation functions</h4>
 
@@ -1040,7 +1088,7 @@
 </li>
 <li><p>ECDH_KDF_X9_62()</p>
 
-<p>Applications may either set this using the helper function <a href="../man3/EVP_PKEY_CTX_set_ecdh_kdf_type.html">EVP_PKEY_CTX_set_ecdh_kdf_type(3)</a> or by setting an <b>OSSL_PARAM</b> using the &quot;kdf-type&quot; as shown in <a href="../man7/EVP_KEYEXCH-ECDH.html">&quot;EXAMPLES&quot; in EVP_KEYEXCH-ECDH(7)</a></p>
+<p>Applications may either set this using the helper function <a href="../man3/EVP_PKEY_CTX_set_ecdh_kdf_type.html">EVP_PKEY_CTX_set_ecdh_kdf_type(3)</a> or by setting an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> using the &quot;kdf-type&quot; as shown in <a href="../man7/EVP_KEYEXCH-ECDH.html">&quot;EXAMPLES&quot; in EVP_KEYEXCH-ECDH(7)</a></p>
 
 </li>
 <li><p>ECDSA_sign(), ECDSA_sign_ex(), ECDSA_sign_setup(), ECDSA_do_sign(), ECDSA_do_sign_ex(), ECDSA_verify(), ECDSA_do_verify()</p>
@@ -1090,7 +1138,7 @@
 </li>
 <li><p>EC_KEY_set_flags(), EC_KEY_get_flags(), EC_KEY_clear_flags()</p>
 
-<p>See <a href="../man7/EVP_PKEY-EC.html">&quot;Common EC parameters&quot; in EVP_PKEY-EC(7)</a> which handles flags as seperate parameters for <b>OSSL_PKEY_PARAM_EC_POINT_CONVERSION_FORMAT</b>, <b>OSSL_PKEY_PARAM_EC_GROUP_CHECK_TYPE</b>, <b>OSSL_PKEY_PARAM_EC_ENCODING</b>, <b>OSSL_PKEY_PARAM_USE_COFACTOR_ECDH</b> and <b>OSSL_PKEY_PARAM_EC_INCLUDE_PUBLIC</b>. See also <a href="../man7/EVP_PKEY-EC.html">&quot;EXAMPLES&quot; in EVP_PKEY-EC(7)</a></p>
+<p>See <a href="../man7/EVP_PKEY-EC.html">&quot;Common EC parameters&quot; in EVP_PKEY-EC(7)</a> which handles flags as separate parameters for <b>OSSL_PKEY_PARAM_EC_POINT_CONVERSION_FORMAT</b>, <b>OSSL_PKEY_PARAM_EC_GROUP_CHECK_TYPE</b>, <b>OSSL_PKEY_PARAM_EC_ENCODING</b>, <b>OSSL_PKEY_PARAM_USE_COFACTOR_ECDH</b> and <b>OSSL_PKEY_PARAM_EC_INCLUDE_PUBLIC</b>. See also <a href="../man7/EVP_PKEY-EC.html">&quot;EXAMPLES&quot; in EVP_PKEY-EC(7)</a></p>
 
 </li>
 <li><p>EC_KEY_dup(), EC_KEY_copy()</p>
@@ -1532,6 +1580,19 @@
 </li>
 </ul>
 
+<h3 id="NID-handling-for-provided-keys-and-algorithms">NID handling for provided keys and algorithms</h3>
+
+<p>The following functions for NID (numeric id) handling have changed semantics.</p>
+
+<ul>
+
+<li><p>EVP_PKEY_id(), EVP_PKEY_get_id()</p>
+
+<p>This function was previously used to reliably return the NID of an EVP_PKEY object, e.g., to look up the name of the algorithm of such EVP_PKEY by calling <a href="../man3/OBJ_nid2sn.html">OBJ_nid2sn(3)</a>. With the introduction of <a href="../man7/provider.html">provider(7)</a>s EVP_PKEY_id() or its new equivalent <a href="../man3/EVP_PKEY_get_id.html">EVP_PKEY_get_id(3)</a> might now also return the value -1 (<b>EVP_PKEY_KEYMGMT</b>) indicating the use of a provider to implement the EVP_PKEY object. Therefore, the use of <a href="../man3/EVP_PKEY_get0_type_name.html">EVP_PKEY_get0_type_name(3)</a> is recommended for retrieving the name of the EVP_PKEY algorithm.</p>
+
+</li>
+</ul>
+
 <h2 id="Using-the-FIPS-Module-in-applications">Using the FIPS Module in applications</h2>
 
 <p>See <a href="../man7/fips_module.html">fips_module(7)</a> and <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a> for details.</p>
@@ -1653,9 +1714,13 @@
 
 <p><a href="../man7/fips_module.html">fips_module(7)</a></p>
 
+<h1 id="HISTORY">HISTORY</h1>
+
+<p>The migration guide was created for OpenSSL 3.0.</p>
+
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2021-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2021-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -83,7 +83,7 @@ int SSL_use_cert_and_key(SSL *ssl, X509 *x, EVP_PKEY *pkey, STACK_OF(X509) *chai
 
 <p>SSL_CTX_use_PrivateKey_file() adds the first private key found in <b>file</b> to <b>ctx</b>. The formatting <b>type</b> of the private key must be specified from the known types SSL_FILETYPE_PEM, SSL_FILETYPE_ASN1. SSL_CTX_use_RSAPrivateKey_file() adds the first private RSA key found in <b>file</b> to <b>ctx</b>. SSL_use_PrivateKey_file() adds the first private key found in <b>file</b> to <b>ssl</b>; SSL_use_RSAPrivateKey_file() adds the first private RSA key found to <b>ssl</b>.</p>
 
-<p>SSL_CTX_check_private_key() checks the consistency of a private key with the corresponding certificate loaded into <b>ctx</b>. If more than one key/certificate pair (RSA/DSA) is installed, the last item installed will be checked. If e.g. the last item was a RSA certificate or key, the RSA key/certificate pair will be checked. SSL_check_private_key() performs the same check for <b>ssl</b>. If no key/certificate was explicitly added for this <b>ssl</b>, the last item added into <b>ctx</b> will be checked.</p>
+<p>SSL_CTX_check_private_key() checks the consistency of a private key with the corresponding certificate loaded into <b>ctx</b>. If more than one key/certificate pair (RSA/DSA) is installed, the last item installed will be checked. If e.g. the last item was an RSA certificate or key, the RSA key/certificate pair will be checked. SSL_check_private_key() performs the same check for <b>ssl</b>. If no key/certificate was explicitly added for this <b>ssl</b>, the last item added into <b>ctx</b> will be checked.</p>
 
 <h1 id="NOTES">NOTES</h1>
 

@@ -133,14 +133,14 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_RAND 3ossl"
-.TH EVP_RAND 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH EVP_RAND 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
 EVP_RAND, EVP_RAND_fetch, EVP_RAND_free, EVP_RAND_up_ref, EVP_RAND_CTX,
-EVP_RAND_CTX_new, EVP_RAND_CTX_free, EVP_RAND_instantiate,
+EVP_RAND_CTX_new, EVP_RAND_CTX_free, EVP_RAND_CTX_up_ref, EVP_RAND_instantiate,
 EVP_RAND_uninstantiate, EVP_RAND_generate, EVP_RAND_reseed, EVP_RAND_nonce,
 EVP_RAND_enable_locking, EVP_RAND_verify_zeroization, EVP_RAND_get_strength,
 EVP_RAND_get_state,
@@ -167,6 +167,7 @@ EVP_RAND_STATE_ERROR \- EVP RAND routines
 \& void EVP_RAND_free(EVP_RAND *rand);
 \& EVP_RAND_CTX *EVP_RAND_CTX_new(EVP_RAND *rand, EVP_RAND_CTX *parent);
 \& void EVP_RAND_CTX_free(EVP_RAND_CTX *ctx);
+\& int EVP_RAND_CTX_up_ref(EVP_RAND_CTX *ctx);
 \& EVP_RAND *EVP_RAND_CTX_get0_rand(EVP_RAND_CTX *ctx);
 \& int EVP_RAND_get_params(EVP_RAND *rand, OSSL_PARAM params[]);
 \& int EVP_RAND_CTX_get_params(EVP_RAND_CTX *ctx, OSSL_PARAM params[]);
@@ -319,26 +320,23 @@ simply ignored.
 Also, what happens when a needed parameter isn't passed down is
 defined by the implementation.
 .PP
-\&\fBEVP_RAND_gettable_params()\fR returns an \fB\s-1OSSL_PARAM\s0\fR array that describes
+\&\fBEVP_RAND_gettable_params()\fR returns an \s-1\fBOSSL_PARAM\s0\fR\|(3) array that describes
 the retrievable and settable parameters.  \fBEVP_RAND_gettable_params()\fR returns
-parameters that can be used with \fBEVP_RAND_get_params()\fR.  See \s-1\fBOSSL_PARAM\s0\fR\|(3)
-for the use of \fB\s-1OSSL_PARAM\s0\fR as a parameter descriptor.
+parameters that can be used with \fBEVP_RAND_get_params()\fR.
 .PP
 \&\fBEVP_RAND_gettable_ctx_params()\fR and \fBEVP_RAND_CTX_gettable_params()\fR return
-constant \fB\s-1OSSL_PARAM\s0\fR arrays that describe the retrievable parameters that
+constant \s-1\fBOSSL_PARAM\s0\fR\|(3) arrays that describe the retrievable parameters that
 can be used with \fBEVP_RAND_CTX_get_params()\fR.  \fBEVP_RAND_gettable_ctx_params()\fR
 returns the parameters that can be retrieved from the algorithm, whereas
 \&\fBEVP_RAND_CTX_gettable_params()\fR returns the parameters that can be retrieved
-in the context's current state.  See \s-1\fBOSSL_PARAM\s0\fR\|(3) for the use of
-\&\fB\s-1OSSL_PARAM\s0\fR as a parameter descriptor.
+in the context's current state.
 .PP
 \&\fBEVP_RAND_settable_ctx_params()\fR and \fBEVP_RAND_CTX_settable_params()\fR return
-constant \fB\s-1OSSL_PARAM\s0\fR arrays that describe the settable parameters that
+constant \s-1\fBOSSL_PARAM\s0\fR\|(3) arrays that describe the settable parameters that
 can be used with \fBEVP_RAND_CTX_set_params()\fR.  \fBEVP_RAND_settable_ctx_params()\fR
 returns the parameters that can be retrieved from the algorithm, whereas
 \&\fBEVP_RAND_CTX_settable_params()\fR returns the parameters that can be retrieved
-in the context's current state.  See \s-1\fBOSSL_PARAM\s0\fR\|(3) for the use of
-\&\fB\s-1OSSL_PARAM\s0\fR as a parameter descriptor.
+in the context's current state.
 .SS "Information functions"
 .IX Subsection "Information functions"
 \&\fBEVP_RAND_get_strength()\fR returns the security strength of the \s-1RAND\s0 \fIctx\fR.
@@ -461,6 +459,18 @@ The value is always the name of the intended algorithm,
 or the properties in the case of \fB\s-1OSSL_RAND_PARAM_PROPERTIES\s0\fR.
 .SH "NOTES"
 .IX Header "NOTES"
+The use of a nonzero value for the \fIprediction_resistance\fR argument to
+\&\fBEVP_RAND_instantiate()\fR, \fBEVP_RAND_generate()\fR or \fBEVP_RAND_reseed()\fR should
+be used sparingly.  In the default setup, this will cause all public and
+private DRBGs to be reseeded on next use.  Since, by default, public and
+private DRBGs are allocated on a per thread basis, this can result in
+significant overhead for highly multi-threaded applications.  For normal
+use-cases, the default \*(L"reseed_requests\*(R" and \*(L"reseed_time_interval\*(R"
+thresholds ensure sufficient prediction resistance over time and you
+can reduce those values if you think they are too high.  Explicitly
+requesting prediction resistance is intended for more special use-cases
+like generating long-term secrets.
+.PP
 An \fB\s-1EVP_RAND_CTX\s0\fR needs to have locking enabled if it acts as the parent of
 more than one child and the children can be accessed concurrently.  This must
 be done by explicitly calling \fBEVP_RAND_enable_locking()\fR.
@@ -492,6 +502,8 @@ return value of 0 means that the callback was not called for any names.
 .PP
 \&\fBEVP_RAND_CTX_free()\fR does not return a value.
 .PP
+\&\fBEVP_RAND_CTX_up_ref()\fR returns 1 on success, 0 on error.
+.PP
 \&\fBEVP_RAND_nonce()\fR returns the length of the nonce.
 .PP
 \&\fBEVP_RAND_get_strength()\fR returns the strength of the random number generator
@@ -519,7 +531,7 @@ failure.
 This functionality was added to OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2020\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2020\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

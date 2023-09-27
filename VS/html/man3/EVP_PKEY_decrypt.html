@@ -39,11 +39,13 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The EVP_PKEY_decrypt_init() function initializes a public key algorithm context using key <b>pkey</b> for a decryption operation.</p>
+<p>The EVP_PKEY_decrypt_init() function initializes a public key algorithm context using key <i>pkey</i> for a decryption operation.</p>
 
-<p>The EVP_PKEY_decrypt_init_ex() function initializes a public key algorithm context using key <b>pkey</b> for a decryption operation and sets the algorithm specific <b>params</b>.</p>
+<p>The EVP_PKEY_decrypt_init_ex() function initializes a public key algorithm context using key <i>pkey</i> for a decryption operation and sets the algorithm specific <i>params</i>.</p>
 
-<p>The EVP_PKEY_decrypt() function performs a public key decryption operation using <b>ctx</b>. The data to be decrypted is specified using the <b>in</b> and <b>inlen</b> parameters. If <b>out</b> is <b>NULL</b> then the maximum size of the output buffer is written to the <b>outlen</b> parameter. If <b>out</b> is not <b>NULL</b> then before the call the <b>outlen</b> parameter should contain the length of the <b>out</b> buffer, if the call is successful the decrypted data is written to <b>out</b> and the amount of data written to <b>outlen</b>.</p>
+<p>The EVP_PKEY_decrypt() function performs a public key decryption operation using <i>ctx</i>. The data to be decrypted is specified using the <i>in</i> and <i>inlen</i> parameters. If <i>out</i> is NULL then the minimum required size of the output buffer is written to the <i>*outlen</i> parameter.</p>
+
+<p>If <i>out</i> is not NULL then before the call the <i>*outlen</i> parameter must contain the length of the <i>out</i> buffer. If the call is successful the decrypted data is written to <i>out</i> and the amount of the decrypted data written to <i>*outlen</i>, otherwise an error is returned.</p>
 
 <h1 id="NOTES">NOTES</h1>
 

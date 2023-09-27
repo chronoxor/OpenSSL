@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_PROVIDER 3ossl"
-.TH OSSL_PROVIDER 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_PROVIDER 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -226,8 +226,8 @@ the environment variable \s-1OPENSSL_MODULES\s0 if set.
 .PP
 \&\fBOSSL_PROVIDER_try_load()\fR functions like \fBOSSL_PROVIDER_load()\fR, except that
 it does not disable the fallback providers if the provider cannot be
-loaded and initialized or if \fIretain_fallbacks\fR is zero.
-If the provider loads successfully and \fIretain_fallbacks\fR is nonzero, the
+loaded and initialized or if \fIretain_fallbacks\fR is nonzero.
+If the provider loads successfully and \fIretain_fallbacks\fR is zero, the
 fallback providers are disabled.
 .PP
 \&\fBOSSL_PROVIDER_unload()\fR unloads the given provider.
@@ -246,11 +246,10 @@ See \fBOSSL_PROVIDER\-default\fR\|(7) for more information on this fallback
 behaviour.
 .PP
 \&\fBOSSL_PROVIDER_gettable_params()\fR is used to get a provider parameter
-descriptor set as a constant \fB\s-1OSSL_PARAM\s0\fR array.
-See \s-1\fBOSSL_PARAM\s0\fR\|(3) for more information.
+descriptor set as a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array.
 .PP
 \&\fBOSSL_PROVIDER_get_params()\fR is used to get provider parameter values.
-The caller must prepare the \fB\s-1OSSL_PARAM\s0\fR array before calling this
+The caller must prepare the \s-1\fBOSSL_PARAM\s0\fR\|(3) array before calling this
 function, and the variables acting as buffers for this parameter array
 should be filled with data when it returns successfully.
 .PP
@@ -286,7 +285,7 @@ have a short lifetime.
 \&\fBOSSL_PROVIDER_get_capabilities()\fR provides information about the capabilities
 supported by the provider specified in \fIprov\fR with the capability name
 \&\fIcapability\fR. For each capability of that name supported by the provider it
-will call the callback \fIcb\fR and supply a set of \fB\s-1OSSL_PARAM\s0\fRs describing the
+will call the callback \fIcb\fR and supply a set of \s-1\fBOSSL_PARAM\s0\fR\|(3)s describing the
 capability. It will also pass back the argument \fIarg\fR. For more details about
 capabilities and what they can be used for please see
 \&\*(L"\s-1CAPABILTIIES\*(R"\s0 in \fBprovider\-base\fR\|(7).
@@ -308,7 +307,7 @@ that returns 0.
 otherwise 0.
 .PP
 \&\fBOSSL_PROVIDER_gettable_params()\fR returns a pointer to an array
-of constant \fB\s-1OSSL_PARAM\s0\fR, or \s-1NULL\s0 if none is provided.
+of constant \s-1\fBOSSL_PARAM\s0\fR\|(3), or \s-1NULL\s0 if none is provided.
 .PP
 \&\fBOSSL_PROVIDER_get_params()\fR and returns 1 on success, or 0 on error.
 .PP
@@ -347,7 +346,7 @@ its build information.
 The type and functions described here were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

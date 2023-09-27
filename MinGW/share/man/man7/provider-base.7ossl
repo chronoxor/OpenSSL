@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-BASE 7ossl"
-.TH PROVIDER-BASE 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH PROVIDER-BASE 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -253,13 +253,13 @@ provider\-base
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 All \*(L"functions\*(R" mentioned here are passed as function pointers between
-\&\fIlibcrypto\fR and the provider in \fB\s-1OSSL_DISPATCH\s0\fR arrays, in the call
+\&\fIlibcrypto\fR and the provider in \s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays, in the call
 of the provider initialization function.  See \*(L"Provider\*(R" in \fBprovider\fR\|(7)
 for a description of the initialization function. They are known as \*(L"upcalls\*(R".
 .PP
 All these \*(L"functions\*(R" have a corresponding function type definition
 named \fBOSSL_FUNC_{name}_fn\fR, and a helper function to retrieve the
-function pointer from a \fB\s-1OSSL_DISPATCH\s0\fR element named
+function pointer from a \s-1\fBOSSL_DISPATCH\s0\fR\|(3) element named
 \&\fBOSSL_FUNC_{name}\fR.
 For example, the \*(L"function\*(R" \fBcore_gettable_params()\fR has these:
 .PP
@@ -270,10 +270,10 @@ For example, the \*(L"function\*(R" \fBcore_gettable_params()\fR has these:
 \&     OSSL_FUNC_core_gettable_params(const OSSL_DISPATCH *opf);
 .Ve
 .PP
-\&\fB\s-1OSSL_DISPATCH\s0\fR arrays are indexed by numbers that are provided as
+\&\s-1\fBOSSL_DISPATCH\s0\fR\|(3) arrays are indexed by numbers that are provided as
 macros in \fBopenssl\-core_dispatch.h\fR\|(7), as follows:
 .PP
-For \fIin\fR (the \fB\s-1OSSL_DISPATCH\s0\fR array passed from \fIlibcrypto\fR to the
+For \fIin\fR (the \s-1\fBOSSL_DISPATCH\s0\fR\|(3) array passed from \fIlibcrypto\fR to the
 provider):
 .PP
 .Vb 10
@@ -323,7 +323,7 @@ provider):
 \& provider_free                  OSSL_FUNC_PROVIDER_FREE
 .Ve
 .PP
-For \fI*out\fR (the \fB\s-1OSSL_DISPATCH\s0\fR array passed from the provider to
+For \fI*out\fR (the \s-1\fBOSSL_DISPATCH\s0\fR\|(3) array passed from the provider to
 \&\fIlibcrypto\fR):
 .PP
 .Vb 8
@@ -339,7 +339,7 @@ For \fI*out\fR (the \fB\s-1OSSL_DISPATCH\s0\fR array passed from the provider to
 .SS "Core functions"
 .IX Subsection "Core functions"
 \&\fBcore_gettable_params()\fR returns a constant array of descriptor
-\&\fB\s-1OSSL_PARAM\s0\fR, for parameters that \fBcore_get_params()\fR can handle.
+\&\s-1\fBOSSL_PARAM\s0\fR\|(3), for parameters that \fBcore_get_params()\fR can handle.
 .PP
 \&\fBcore_get_params()\fR retrieves parameters from the core for the given \fIhandle\fR.
 See \*(L"Core parameters\*(R" below for a description of currently known
@@ -400,7 +400,6 @@ It will treat as success the case where the \s-1OID\s0 already exists (even if t
 short name \fIsn\fR or long name \fIln\fR provided as arguments differ from those
 associated with the existing \s-1OID,\s0 in which case the new names are not
 associated).
-This function is not thread safe.
 .PP
 The \fBcore_obj_add_sigid()\fR function registers a new composite signature algorithm
 (\fIsign_name\fR) consisting of an underlying signature algorithm (\fIpkey_name\fR)
@@ -415,7 +414,6 @@ signature algorithm already exists (even if registered against a different
 underlying signature or digest algorithm). For \fIdigest_name\fR, \s-1NULL\s0 or an
 empty string is permissible for signature algorithms that do not need a digest
 to operate correctly. The function returns 1 on success or 0 on failure.
-This function is not thread safe.
 .PP
 \&\fBCRYPTO_malloc()\fR, \fBCRYPTO_zalloc()\fR, \fBCRYPTO_free()\fR, \fBCRYPTO_clear_free()\fR,
 \&\fBCRYPTO_realloc()\fR, \fBCRYPTO_clear_realloc()\fR, \fBCRYPTO_secure_malloc()\fR,
@@ -425,7 +423,7 @@ This function is not thread safe.
 \&\fBBIO_free()\fR, \fBBIO_vprintf()\fR, \fBBIO_vsnprintf()\fR, \fBBIO_gets()\fR, \fBBIO_puts()\fR,
 \&\fBBIO_ctrl()\fR, \fBOPENSSL_cleanse()\fR and
 \&\fBOPENSSL_hexstr2buf()\fR correspond exactly to the public functions with
-the same name.  As a matter of fact, the pointers in the \fB\s-1OSSL_DISPATCH\s0\fR
+the same name.  As a matter of fact, the pointers in the \s-1\fBOSSL_DISPATCH\s0\fR\|(3)
 array are typically direct pointers to those public functions. Note that the \s-1BIO\s0
 functions take an \fB\s-1OSSL_CORE_BIO\s0\fR type rather than the standard \fB\s-1BIO\s0\fR
 type. This is to ensure that a provider does not mix BIOs from the core
@@ -447,7 +445,7 @@ returned to the caller.  On error, zero is returned.
 of length \fIsalt_len\fR and operating system specific information.
 The \fIsalt\fR should contain uniquely identifying information and this is
 included, in an unspecified manner, as part of the output.
-The output is stored in a buffer which contrains at least \fImin_len\fR and at
+The output is stored in a buffer which contains at least \fImin_len\fR and at
 most \fImax_len\fR bytes.  The buffer address is stored in \fI*pout\fR and the
 buffer length returned to the caller.  On error, zero is returned.
 .PP
@@ -506,13 +504,13 @@ from the core's provider store.
 It must free the passed \fIprovctx\fR.
 .PP
 \&\fBprovider_gettable_params()\fR should return a constant array of
-descriptor \fB\s-1OSSL_PARAM\s0\fR, for parameters that \fBprovider_get_params()\fR
+descriptor \s-1\fBOSSL_PARAM\s0\fR\|(3), for parameters that \fBprovider_get_params()\fR
 can handle.
 .PP
-\&\fBprovider_get_params()\fR should process the \fB\s-1OSSL_PARAM\s0\fR array
+\&\fBprovider_get_params()\fR should process the \s-1\fBOSSL_PARAM\s0\fR\|(3) array
 \&\fIparams\fR, setting the values of the parameters it understands.
 .PP
-\&\fBprovider_query_operation()\fR should return a constant \fB\s-1OSSL_ALGORITHM\s0\fR
+\&\fBprovider_query_operation()\fR should return a constant \s-1\fBOSSL_ALGORITHM\s0\fR\|(3)
 that corresponds to the given \fIoperation_id\fR.
 It should indicate if the core may store a reference to this array by
 setting \fI*no_store\fR to 0 (core may store a reference) or 1 (core may
@@ -523,13 +521,13 @@ not store a reference).
 pointers have been copied.  The \fIoperation_id\fR should match that passed to
 \&\fBprovider_query_operation()\fR and \fIalgs\fR should be its return value.
 .PP
-\&\fBprovider_get_reason_strings()\fR should return a constant \fB\s-1OSSL_ITEM\s0\fR
+\&\fBprovider_get_reason_strings()\fR should return a constant \s-1\fBOSSL_ITEM\s0\fR\|(3)
 array that provides reason strings for reason codes the provider may
 use when reporting errors using \fBcore_put_error()\fR.
 .PP
 The \fBprovider_get_capabilities()\fR function should call the callback \fIcb\fR passing
-it a set of \fB\s-1OSSL_PARAM\s0\fRs and the caller supplied argument \fIarg\fR. The
-\&\fB\s-1OSSL_PARAM\s0\fRs should provide details about the capability with the name given
+it a set of \s-1\fBOSSL_PARAM\s0\fR\|(3)s and the caller supplied argument \fIarg\fR. The
+\&\s-1\fBOSSL_PARAM\s0\fR\|(3)s should provide details about the capability with the name given
 in the \fIcapability\fR argument relevant for the provider context \fIprovctx\fR. If a
 provider supports multiple capabilities with the given name then it may call the
 callback multiple times (one for each capability). Capabilities can be useful for
@@ -730,6 +728,10 @@ versions supported by the group. The values equate to the on-the-wire encoding
 of the various \s-1TLS\s0 versions. For example TLSv1.3 is 0x0304 (772 decimal), and
 TLSv1.2 is 0x0303 (771 decimal). A 0 indicates that there is no defined minimum
 or maximum. A \-1 indicates that the group should not be used in that protocol.
+.SH "NOTES"
+.IX Header "NOTES"
+The \fBcore_obj_create()\fR and \fBcore_obj_add_sigid()\fR functions were not thread safe
+in OpenSSL 3.0.
 .SH "EXAMPLES"
 .IX Header "EXAMPLES"
 This is an example of a simple provider made available as a
@@ -903,7 +905,7 @@ This relies on a few things existing in \fIopenssl/core_dispatch.h\fR:
 \&
 \& #define OSSL_FUNC_BAR_FREECTX     2
 \& typedef void (OSSL_FUNC_bar_freectx_fn)(void *ctx);
-\& static ossl_inline OSSL_FUNC_bar_newctx(const OSSL_DISPATCH *opf)
+\& static ossl_inline OSSL_FUNC_bar_freectx(const OSSL_DISPATCH *opf)
 \& { return (OSSL_FUNC_bar_freectx_fn *)opf\->function; }
 \&
 \& #define OSSL_FUNC_BAR_INIT        3
@@ -931,7 +933,7 @@ The concept of providers and everything surrounding them was
 introduced in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2019\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2019\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

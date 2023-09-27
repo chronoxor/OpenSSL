@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL_IA32CAP 3ossl"
-.TH OPENSSL_IA32CAP 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OPENSSL_IA32CAP 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -227,6 +227,8 @@ The capability vector is further extended with \s-1EBX\s0 value returned by
 .IX Item "bit #64+8 denoting availability of BMI2 instructions, e.g. MULX and RORX;"
 .IP "bit #64+16 denoting availability of \s-1AVX512F\s0 extension;" 4
 .IX Item "bit #64+16 denoting availability of AVX512F extension;"
+.IP "bit #64+17 denoting availability of \s-1AVX512DQ\s0 extension;" 4
+.IX Item "bit #64+17 denoting availability of AVX512DQ extension;"
 .IP "bit #64+18 denoting availability of \s-1RDSEED\s0 instruction;" 4
 .IX Item "bit #64+18 denoting availability of RDSEED instruction;"
 .IP "bit #64+19 denoting availability of \s-1ADCX\s0 and \s-1ADOX\s0 instructions;" 4
@@ -254,7 +256,7 @@ extensions.
 Not available.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2004\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2004\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

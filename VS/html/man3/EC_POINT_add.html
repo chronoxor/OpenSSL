@@ -61,7 +61,7 @@
 
 <p>EC_POINT_cmp compares the two supplied points and tests whether or not they are equal.</p>
 
-<p>The functions EC_POINT_make_affine and EC_POINTs_make_affine force the internal representation of the EC_POINT(s) into the affine co-ordinate system. In the case of EC_POINTs_make_affine the value <b>num</b> provides the number of points in the array <b>points</b> to be forced. These functions were deprecated in OpenSSL 3.0 and should no longer be used. Modern versions automatically perform this conversion when needed.</p>
+<p>The functions EC_POINT_make_affine and EC_POINTs_make_affine force the internal representation of the EC_POINT(s) into the affine coordinate system. In the case of EC_POINTs_make_affine the value <b>num</b> provides the number of points in the array <b>points</b> to be forced. These functions were deprecated in OpenSSL 3.0 and should no longer be used. Modern versions automatically perform this conversion when needed.</p>
 
 <p>EC_POINT_mul calculates the value generator * <b>n</b> + <b>q</b> * <b>m</b> and stores the result in <b>r</b>. The value <b>n</b> may be NULL in which case the result is just <b>q</b> * <b>m</b> (variable point multiplication). Alternatively, both <b>q</b> and <b>m</b> may be NULL, and <b>n</b> non-NULL, in which case the result is just generator * <b>n</b> (fixed point multiplication). When performing a single fixed or variable point multiplication, the underlying implementation uses a constant time algorithm, when the input scalar (either <b>n</b> or <b>m</b>) is in the range [0, ec_group_order).</p>
 
@@ -91,7 +91,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2013-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2013-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

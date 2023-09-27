@@ -63,13 +63,13 @@ int ASN1_item_verify_ctx(const ASN1_ITEM *it, const X509_ALGOR *alg,
 
 <p>ASN1_item_sign() is similar to ASN1_item_sign_ex() but uses default values of NULL for the <i>id</i>, <i>libctx</i> and <i>propq</i>.</p>
 
-<p>ASN1_item_sign_ctx() is similiar to ASN1_item_sign() but uses the parameters contained in digest context <i>ctx</i>.</p>
+<p>ASN1_item_sign_ctx() is similar to ASN1_item_sign() but uses the parameters contained in digest context <i>ctx</i>.</p>
 
 <p>ASN1_item_verify_ex() is used to verify the signature <i>signature</i> of internal data <i>data</i> using the public key <i>pkey</i> and algorithm identifier <i>alg</i>. The data that is verified is formed by taking the data object in <i>data</i> and converting it to der format using the ASN.1 structure <i>it</i>. The <b>OSSL_LIB_CTX</b> specified in <i>libctx</i> and the property query string specified in <i>props</i> are used when searching for algorithms in providers. The optional parameter <i>id</i> can be NULL, but can be set for special key types. See EVP_PKEY_CTX_set1_id() for further info.</p>
 
 <p>ASN1_item_verify() is similar to ASN1_item_verify_ex() but uses default values of NULL for the <i>id</i>, <i>libctx</i> and <i>propq</i>.</p>
 
-<p>ASN1_item_verify_ctx() is similiar to ASN1_item_verify() but uses the parameters contained in digest context <i>ctx</i>.</p>
+<p>ASN1_item_verify_ctx() is similar to ASN1_item_verify() but uses the parameters contained in digest context <i>ctx</i>.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -200,7 +200,7 @@ err:
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

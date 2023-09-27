@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_CMP_VALIDATE_MSG 3ossl"
-.TH OSSL_CMP_VALIDATE_MSG 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_CMP_VALIDATE_MSG 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -156,8 +156,11 @@ This is the \s-1API\s0 for validating the protection of \s-1CMP\s0 messages,
 which includes validating \s-1CMP\s0 message sender certificates and their paths
 while optionally checking the revocation status of the certificates(s).
 .PP
-\&\fBOSSL_CMP_validate_msg()\fR validates the protection of the given \fImsg\fR
-using either password-based mac (\s-1PBM\s0) or a signature algorithm.
+\&\fBOSSL_CMP_validate_msg()\fR validates the protection of the given \fImsg\fR,
+which must be signature-based or using password-based \s-1MAC\s0 (\s-1PBM\s0).
+In the former case a suitable trust anchor must be given in the \s-1CMP\s0 context
+\&\fIctx\fR, and in the latter case the matching secret must have been set there
+using \fBOSSL_CMP_CTX_set1_secretValue\fR\|(3).
 .PP
 In case of signature algorithm, the certificate to use for the signature check
 is preferably the one provided by a call to \fBOSSL_CMP_CTX_set1_srvCert\fR\|(3).
@@ -195,13 +198,15 @@ verification callback) and non-trusted intermediate certs from the \fIctx\fR.
 return 1 on success, 0 on error or validation failed.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
-\&\fBOSSL_CMP_CTX_new\fR\|(3), \fBOSSL_CMP_exec_certreq\fR\|(3)
+\&\fBOSSL_CMP_CTX_new\fR\|(3), \fBOSSL_CMP_exec_certreq\fR\|(3),
+\&\fBOSSL_CMP_CTX_set1_secretValue\fR\|(3), \fBOSSL_CMP_CTX_set1_srvCert\fR\|(3),
+\&\fBOSSL_CMP_CTX_set1_untrusted\fR\|(3), \fBOSSL_CMP_CTX_set0_trustedStore\fR\|(3)
 .SH "HISTORY"
 .IX Header "HISTORY"
 The OpenSSL \s-1CMP\s0 support was added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2007\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2007\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

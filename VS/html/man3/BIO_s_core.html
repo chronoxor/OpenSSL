@@ -39,7 +39,7 @@
 
 <p>A core BIO is treated as source/sink BIO which communicates to some external BIO. This is primarily useful to provider authors. A number of calls from libcrypto into a provider supply an OSSL_CORE_BIO parameter. This represents a BIO within libcrypto, but cannot be used directly by a provider. Instead it should be wrapped using a BIO_s_core().</p>
 
-<p>Once a BIO is contructed based on BIO_s_core(), the associated OSSL_CORE_BIO object should be set on it using BIO_set_data(3). Note that the BIO will only operate correctly if it is associated with a library context constructed using OSSL_LIB_CTX_new_from_dispatch(3). To associate the BIO with a library context construct it using BIO_new_ex(3).</p>
+<p>Once a BIO is constructed based on BIO_s_core(), the associated OSSL_CORE_BIO object should be set on it using BIO_set_data(3). Note that the BIO will only operate correctly if it is associated with a library context constructed using OSSL_LIB_CTX_new_from_dispatch(3). To associate the BIO with a library context construct it using BIO_new_ex(3).</p>
 
 <p>BIO_new_from_core_bio() is a convenience function that constructs a new BIO based on BIO_s_core() and that is associated with the given library context. It then also sets the OSSL_CORE_BIO object on the BIO using BIO_set_data(3).</p>
 
@@ -71,7 +71,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2021-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

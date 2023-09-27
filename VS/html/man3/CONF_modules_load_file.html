@@ -42,7 +42,7 @@
 
 <p>The function CONF_get1_default_config_file() determines the default configuration file pathname as follows. If the <b>OPENSSL_CONF</b> environment variable is set its value is returned. Else the function returns the path obtained using <a href="../man3/X509_get_default_cert_area.html">X509_get_default_cert_area(3)</a> with the filename <code>&quot;openssl.cnf&quot;</code> appended. The caller is responsible for freeing any string returned.</p>
 
-<p>The function CONF_modules_load_file_ex() configures OpenSSL using library context <b>libctx</b> file <b>filename</b> and application name <b>appname</b>. If <b>filename</b> is NULL the standard OpenSSL configuration file is used as determined by calling CONF_get1_default_config_file(). If <b>appname</b> is NULL the standard OpenSSL application name <b>openssl_conf</b> is used. The behaviour can be customized using <b>flags</b>. Note that, the error suppressing can be overriden by <b>config_diagnostics</b> as described in <a href="../man5/config.html">config(5)</a>.</p>
+<p>The function CONF_modules_load_file_ex() configures OpenSSL using library context <b>libctx</b> file <b>filename</b> and application name <b>appname</b>. If <b>filename</b> is NULL the standard OpenSSL configuration file is used as determined by calling CONF_get1_default_config_file(). If <b>appname</b> is NULL the standard OpenSSL application name <b>openssl_conf</b> is used. The behaviour can be customized using <b>flags</b>. Note that, the error suppressing can be overridden by <b>config_diagnostics</b> as described in <a href="../man5/config.html">config(5)</a>.</p>
 
 <p>CONF_modules_load_file() is the same as CONF_modules_load_file_ex() but has a NULL library context.</p>
 
@@ -132,7 +132,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2004-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2004-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

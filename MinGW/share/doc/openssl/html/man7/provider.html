@@ -55,7 +55,7 @@
 
 <h2 id="Provider">Provider</h2>
 
-<p>A <i>provider</i> offers an initialization function, as a set of base functions in the form of an <b>OSSL_DISPATCH</b> array, and by extension, a set of <b>OSSL_ALGORITHM</b>s (see <a href="../man7/openssl-core.h.html">openssl-core.h(7)</a>). It may be a dynamically loadable module, or may be built-in, in OpenSSL libraries or in the application. If it&#39;s a dynamically loadable module, the initialization function must be named <code>OSSL_provider_init</code> and must be exported. If it&#39;s built-in, the initialization function may have any name.</p>
+<p>A <i>provider</i> offers an initialization function, as a set of base functions in the form of an <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> array, and by extension, a set of <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a>s (see <a href="../man7/openssl-core.h.html">openssl-core.h(7)</a>). It may be a dynamically loadable module, or may be built-in, in OpenSSL libraries or in the application. If it&#39;s a dynamically loadable module, the initialization function must be named <code>OSSL_provider_init</code> and must be exported. If it&#39;s built-in, the initialization function may have any name.</p>
 
 <p>The initialization function must have the following signature:</p>
 
@@ -85,7 +85,7 @@
 
 <p><i>no_store</i> is a flag back to the OpenSSL libraries which, when nonzero, signifies that the OpenSSL libraries will not store a reference to the returned data in their internal store of implementations.</p>
 
-<p>The returned <b>OSSL_ALGORITHM</b> is the foundation of any OpenSSL library API that uses providers for their implementation, most commonly in the <i>fetching</i> type of functions (see <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>).</p>
+<p>The returned <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a> is the foundation of any OpenSSL library API that uses providers for their implementation, most commonly in the <i>fetching</i> type of functions (see <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>).</p>
 
 <h2 id="Operations">Operations</h2>
 

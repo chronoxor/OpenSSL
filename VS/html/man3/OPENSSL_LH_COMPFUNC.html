@@ -25,13 +25,15 @@
 
 <h1 id="NAME">NAME</h1>
 
-<p>LHASH, DECLARE_LHASH_OF, OPENSSL_LH_COMPFUNC, OPENSSL_LH_HASHFUNC, OPENSSL_LH_DOALL_FUNC, LHASH_DOALL_ARG_FN_TYPE, IMPLEMENT_LHASH_HASH_FN, IMPLEMENT_LHASH_COMP_FN, lh_TYPE_new, lh_TYPE_free, lh_TYPE_flush, lh_TYPE_insert, lh_TYPE_delete, lh_TYPE_retrieve, lh_TYPE_doall, lh_TYPE_doall_arg, lh_TYPE_error, OPENSSL_LH_new, OPENSSL_LH_free, OPENSSL_LH_flush, OPENSSL_LH_insert, OPENSSL_LH_delete, OPENSSL_LH_retrieve, OPENSSL_LH_doall, OPENSSL_LH_doall_arg, OPENSSL_LH_error - dynamic hash table</p>
+<p>LHASH, LHASH_OF, DEFINE_LHASH_OF_EX, DEFINE_LHASH_OF, OPENSSL_LH_COMPFUNC, OPENSSL_LH_HASHFUNC, OPENSSL_LH_DOALL_FUNC, LHASH_DOALL_ARG_FN_TYPE, IMPLEMENT_LHASH_HASH_FN, IMPLEMENT_LHASH_COMP_FN, lh_TYPE_new, lh_TYPE_free, lh_TYPE_flush, lh_TYPE_insert, lh_TYPE_delete, lh_TYPE_retrieve, lh_TYPE_doall, lh_TYPE_doall_arg, lh_TYPE_error, OPENSSL_LH_new, OPENSSL_LH_free, OPENSSL_LH_flush, OPENSSL_LH_insert, OPENSSL_LH_delete, OPENSSL_LH_retrieve, OPENSSL_LH_doall, OPENSSL_LH_doall_arg, OPENSSL_LH_error - dynamic hash table</p>
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
 <pre><code> #include &lt;openssl/lhash.h&gt;
 
- DECLARE_LHASH_OF(TYPE);
+ LHASH_OF(TYPE)
+
+ DEFINE_LHASH_OF_EX(TYPE);
 
  LHASH_OF(TYPE) *lh_TYPE_new(OPENSSL_LH_HASHFUNC hash, OPENSSL_LH_COMPFUNC compare);
  void lh_TYPE_free(LHASH_OF(TYPE) *table);
@@ -65,9 +67,15 @@
 
  int OPENSSL_LH_error(OPENSSL_LHASH *lh);</code></pre>
 
+<p>The following macro is deprecated:</p>
+
+<pre><code> DEFINE_LHASH_OF(TYPE);</code></pre>
+
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
 <p>This library implements type-checked dynamic hash tables. The hash table entries can be arbitrary structures. Usually they consist of key and value fields. In the description here, <b><i>TYPE</i></b> is used a placeholder for any of the OpenSSL datatypes, such as <i>SSL_SESSION</i>.</p>
+
+<p>To define a new type-checked dynamic hash table, use <b>DEFINE_LHASH_OF_EX</b>(). <b>DEFINE_LHASH_OF</b>() was previously used for this purpose, but is now deprecated. The <b>DEFINE_LHASH_OF_EX</b>() macro provides all functionality of <b>DEFINE_LHASH_OF</b>() except for certain deprecated statistics functions (see OPENSSL_LH_stats(3)).</p>
 
 <p><b>lh_<i>TYPE</i>_new</b>() creates a new <b>LHASH_OF</b>(<b><i>TYPE</i></b>) structure to store arbitrary data entries, and specifies the &#39;hash&#39; and &#39;compare&#39; callbacks to be used in organising the table&#39;s entries. The <i>hash</i> callback takes a pointer to a table entry as its argument and returns an unsigned long hash value for its key field. The hash value is normally truncated to a power of 2, so make sure that your hash function returns well mixed low order bits. The <i>compare</i> callback takes two arguments (pointers to two hash table entries), and returns 0 if their keys are equal, nonzero otherwise.</p>
 
@@ -179,6 +187,8 @@
 <h1 id="HISTORY">HISTORY</h1>
 
 <p>In OpenSSL 1.0.0, the lhash interface was revamped for better type checking.</p>
+
+<p>In OpenSSL 3.1, <b>DEFINE_LHASH_OF_EX</b>() was introduced and <b>DEFINE_LHASH_OF</b>() was deprecated.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

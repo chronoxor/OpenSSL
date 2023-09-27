@@ -16,6 +16,7 @@
   <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
   <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
   <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
+  <li><a href="#NOTES">NOTES</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
   <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
@@ -53,6 +54,10 @@ int ERR_FATAL_ERROR(unsigned long e);</code></pre>
 
 <p>The library number, reason code, and whether the error is fatal, respectively. Starting with OpenSSL 3.0.0, the function code is always set to zero.</p>
 
+<h1 id="NOTES">NOTES</h1>
+
+<p>Applications should not make control flow decisions based on specific error codes. Error codes are subject to change at any time (even in patch releases of OpenSSL). A particular error code can only be considered meaningful for control flow decisions if it is explicitly documented as such. New failure codes may still appear at any time.</p>
+
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
 <p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a></p>
@@ -65,7 +70,7 @@ int ERR_FATAL_ERROR(unsigned long e);</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

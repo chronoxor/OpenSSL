@@ -43,7 +43,7 @@
 
 <p>The same API&#39;s can usually be used simultaneously on different objects without interference. For example, two threads can calculate a signature using two different <b>EVP_PKEY_CTX</b> objects.</p>
 
-<p>For implicit global state or singletons, thread-safety depends on the facility. The <a href="../man3/CRYPTO_secure_malloc.html">CRYPTO_secure_malloc(3)</a> and related API&#39;s have their own lock, while <a href="../man3/CRYPTO_malloc.html">CRYPTO_malloc(3)</a> assumes the underlying platform allocation will do any necessary locking. Some API&#39;s, such as <a href="../man3/NCONF_load.html">NCONF_load(3)</a> and related, or <a href="../man3/OBJ_create.html">OBJ_create(3)</a> do no locking at all; this can be considered a bug.</p>
+<p>For implicit global state or singletons, thread-safety depends on the facility. The <a href="../man3/CRYPTO_secure_malloc.html">CRYPTO_secure_malloc(3)</a> and related API&#39;s have their own lock, while <a href="../man3/CRYPTO_malloc.html">CRYPTO_malloc(3)</a> assumes the underlying platform allocation will do any necessary locking. Some API&#39;s, such as <a href="../man3/NCONF_load.html">NCONF_load(3)</a> and related do no locking at all; this can be considered a bug.</p>
 
 <p>A separate, although related, issue is modifying &quot;factory&quot; objects when other objects have been created from that. For example, an <b>SSL_CTX</b> object created by <a href="../man3/SSL_CTX_new.html">SSL_CTX_new(3)</a> is used to create per-connection <b>SSL</b> objects by calling <a href="../man3/SSL_new.html">SSL_new(3)</a>. In this specific case, and probably for factory methods in general, it is not safe to modify the factory object after it has been used to create other objects.</p>
 
@@ -57,7 +57,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2021-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

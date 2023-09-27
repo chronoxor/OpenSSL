@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL_S390XCAP 3ossl"
-.TH OPENSSL_S390XCAP 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OPENSSL_S390XCAP 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -170,8 +170,8 @@ There are three types of tokens:
 The name of a processor generation. A bit in the environment variable's
 mask is set to one if and only if the specified processor generation
 implements the corresponding instruction set extension. Possible values
-are \fBz900\fR, \fBz990\fR, \fBz9\fR, \fBz10\fR, \fBz196\fR, \fBzEC12\fR, \fBz13\fR, \fBz14\fR
-and \fBz15\fR.
+are \fBz900\fR, \fBz990\fR, \fBz9\fR, \fBz10\fR, \fBz196\fR, \fBzEC12\fR, \fBz13\fR, \fBz14\fR,
+\&\fBz15\fR, and \fBz16\fR.
 .IP "<string>:<mask>:<mask>" 4
 .IX Item "<string>:<mask>:<mask>"
 The name of an instruction followed by two 64\-bit masks. The part of the
@@ -325,7 +325,7 @@ Disables the KM-XTS-AES and the KIMD-SHAKE function codes:
 [1] z/Architecture Principles of Operation, \s-1SA22\-7832\-12\s0
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2018\-2020 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2018\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

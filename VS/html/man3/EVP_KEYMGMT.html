@@ -73,9 +73,9 @@
 
 <p>EVP_KEYMGMT_do_all_provided() traverses all key keymgmt implementations by all activated providers in the library context <i>libctx</i>, and for each of the implementations, calls <i>fn</i> with the implementation method and <i>data</i> as arguments.</p>
 
-<p>EVP_KEYMGMT_gettable_params() and EVP_KEYMGMT_settable_params() return a constant <b>OSSL_PARAM</b> array that describes the names and types of key parameters that can be retrieved or set. EVP_KEYMGMT_gettable_params() is used by <a href="../man3/EVP_PKEY_gettable_params.html">EVP_PKEY_gettable_params(3)</a>. See <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for the use of <b>OSSL_PARAM</b> as a parameter descriptor.</p>
+<p>EVP_KEYMGMT_gettable_params() and EVP_KEYMGMT_settable_params() return a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the names and types of key parameters that can be retrieved or set. EVP_KEYMGMT_gettable_params() is used by <a href="../man3/EVP_PKEY_gettable_params.html">EVP_PKEY_gettable_params(3)</a>.</p>
 
-<p>EVP_KEYMGMT_gen_settable_params() returns a constant <b>OSSL_PARAM</b> array that describes the names and types of key generation parameters that can be set via <a href="../man3/EVP_PKEY_CTX_set_params.html">EVP_PKEY_CTX_set_params(3)</a>.</p>
+<p>EVP_KEYMGMT_gen_settable_params() returns a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the names and types of key generation parameters that can be set via <a href="../man3/EVP_PKEY_CTX_set_params.html">EVP_PKEY_CTX_set_params(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -97,9 +97,9 @@
 
 <p>EVP_KEYMGMT_get0_name() returns the algorithm name, or NULL on error.</p>
 
-<p>EVP_KEYMGMT_get0_description() returns a pointer to a decription, or NULL if there isn&#39;t one.</p>
+<p>EVP_KEYMGMT_get0_description() returns a pointer to a description, or NULL if there isn&#39;t one.</p>
 
-<p>EVP_KEYMGMT_gettable_params(), EVP_KEYMGMT_settable_params() and EVP_KEYMGMT_gen_settable_params() return a constant <b>OSSL_PARAM</b> array or NULL on error.</p>
+<p>EVP_KEYMGMT_gettable_params(), EVP_KEYMGMT_settable_params() and EVP_KEYMGMT_gen_settable_params() return a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array or NULL on error.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
@@ -111,7 +111,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

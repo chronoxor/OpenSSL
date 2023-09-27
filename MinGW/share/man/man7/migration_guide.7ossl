@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "MIGRATION_GUIDE 7ossl"
-.TH MIGRATION_GUIDE 7ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH MIGRATION_GUIDE 7ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -146,10 +146,27 @@ See the individual manual pages for details.
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 This guide details the changes required to migrate to new versions of OpenSSL.
-Currently this covers OpenSSL 3.0. For earlier versions refer to
+Currently this covers OpenSSL 3.0 & 3.1. For earlier versions refer to
 <https://github.com/openssl/openssl/blob/master/CHANGES.md>.
 For an overview of some of the key concepts introduced in OpenSSL 3.0 see
 \&\fBcrypto\fR\|(7).
+.SH "OPENSSL 3.1"
+.IX Header "OPENSSL 3.1"
+.SS "Main Changes from OpenSSL 3.0"
+.IX Subsection "Main Changes from OpenSSL 3.0"
+The \s-1FIPS\s0 provider in OpenSSL 3.1 includes some non-FIPS validated algorithms,
+consequently the property query \f(CW\*(C`fips=yes\*(C'\fR is mandatory for applications that
+want to operate in a \s-1FIPS\s0 approved manner.  The algorithms are:
+.IP "Triple \s-1DES ECB\s0" 4
+.IX Item "Triple DES ECB"
+.PD 0
+.IP "Triple \s-1DES CBC\s0" 4
+.IX Item "Triple DES CBC"
+.IP "EdDSA" 4
+.IX Item "EdDSA"
+.PD
+.PP
+There are no other changes requiring additional migration measures since OpenSSL 3.0.
 .SH "OPENSSL 3.0"
 .IX Header "OPENSSL 3.0"
 .SS "Main Changes from OpenSSL 1.1.1"
@@ -271,7 +288,7 @@ New algorithms provided via engines will still work.
 .PP
 Engine-backed keys can be loaded via custom \fB\s-1OSSL_STORE\s0\fR implementation.
 In this case the \fB\s-1EVP_PKEY\s0\fR objects created via \fBENGINE_load_private_key\fR\|(3)
-will be concidered legacy and will continue to work.
+will be considered legacy and will continue to work.
 .PP
 To ensure the future compatibility, the engines should be turned to providers.
 To prefer the provider-based hardware offload, you can specify the default
@@ -335,6 +352,16 @@ use of MACs through raw private keys in functionality such as
 All new applications should use the new \s-1\fBEVP_MAC\s0\fR\|(3) interface.
 See also \*(L"Message Authentication Code (\s-1MAC\s0)\*(R" in \fBOSSL_PROVIDER\-default\fR\|(7)
 and \*(L"Message Authentication Code (\s-1MAC\s0)\*(R" in \s-1\fBOSSL_PROVIDER\-FIPS\s0\fR\|(7).
+.PP
+Algorithm Fetching
+.IX Subsection "Algorithm Fetching"
+.PP
+Using calls to convenience functions such as \fBEVP_sha256()\fR and \fBEVP_aes_256_gcm()\fR may
+incur a performance penalty when using providers.
+Retrieving algorithms from providers involves searching for an algorithm by name.
+This is much slower than directly accessing a method table.
+It is recommended to prefetch algorithms if an algorithm is used many times.
+See \*(L"Performance\*(R" in \fBcrypto\fR\|(7), \*(L"Explicit fetching\*(R" in \fBcrypto\fR\|(7) and \*(L"Implicit fetching\*(R" in \fBcrypto\fR\|(7).
 .PP
 Support for Linux Kernel \s-1TLS\s0
 .IX Subsection "Support for Linux Kernel TLS"
@@ -420,6 +447,16 @@ context and property query and will call an extended version of the key/IV
 derivation function which supports these parameters. This includes
 \&\fBEVP_PBE_CipherInit_ex\fR\|(3), \fBEVP_PBE_find_ex\fR\|(3) and \fBEVP_PBE_scrypt_ex\fR\|(3).
 .PP
+PKCS#12 \s-1KDF\s0 versus \s-1FIPS\s0
+.IX Subsection "PKCS#12 KDF versus FIPS"
+.PP
+Unlike in 1.x.y, the \s-1PKCS12KDF\s0 algorithm used when a PKCS#12 structure
+is created with a \s-1MAC\s0 that does not work with the \s-1FIPS\s0 provider as the \s-1PKCS12KDF\s0
+is not a \s-1FIPS\s0 approvable mechanism.
+.PP
+See \s-1\fBEVP_KDF\-PKCS12KDF\s0\fR\|(7), \fBPKCS12_create\fR\|(3), \fBopenssl\-pkcs12\fR\|(1),
+\&\s-1\fBOSSL_PROVIDER\-FIPS\s0\fR\|(7).
+.PP
 Windows thread synchronization changes
 .IX Subsection "Windows thread synchronization changes"
 .PP
@@ -458,7 +495,7 @@ This code is now always set to zero. Related functions are deprecated.
 .IX Subsection "STACK and HASH macros have been cleaned up"
 .PP
 The type-safe wrappers are declared everywhere and implemented once.
-See \s-1\fBDEFINE_STACK_OF\s0\fR\|(3) and \s-1\fBDECLARE_LHASH_OF\s0\fR\|(3).
+See \s-1\fBDEFINE_STACK_OF\s0\fR\|(3) and \s-1\fBDEFINE_LHASH_OF_EX\s0\fR\|(3).
 .PP
 The \s-1RAND_DRBG\s0 subsystem has been removed
 .IX Subsection "The RAND_DRBG subsystem has been removed"
@@ -616,6 +653,15 @@ Removal of function code from the error codes
 The function code part of the error code is now always set to 0. For that
 reason the \s-1\fBERR_GET_FUNC\s0()\fR macro was removed. Applications must resolve
 the error codes only using the library number and the reason code.
+.PP
+ChaCha20\-Poly1305 cipher does not allow a truncated \s-1IV\s0 length to be used
+.IX Subsection "ChaCha20-Poly1305 cipher does not allow a truncated IV length to be used"
+.PP
+In OpenSSL 3.0 setting the \s-1IV\s0 length to any value other than 12 will result in an
+error.
+Prior to OpenSSL 3.0 the ivlen could be smaller that the required 12 byte length,
+using EVP_CIPHER_CTX_ctrl(ctx, \s-1EVP_CRTL_AEAD_SET_IVLEN,\s0 ivlen, \s-1NULL\s0). This resulted
+in an \s-1IV\s0 that had leading zero padding.
 .SS "Installation and Compilation"
 .IX Subsection "Installation and Compilation"
 Please refer to the \s-1INSTALL\s0.md file in the top of the distribution for
@@ -752,7 +798,7 @@ set up with the default library context. Use \fBX509_new_ex\fR\|(3),
 \&\fBX509_CRL_new_ex\fR\|(3), \fBX509_REQ_new_ex\fR\|(3) and \fBX509_PUBKEY_new_ex\fR\|(3) if a
 library context is required.
 .PP
-All functions listed below with a \fI\s-1NAME\s0\fR have a replacment function \fINAME_ex\fR
+All functions listed below with a \fI\s-1NAME\s0\fR have a replacement function \fINAME_ex\fR
 that takes \fB\s-1OSSL_LIB_CTX\s0\fR as an additional argument. Functions that have other
 mappings are listed along with the respective name.
 .IP "\(bu" 4
@@ -938,7 +984,7 @@ See also \*(L"\s-1OPENSSL PROVIDERS\*(R"\s0 in \fBcrypto\fR\|(7).
 Implicit and Explicit Fetching is described in detail here
 \&\*(L"\s-1ALGORITHM FETCHING\*(R"\s0 in \fBcrypto\fR\|(7).
 .PP
-\fIMapping \s-1EVP\s0 controls and flags to provider \f(BI\s-1OSSL_PARAM\s0\fI parameters\fR
+\fIMapping \s-1EVP\s0 controls and flags to provider \s-1\f(BIOSSL_PARAM\s0\fI\|(3) parameters\fR
 .IX Subsection "Mapping EVP controls and flags to provider OSSL_PARAM parameters"
 .PP
 The existing functions for controls (such as \fBEVP_CIPHER_CTX_ctrl\fR\|(3)) and
@@ -966,7 +1012,7 @@ Providers are a replacement for engines and low-level method overrides
 Any accessor that uses an \s-1ENGINE\s0 is deprecated (such as \fBEVP_PKEY_set1_engine()\fR).
 Applications using engines should instead use providers.
 .PP
-Before providers were added algorithms were overriden by changing the methods
+Before providers were added algorithms were overridden by changing the methods
 used by algorithms. All these methods such as \fBRSA_new_method()\fR and \fBRSA_meth_new()\fR
 are now deprecated and can be replaced by using providers instead.
 .PP
@@ -1067,7 +1113,8 @@ See \s-1\fBEVP_MAC\s0\fR\|(3), \s-1\fBEVP_MAC\-HMAC\s0\fR\|(7), \s-1\fBEVP_MAC\-
 \&\s-1\fBEVP_MAC\-KMAC\s0\fR\|(7), \s-1\fBEVP_MAC\-BLAKE2\s0\fR\|(7), \fBEVP_MAC\-Poly1305\fR\|(7) and
 \&\fBEVP_MAC\-Siphash\fR\|(7) for additional information.
 .PP
-Note that the one-shot method \s-1\fBHMAC\s0()\fR is still available for compatability purposes.
+Note that the one-shot method \s-1\fBHMAC\s0()\fR is still available for compatibility purposes,
+but this can also be replaced by using \s-1EVP_Q_MAC\s0 if a library context is required.
 .PP
 Deprecated low-level validation functions
 .IX Subsection "Deprecated low-level validation functions"
@@ -1366,7 +1413,7 @@ See \*(L"Deprecated low-level key exchange functions\*(R".
 \&\s-1\fBECDH_KDF_X9_62\s0()\fR
 .Sp
 Applications may either set this using the helper function
-\&\fBEVP_PKEY_CTX_set_ecdh_kdf_type\fR\|(3) or by setting an \fB\s-1OSSL_PARAM\s0\fR using the
+\&\fBEVP_PKEY_CTX_set_ecdh_kdf_type\fR\|(3) or by setting an \s-1\fBOSSL_PARAM\s0\fR\|(3) using the
 \&\*(L"kdf-type\*(R" as shown in \*(L"\s-1EXAMPLES\*(R"\s0 in \s-1\fBEVP_KEYEXCH\-ECDH\s0\fR\|(7)
 .IP "\(bu" 4
 \&\fBECDSA_sign()\fR, \fBECDSA_sign_ex()\fR, \fBECDSA_sign_setup()\fR, \fBECDSA_do_sign()\fR,
@@ -1417,7 +1464,7 @@ See \*(L"Deprecated low-level validation functions\*(R"
 .IP "\(bu" 4
 \&\fBEC_KEY_set_flags()\fR, \fBEC_KEY_get_flags()\fR, \fBEC_KEY_clear_flags()\fR
 .Sp
-See \*(L"Common \s-1EC\s0 parameters\*(R" in \s-1\fBEVP_PKEY\-EC\s0\fR\|(7) which handles flags as seperate
+See \*(L"Common \s-1EC\s0 parameters\*(R" in \s-1\fBEVP_PKEY\-EC\s0\fR\|(7) which handles flags as separate
 parameters for \fB\s-1OSSL_PKEY_PARAM_EC_POINT_CONVERSION_FORMAT\s0\fR,
 \&\fB\s-1OSSL_PKEY_PARAM_EC_GROUP_CHECK_TYPE\s0\fR, \fB\s-1OSSL_PKEY_PARAM_EC_ENCODING\s0\fR,
 \&\fB\s-1OSSL_PKEY_PARAM_USE_COFACTOR_ECDH\s0\fR and
@@ -1914,6 +1961,23 @@ and \fBX509_get0_signature\fR\|(3) instead.
 \&\fBX509_http_nbio()\fR, \fBX509_CRL_http_nbio()\fR
 .Sp
 Use \fBX509_load_http\fR\|(3) and \fBX509_CRL_load_http\fR\|(3) instead.
+.PP
+\fI\s-1NID\s0 handling for provided keys and algorithms\fR
+.IX Subsection "NID handling for provided keys and algorithms"
+.PP
+The following functions for \s-1NID\s0 (numeric id) handling have changed semantics.
+.IP "\(bu" 4
+\&\fBEVP_PKEY_id()\fR, \fBEVP_PKEY_get_id()\fR
+.Sp
+This function was previously used to reliably return the \s-1NID\s0 of
+an \s-1EVP_PKEY\s0 object, e.g., to look up the name of the algorithm of
+such \s-1EVP_PKEY\s0 by calling \fBOBJ_nid2sn\fR\|(3). With the introduction
+of \fBprovider\fR\|(7)s \fBEVP_PKEY_id()\fR or its new equivalent
+\&\fBEVP_PKEY_get_id\fR\|(3) might now also return the value \-1
+(\fB\s-1EVP_PKEY_KEYMGMT\s0\fR) indicating the use of a provider to
+implement the \s-1EVP_PKEY\s0 object. Therefore, the use of
+\&\fBEVP_PKEY_get0_type_name\fR\|(3) is recommended for retrieving
+the name of the \s-1EVP_PKEY\s0 algorithm.
 .SS "Using the \s-1FIPS\s0 Module in applications"
 .IX Subsection "Using the FIPS Module in applications"
 See \fBfips_module\fR\|(7) and \s-1\fBOSSL_PROVIDER\-FIPS\s0\fR\|(7) for details.
@@ -2090,9 +2154,12 @@ options of the commands.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBfips_module\fR\|(7)
+.SH "HISTORY"
+.IX Header "HISTORY"
+The migration guide was created for OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2021\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2021\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

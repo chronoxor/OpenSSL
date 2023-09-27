@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_DECODER_CTX_NEW_FOR_PKEY 3ossl"
-.TH OSSL_DECODER_CTX_NEW_FOR_PKEY 3ossl "2022-11-01" "3.0.7" "OpenSSL"
+.TH OSSL_DECODER_CTX_NEW_FOR_PKEY 3ossl "2023-09-19" "3.1.3" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -178,7 +178,7 @@ them up, so all the caller has to do next is call functions like
 \&\fBOSSL_DECODER_from_bio\fR\|(3).  The caller may use the optional \fIinput_type\fR,
 \&\fIinput_struct\fR, \fIkeytype\fR and \fIselection\fR to specify what the input is
 expected to contain.  The \fIpkey\fR must reference an \fB\s-1EVP_PKEY\s0 *\fR variable
-that will be set to the newly created \fB\s-1EVP_PKEY\s0\fR on succesfull decoding.
+that will be set to the newly created \fB\s-1EVP_PKEY\s0\fR on successful decoding.
 The referenced variable must be initialized to \s-1NULL\s0 before calling the
 function.
 .PP
@@ -215,10 +215,10 @@ callback may be specified with the following functions.
 \&\fBOSSL_DECODER_CTX_set_pem_password_cb()\fR, \fBOSSL_DECODER_CTX_set_passphrase_ui()\fR
 and \fBOSSL_DECODER_CTX_set_passphrase_cb()\fR set up a callback method that the
 implementation can use to prompt for a pass phrase, giving the caller the
-choice of prefered pass phrase callback form.  These are called indirectly,
-through an internal \fB\s-1OSSL_PASSPHRASE_CALLBACK\s0\fR function.
+choice of preferred pass phrase callback form.  These are called indirectly,
+through an internal \s-1\fBOSSL_PASSPHRASE_CALLBACK\s0\fR\|(3) function.
 .PP
-The internal \fB\s-1OSSL_PASSPHRASE_CALLBACK\s0\fR function caches the pass phrase, to
+The internal \s-1\fBOSSL_PASSPHRASE_CALLBACK\s0\fR\|(3) function caches the pass phrase, to
 be re-used in all decodings that are performed in the same decoding run (for
 example, within one \fBOSSL_DECODER_from_bio\fR\|(3) call).
 .SS "Input Types"
@@ -265,7 +265,7 @@ failure.
 The functions described here were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2020\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2020\-2022 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy
