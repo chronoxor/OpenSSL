@@ -1,4 +1,8 @@
 # OpenSSL
+
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Release](https://img.shields.io/github/release/chronoxor/OpenSSL.svg?sort=semver)](https://github.com/chronoxor/OpenSSL/releases)
+
 OpenSSL 64-bit binaries for MinGW and Visual Studio
 
 # Contents
