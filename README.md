@@ -4,7 +4,7 @@
 [![Release](https://img.shields.io/github/release/chronoxor/OpenSSL.svg?sort=semver)](https://github.com/chronoxor/OpenSSL/releases)
 <br/>
 [![Windows (MinGW)](https://img.shields.io/badge/Build-MinGW-4BC51D)](MinGW)
-[![Windows (Visual Studio)](https://img.shields.io/badge/Build-VisualStudio-4BC51D)](Visual Studio)
+[![Windows (Visual Studio)](https://img.shields.io/badge/Build-VisualStudio-4BC51D)](VS)
 
 OpenSSL 64-bit binaries for MinGW and Visual Studio
 
