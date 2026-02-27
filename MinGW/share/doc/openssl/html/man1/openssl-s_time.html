@@ -16,6 +16,7 @@
   <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
   <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
   <li><a href="#OPTIONS">OPTIONS</a></li>
+  <li><a href="#ENVIRONMENT">ENVIRONMENT</a></li>
   <li><a href="#NOTES">NOTES</a></li>
   <li><a href="#BUGS">BUGS</a></li>
   <li><a href="#HISTORY">HISTORY</a></li>
@@ -29,7 +30,7 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<p><b>openssl</b> <b>s_time</b> [<b>-help</b>] [<b>-connect</b> <i>host</i>:<i>port</i>] [<b>-www</b> <i>page</i>] [<b>-cert</b> <i>filename</i>] [<b>-key</b> <i>filename</i>] [<b>-reuse</b>] [<b>-new</b>] [<b>-verify</b> <i>depth</i>] [<b>-time</b> <i>seconds</i>] [<b>-ssl3</b>] [<b>-tls1</b>] [<b>-tls1_1</b>] [<b>-tls1_2</b>] [<b>-tls1_3</b>] [<b>-bugs</b>] [<b>-cipher</b> <i>cipherlist</i>] [<b>-ciphersuites</b> <i>val</i>] [<b>-nameopt</b> <i>option</i>] [<b>-cafile</b> <i>file</i>] [<b>-CAfile</b> <i>file</i>] [<b>-no-CAfile</b>] [<b>-CApath</b> <i>dir</i>] [<b>-no-CApath</b>] [<b>-CAstore</b> <i>uri</i>] [<b>-no-CAstore</b>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>]</p>
+<p><b>openssl</b> <b>s_time</b> [<b>-help</b>] [<b>-connect</b> <i>host</i>:<i>port</i>] [<b>-www</b> <i>page</i>] [<b>-cert</b> <i>filename</i>] [<b>-key</b> <i>filename</i>] [<b>-reuse</b>] [<b>-new</b>] [<b>-verify</b> <i>depth</i>] [<b>-time</b> <i>seconds</i>] [<b>-ssl3</b>] [<b>-tls1</b>] [<b>-tls1_1</b>] [<b>-tls1_2</b>] [<b>-tls1_3</b>] [<b>-bugs</b>] [<b>-cipher</b> <i>cipherlist</i>] [<b>-ciphersuites</b> <i>val</i>] [<b>-nameopt</b> <i>option</i>] [<b>-cafile</b> <i>file</i>] [<b>-CAfile</b> <i>file</i>] [<b>-no-CAfile</b>] [<b>-CApath</b> <i>dir</i>] [<b>-no-CApath</b>] [<b>-CAstore</b> <i>uri</i>] [<b>-no-CAstore</b>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-provparam</b> <i>[name:]key=value</i>] [<b>-propquery</b> <i>propq</i>]</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -48,7 +49,7 @@
 <dt id="connect-host:port"><b>-connect</b> <i>host</i>:<i>port</i></dt>
 <dd>
 
-<p>This specifies the host and optional port to connect to.</p>
+<p>This specifies the host and optional port to connect to. If the host string is an IPv6 address, it must be enclosed in <code>[</code> and <code>]</code>.</p>
 
 </dd>
 <dt id="www-page"><b>-www</b> <i>page</i></dt>
@@ -131,6 +132,10 @@
 <dd>
 
 </dd>
+<dt id="provparam-name:-key-value"><b>-provparam</b> <i>[name:]key=value</i></dt>
+<dd>
+
+</dd>
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
@@ -147,6 +152,18 @@
 <dd>
 
 <p>See <a href="../man1/openssl.html">&quot;TLS Version Options&quot; in openssl(1)</a>.</p>
+
+</dd>
+</dl>
+
+<h1 id="ENVIRONMENT">ENVIRONMENT</h1>
+
+<dl>
+
+<dt id="SSL_CIPHER"><b>SSL_CIPHER</b></dt>
+<dd>
+
+<p>If the <b>-cipher</b> option is not specified, the contents of this environment variable are used to modify the TLSv1.2 and below cipher list sent by the client the same way the aforementioned option does.</p>
 
 </dd>
 </dl>
@@ -181,7 +198,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2004-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2004-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

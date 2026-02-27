@@ -47,7 +47,7 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_CTX_set_verify() sets the verification flags for <b>ctx</b> to be <b>mode</b> and specifies the <b>verify_callback</b> function to be used. If no callback function shall be specified, the NULL pointer can be used for <b>verify_callback</b>.</p>
+<p>SSL_CTX_set_verify() sets the verification flags for <b>ctx</b> to be <b>mode</b> and specifies the <b>verify_callback</b> function to be used. If no callback function shall be specified, the NULL pointer can be used for <b>verify_callback</b>. <b>ctx</b> <b>MUST NOT</b> be NULL.</p>
 
 <p>SSL_set_verify() sets the verification flags for <b>ssl</b> to be <b>mode</b> and specifies the <b>verify_callback</b> function to be used. If no callback function shall be specified, the NULL pointer can be used for <b>verify_callback</b>. In this case last <b>verify_callback</b> set specifically for this <b>ssl</b> remains. If no special <b>callback</b> was set before, the default callback for the underlying <b>ctx</b> is used, that was valid at the time <b>ssl</b> was created with <a href="../man3/SSL_new.html">SSL_new(3)</a>. Within the callback function, <b>SSL_get_ex_data_X509_STORE_CTX_idx</b> can be called to get the data index of the current SSL object that is doing the verification.</p>
 
@@ -110,6 +110,8 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 </dl>
 
 <p>If the <b>mode</b> is SSL_VERIFY_NONE none of the other flags may be set.</p>
+
+<p>If verification flags are not modified explicitly by <code>SSL_CTX_set_verify()</code> or <code>SSL_set_verify()</code>, the default value will be SSL_VERIFY_NONE.</p>
 
 <p>The actual verification procedure is performed either using the built-in verification procedure or using another application provided verification function set with <a href="../man3/SSL_CTX_set_cert_verify_callback.html">SSL_CTX_set_cert_verify_callback(3)</a>. The following descriptions apply in the case of the built-in procedure. An application provided procedure also has access to the verify depth information and the verify_callback() function, but the way this information is used may be different.</p>
 
@@ -256,7 +258,7 @@ if (peer = SSL_get_peer_certificate(ssl)) {
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2024 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

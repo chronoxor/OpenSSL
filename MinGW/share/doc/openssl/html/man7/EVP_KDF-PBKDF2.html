@@ -36,6 +36,8 @@
 
 <p>The EVP_KDF-PBKDF2 algorithm implements the PBKDF2 password-based key derivation function, as described in SP800-132; it derives a key from a password using a salt and iteration count.</p>
 
+<p>The output is considered to be a cryptographic key.</p>
+
 <h2 id="Identity">Identity</h2>
 
 <p>&quot;PBKDF2&quot; is the name for this implementation; it can be used with the EVP_KDF_fetch() function.</p>
@@ -93,9 +95,15 @@
 </dd>
 </dl>
 
-<p>The default provider uses a default mode of 1 for backwards compatibility, and the FIPS provider uses a default mode of 0.</p>
+<p>The default provider uses a default mode of 1 for backwards compatibility, and the FIPS provider uses a default mode of 0. This option breaks FIPS compliance if it causes the approved &quot;fips-indicator&quot; to return 0.</p>
 
-<p>The value string is expected to be a decimal number 0 or 1.</p>
+</dd>
+<dt id="fips-indicator-OSSL_KDF_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_KDF_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
+<dd>
+
+<p>This option is used by the OpenSSL FIPS provider.</p>
+
+<p>A getter that returns 1 if the operation is FIPS approved, or 0 otherwise. This may be used after calling EVP_KDF_derive. It returns 0 if &quot;pkcs5&quot; is set to 1 and the derived key length, salt length or iteration count test fails.</p>
 
 </dd>
 </dl>
@@ -122,7 +130,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2018-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2018-2024 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -92,7 +92,7 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <p>OSSL_trace_enabled() can be used to check if tracing for the given <i>category</i> is enabled, i.e., if the tracing facility has been statically enabled (see <a href="#Configure-Tracing">&quot;Configure Tracing&quot;</a> below) and a trace channel has been registered using <a href="../man3/OSSL_trace_set_channel.html">OSSL_trace_set_channel(3)</a> or <a href="../man3/OSSL_trace_set_callback.html">OSSL_trace_set_callback(3)</a>.</p>
 
-<p>OSSL_trace_begin() is used to starts a tracing section, and get the channel for the given <i>category</i> in form of a BIO. This BIO can only be used for output.</p>
+<p>OSSL_trace_begin() is used to start a tracing section, and get the channel for the given <i>category</i> in form of a BIO. This BIO can only be used for output. The pointer returned is NULL if the category is invalid or not enabled.</p>
 
 <p>OSSL_trace_end() is used to end a tracing section.</p>
 
@@ -181,6 +181,8 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <h1 id="NOTES">NOTES</h1>
 
+<p>It is not needed to guard trace output function calls like <i>OSSL_TRACE(category, ...)</i> by <i>OSSL_TRACE_ENABLED(category)</i>.</p>
+
 <p>If producing the trace output requires carrying out auxiliary calculations, this auxiliary code should be placed inside a conditional block which is executed only if the trace category is enabled.</p>
 
 <p>The most natural way to do this is to place the code inside the trace section itself because it already introduces such a conditional block.</p>
@@ -258,13 +260,13 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>The OpenSSL Tracing API was added in OpenSSL 3.0.</p>
+<p>The OpenSSL Tracing functions were added in OpenSSL 3.0.</p>
 
 <p>OSSL_TRACE_STRING(), OSSL_TRACE_STRING_MAX, and OSSL_trace_string were added in OpenSSL 3.2.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

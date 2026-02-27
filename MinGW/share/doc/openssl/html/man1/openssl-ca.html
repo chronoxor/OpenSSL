@@ -36,7 +36,7 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<p><b>openssl</b> <b>ca</b> [<b>-help</b>] [<b>-verbose</b>] [<b>-quiet</b>] [<b>-config</b> <i>filename</i>] [<b>-name</b> <i>section</i>] [<b>-section</b> <i>section</i>] [<b>-gencrl</b>] [<b>-revoke</b> <i>file</i>] [<b>-valid</b> <i>file</i>] [<b>-status</b> <i>serial</i>] [<b>-updatedb</b>] [<b>-crl_reason</b> <i>reason</i>] [<b>-crl_hold</b> <i>instruction</i>] [<b>-crl_compromise</b> <i>time</i>] [<b>-crl_CA_compromise</b> <i>time</i>] [<b>-crl_lastupdate</b> <i>date</i>] [<b>-crl_nextupdate</b> <i>date</i>] [<b>-crldays</b> <i>days</i>] [<b>-crlhours</b> <i>hours</i>] [<b>-crlsec</b> <i>seconds</i>] [<b>-crlexts</b> <i>section</i>] [<b>-startdate</b> <i>date</i>] [<b>-enddate</b> <i>date</i>] [<b>-days</b> <i>arg</i>] [<b>-md</b> <i>arg</i>] [<b>-policy</b> <i>arg</i>] [<b>-keyfile</b> <i>filename</i>|<i>uri</i>] [<b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b>] [<b>-key</b> <i>arg</i>] [<b>-passin</b> <i>arg</i>] [<b>-cert</b> <i>file</i>] [<b>-certform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>] [<b>-selfsign</b>] [<b>-in</b> <i>file</i>] [<b>-inform</b> <b>DER</b>|&lt;PEM&gt;] [<b>-out</b> <i>file</i>] [<b>-notext</b>] [<b>-dateopt</b>] [<b>-outdir</b> <i>dir</i>] [<b>-infiles</b>] [<b>-spkac</b> <i>file</i>] [<b>-ss_cert</b> <i>file</i>] [<b>-preserveDN</b>] [<b>-noemailDN</b>] [<b>-batch</b>] [<b>-msie_hack</b>] [<b>-extensions</b> <i>section</i>] [<b>-extfile</b> <i>section</i>] [<b>-subj</b> <i>arg</i>] [<b>-utf8</b>] [<b>-sigopt</b> <i>nm</i>:<i>v</i>] [<b>-vfyopt</b> <i>nm</i>:<i>v</i>] [<b>-create_serial</b>] [<b>-rand_serial</b>] [<b>-multivalue-rdn</b>] [<b>-rand</b> <i>files</i>] [<b>-writerand</b> <i>file</i>] [<b>-engine</b> <i>id</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>] [<i>certreq</i>...]</p>
+<p><b>openssl</b> <b>ca</b> [<b>-help</b>] [<b>-verbose</b>] [<b>-quiet</b>] [<b>-config</b> <i>filename</i>] [<b>-name</b> <i>section</i>] [<b>-section</b> <i>section</i>] [<b>-gencrl</b>] [<b>-revoke</b> <i>file</i>] [<b>-valid</b> <i>file</i>] [<b>-status</b> <i>serial</i>] [<b>-updatedb</b>] [<b>-crl_reason</b> <i>reason</i>] [<b>-crl_hold</b> <i>instruction</i>] [<b>-crl_compromise</b> <i>time</i>] [<b>-crl_CA_compromise</b> <i>time</i>] [<b>-crl_lastupdate</b> <i>date</i>] [<b>-crl_nextupdate</b> <i>date</i>] [<b>-crldays</b> <i>days</i>] [<b>-crlhours</b> <i>hours</i>] [<b>-crlsec</b> <i>seconds</i>] [<b>-crlexts</b> <i>section</i>] [<b>-startdate</b> <i>date</i>] [<b>-not_before</b> <i>date</i>] [<b>-enddate</b> <i>date</i>] [<b>-not_after</b> <i>date</i>] [<b>-days</b> <i>arg</i>] [<b>-md</b> <i>arg</i>] [<b>-policy</b> <i>arg</i>] [<b>-keyfile</b> <i>filename</i>|<i>uri</i>] [<b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b>] [<b>-key</b> <i>arg</i>] [<b>-passin</b> <i>arg</i>] [<b>-cert</b> <i>file</i>] [<b>-certform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>] [<b>-selfsign</b>] [<b>-in</b> <i>file</i>] [<b>-inform</b> <b>DER</b>|&lt;PEM&gt;] [<b>-out</b> <i>file</i>] [<b>-notext</b>] [<b>-dateopt</b>] [<b>-outdir</b> <i>dir</i>] [<b>-infiles</b>] [<b>-spkac</b> <i>file</i>] [<b>-ss_cert</b> <i>file</i>] [<b>-preserveDN</b>] [<b>-noemailDN</b>] [<b>-batch</b>] [<b>-msie_hack</b>] [<b>-extensions</b> <i>section</i>] [<b>-extfile</b> <i>section</i>] [<b>-subj</b> <i>arg</i>] [<b>-utf8</b>] [<b>-sigopt</b> <i>nm</i>:<i>v</i>] [<b>-vfyopt</b> <i>nm</i>:<i>v</i>] [<b>-create_serial</b>] [<b>-rand_serial</b>] [<b>-multivalue-rdn</b>] [<b>-rand</b> <i>files</i>] [<b>-writerand</b> <i>file</i>] [<b>-engine</b> <i>id</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-provparam</b> <i>[name:]key=value</i>] [<b>-propquery</b> <i>propq</i>] [<i>certreq</i>...]</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -153,7 +153,7 @@
 <dt id="sigopt-nm:v"><b>-sigopt</b> <i>nm</i>:<i>v</i></dt>
 <dd>
 
-<p>Pass options to the signature algorithm during sign operations. Names and values of these options are algorithm-specific.</p>
+<p>Pass options to the signature algorithm during sign operations. Names and values of these options are algorithm-specific and documented in <a href="../man7/provider-signature.html">&quot;Signature parameters&quot; in provider-signature(7)</a>.</p>
 
 </dd>
 <dt id="vfyopt-nm:v"><b>-vfyopt</b> <i>nm</i>:<i>v</i></dt>
@@ -196,22 +196,26 @@
 <p>Specify the date output format. Values are: rfc_822 and iso_8601. Defaults to rfc_822.</p>
 
 </dd>
-<dt id="startdate-date"><b>-startdate</b> <i>date</i></dt>
+<dt id="startdate-date--not_before-date"><b>-startdate</b> <i>date</i>, <b>-not_before</b> <i>date</i></dt>
 <dd>
 
-<p>This allows the start date to be explicitly set. The format of the date is YYMMDDHHMMSSZ (the same as an ASN1 UTCTime structure), or YYYYMMDDHHMMSSZ (the same as an ASN1 GeneralizedTime structure). In both formats, seconds SS and timezone Z must be present.</p>
+<p>This allows the start date to be explicitly set. The format of the date is YYMMDDHHMMSSZ (the same as an ASN1 UTCTime structure), or YYYYMMDDHHMMSSZ (the same as an ASN1 GeneralizedTime structure). In both formats, seconds SS and timezone Z must be present. Alternatively, you can also use &quot;today&quot;.</p>
 
 </dd>
-<dt id="enddate-date"><b>-enddate</b> <i>date</i></dt>
+<dt id="enddate-date--not_after-date"><b>-enddate</b> <i>date</i>, <b>-not_after</b> <i>date</i></dt>
 <dd>
 
-<p>This allows the expiry date to be explicitly set. The format of the date is YYMMDDHHMMSSZ (the same as an ASN1 UTCTime structure), or YYYYMMDDHHMMSSZ (the same as an ASN1 GeneralizedTime structure). In both formats, seconds SS and timezone Z must be present.</p>
+<p>This allows the expiry date to be explicitly set. The format of the date is YYMMDDHHMMSSZ (the same as an ASN1 UTCTime structure), or YYYYMMDDHHMMSSZ (the same as an ASN1 GeneralizedTime structure). In both formats, seconds SS and timezone Z must be present. Alternatively, you can also use &quot;today&quot;.</p>
+
+<p>This overrides the <b>-days</b> option.</p>
 
 </dd>
 <dt id="days-arg"><b>-days</b> <i>arg</i></dt>
 <dd>
 
-<p>The number of days to certify the certificate for.</p>
+<p>The number of days from today to certify the certificate for.</p>
+
+<p>Regardless of the option <b>-not_before</b>, the days are always counted from today. When used together with the option <b>-not_after</b>/<b>-startdate</b>, the explicit expiry date takes precedence.</p>
 
 </dd>
 <dt id="md-alg"><b>-md</b> <i>alg</i></dt>
@@ -318,6 +322,10 @@
 <dd>
 
 </dd>
+<dt id="provparam-name:-key-value"><b>-provparam</b> <i>[name:]key=value</i></dt>
+<dd>
+
+</dd>
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
@@ -401,7 +409,7 @@
 <dt id="crl_hold-instruction"><b>-crl_hold</b> <i>instruction</i></dt>
 <dd>
 
-<p>This sets the CRL revocation reason code to <b>certificateHold</b> and the hold instruction to <i>instruction</i> which must be an OID. Although any OID can be used only <b>holdInstructionNone</b> (the use of which is discouraged by RFC2459) <b>holdInstructionCallIssuer</b> or <b>holdInstructionReject</b> will normally be used.</p>
+<p>This sets the CRL revocation reason code to <b>certificateHold</b> and the hold instruction to <i>instruction</i> which must be an OID. Although any OID can be used, only <b>holdInstructionNone</b> (the use of which is deprecated in RFC 5280), <b>holdInstructionCallIssuer</b> or <b>holdInstructionReject</b> will normally be used.</p>
 
 </dd>
 <dt id="crl_compromise-time"><b>-crl_compromise</b> <i>time</i></dt>
@@ -471,7 +479,7 @@
 <dt id="default_days"><b>default_days</b></dt>
 <dd>
 
-<p>The same as the <b>-days</b> option. The number of days to certify a certificate for.</p>
+<p>The same as the <b>-days</b> option. The number of days from today to certify a certificate for.</p>
 
 </dd>
 <dt id="default_startdate"><b>default_startdate</b></dt>
@@ -650,7 +658,7 @@ private_key    = $dir/private/cakey.pem# CA private key
 
 default_days   = 365                   # how long to certify for
 default_crl_days= 30                   # how long before next CRL
-default_md     = md5                   # md to use
+default_md     = sha256                # md to use
 
 policy         = policy_any            # default policy
 email_in_dn    = no                    # Don&#39;t add the email into cert DN
@@ -737,7 +745,7 @@ emailAddress           = optional</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

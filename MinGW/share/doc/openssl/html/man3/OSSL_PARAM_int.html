@@ -21,6 +21,7 @@
     <ul>
       <li><a href="#Example-1">Example 1</a></li>
       <li><a href="#Example-2">Example 2</a></li>
+      <li><a href="#Example-3">Example 3</a></li>
     </ul>
   </li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
@@ -30,7 +31,7 @@
 
 <h1 id="NAME">NAME</h1>
 
-<p>OSSL_PARAM_double, OSSL_PARAM_int, OSSL_PARAM_int32, OSSL_PARAM_int64, OSSL_PARAM_long, OSSL_PARAM_size_t, OSSL_PARAM_time_t, OSSL_PARAM_uint, OSSL_PARAM_uint32, OSSL_PARAM_uint64, OSSL_PARAM_ulong, OSSL_PARAM_BN, OSSL_PARAM_utf8_string, OSSL_PARAM_octet_string, OSSL_PARAM_utf8_ptr, OSSL_PARAM_octet_ptr, OSSL_PARAM_END, OSSL_PARAM_DEFN, OSSL_PARAM_construct_double, OSSL_PARAM_construct_int, OSSL_PARAM_construct_int32, OSSL_PARAM_construct_int64, OSSL_PARAM_construct_long, OSSL_PARAM_construct_size_t, OSSL_PARAM_construct_time_t, OSSL_PARAM_construct_uint, OSSL_PARAM_construct_uint32, OSSL_PARAM_construct_uint64, OSSL_PARAM_construct_ulong, OSSL_PARAM_construct_BN, OSSL_PARAM_construct_utf8_string, OSSL_PARAM_construct_utf8_ptr, OSSL_PARAM_construct_octet_string, OSSL_PARAM_construct_octet_ptr, OSSL_PARAM_construct_end, OSSL_PARAM_locate, OSSL_PARAM_locate_const, OSSL_PARAM_get_double, OSSL_PARAM_get_int, OSSL_PARAM_get_int32, OSSL_PARAM_get_int64, OSSL_PARAM_get_long, OSSL_PARAM_get_size_t, OSSL_PARAM_get_time_t, OSSL_PARAM_get_uint, OSSL_PARAM_get_uint32, OSSL_PARAM_get_uint64, OSSL_PARAM_get_ulong, OSSL_PARAM_get_BN, OSSL_PARAM_get_utf8_string, OSSL_PARAM_get_octet_string, OSSL_PARAM_get_utf8_ptr, OSSL_PARAM_get_octet_ptr, OSSL_PARAM_get_utf8_string_ptr, OSSL_PARAM_get_octet_string_ptr, OSSL_PARAM_set_double, OSSL_PARAM_set_int, OSSL_PARAM_set_int32, OSSL_PARAM_set_int64, OSSL_PARAM_set_long, OSSL_PARAM_set_size_t, OSSL_PARAM_set_time_t, OSSL_PARAM_set_uint, OSSL_PARAM_set_uint32, OSSL_PARAM_set_uint64, OSSL_PARAM_set_ulong, OSSL_PARAM_set_BN, OSSL_PARAM_set_utf8_string, OSSL_PARAM_set_octet_string, OSSL_PARAM_set_utf8_ptr, OSSL_PARAM_set_octet_ptr, OSSL_PARAM_UNMODIFIED, OSSL_PARAM_modified, OSSL_PARAM_set_all_unmodified - OSSL_PARAM helpers</p>
+<p>OSSL_PARAM_double, OSSL_PARAM_int, OSSL_PARAM_int32, OSSL_PARAM_int64, OSSL_PARAM_long, OSSL_PARAM_size_t, OSSL_PARAM_time_t, OSSL_PARAM_uint, OSSL_PARAM_uint32, OSSL_PARAM_uint64, OSSL_PARAM_ulong, OSSL_PARAM_BN, OSSL_PARAM_utf8_string, OSSL_PARAM_octet_string, OSSL_PARAM_utf8_ptr, OSSL_PARAM_octet_ptr, OSSL_PARAM_END, OSSL_PARAM_DEFN, OSSL_PARAM_construct_double, OSSL_PARAM_construct_int, OSSL_PARAM_construct_int32, OSSL_PARAM_construct_int64, OSSL_PARAM_construct_long, OSSL_PARAM_construct_size_t, OSSL_PARAM_construct_time_t, OSSL_PARAM_construct_uint, OSSL_PARAM_construct_uint32, OSSL_PARAM_construct_uint64, OSSL_PARAM_construct_ulong, OSSL_PARAM_construct_BN, OSSL_PARAM_construct_utf8_string, OSSL_PARAM_construct_utf8_ptr, OSSL_PARAM_construct_octet_string, OSSL_PARAM_construct_octet_ptr, OSSL_PARAM_construct_end, OSSL_PARAM_locate, OSSL_PARAM_locate_const, OSSL_PARAM_get_double, OSSL_PARAM_get_int, OSSL_PARAM_get_int32, OSSL_PARAM_get_int64, OSSL_PARAM_get_long, OSSL_PARAM_get_size_t, OSSL_PARAM_get_time_t, OSSL_PARAM_get_uint, OSSL_PARAM_get_uint32, OSSL_PARAM_get_uint64, OSSL_PARAM_get_ulong, OSSL_PARAM_get_BN, OSSL_PARAM_get_utf8_string, OSSL_PARAM_get_octet_string, OSSL_PARAM_get_utf8_ptr, OSSL_PARAM_get_octet_ptr, OSSL_PARAM_get_utf8_string_ptr, OSSL_PARAM_get_octet_string_ptr, OSSL_PARAM_set_double, OSSL_PARAM_set_int, OSSL_PARAM_set_int32, OSSL_PARAM_set_int64, OSSL_PARAM_set_long, OSSL_PARAM_set_size_t, OSSL_PARAM_set_time_t, OSSL_PARAM_set_uint, OSSL_PARAM_set_uint32, OSSL_PARAM_set_uint64, OSSL_PARAM_set_ulong, OSSL_PARAM_set_BN, OSSL_PARAM_set_utf8_string, OSSL_PARAM_set_octet_string, OSSL_PARAM_set_utf8_ptr, OSSL_PARAM_set_octet_ptr, OSSL_PARAM_set_octet_string_or_ptr, OSSL_PARAM_UNMODIFIED, OSSL_PARAM_modified, OSSL_PARAM_set_all_unmodified - OSSL_PARAM helpers</p>
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
@@ -102,6 +103,8 @@ int OSSL_PARAM_get_octet_string_ptr(const OSSL_PARAM *p, const void **val,
 
 int OSSL_PARAM_modified(const OSSL_PARAM *param);
 void OSSL_PARAM_set_all_unmodified(OSSL_PARAM *params);</code></pre>
+
+<p>int OSSL_PARAM_set_octet_string_or_ptr(OSSL_PARAM *p, const void *val, size_t len);</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -204,6 +207,8 @@ void OSSL_PARAM_set_all_unmodified(OSSL_PARAM *params);</code></pre>
 
 <p>OSSL_PARAM_set_all_unmodified() resets the unused indicator for all parameters in the array <i>params</i>.</p>
 
+<p>OSSL_PARAM_set_octet_string_or_ptr() sets an OCTET string or string pointer from the parameter pointed to by <i>p</i> to the value referenced by <i>val</i>. If <i>p</i> is an OCTET string and the parameter&#39;s <i>data</i> field is NULL, then only its <i>return_size</i> field will be assigned the size the parameter&#39;s <i>data</i> buffer should have. The length of the OCTET string is provided by <i>len</i>.</p>
+
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
 <p>OSSL_PARAM_construct_TYPE(), OSSL_PARAM_construct_BN(), OSSL_PARAM_construct_utf8_string(), OSSL_PARAM_construct_octet_string(), OSSL_PARAM_construct_utf8_ptr() and OSSL_PARAM_construct_octet_ptr() return a populated <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> structure.</p>
@@ -266,17 +271,37 @@ if ((p = OSSL_PARAM_locate(params, &quot;bar&quot;)) != NULL)
 if ((p = OSSL_PARAM_locate(params, &quot;cookie&quot;)) != NULL)
     OSSL_PARAM_set_utf8_ptr(p, &quot;cookie value&quot;);</code></pre>
 
+<h2 id="Example-3">Example 3</h2>
+
+<p>This example shows a special case where <i>-Wincompatible-pointer-types-discards-qualifiers</i> may be set during compilation. The value for <i>buf</i> cannot be a <i>const char *</i> type string. An alternative in this case would be to use <b>OSSL_PARAM</b> macro abbreviated calls rather than the specific callers which allows you to define the sha1 argument as a standard character array (<i>char[]</i>).</p>
+
+<p>For example, this code:</p>
+
+<pre><code>OSSL_PARAM params[2];
+params[0] = OSSL_PARAM_construct_utf8_string(&quot;digest&quot;, &quot;SHA1&quot;, 0);
+params[1] = OSSL_PARAM_construct_end();</code></pre>
+
+<p>Can be made compatible with the following version:</p>
+
+<pre><code>char sha1[] = &quot;SHA1&quot;; /* sha1 is defined as char[] in this case */
+OSSL_PARAM params[2];
+
+params[0] = OSSL_PARAM_construct_utf8_string(&quot;digest&quot;, sha1, 0);
+params[1] = OSSL_PARAM_construct_end();</code></pre>
+
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
 <p><a href="../man7/openssl-core.h.html">openssl-core.h(7)</a>, <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>These APIs were introduced in OpenSSL 3.0.</p>
+<p>These functions were added in OpenSSL 3.0.</p>
+
+<p>OSSL_PARAM_set_octet_string_or_ptr was added in OpenSSL 3.6.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 
