@@ -39,7 +39,7 @@ tar -xvzf openssl-3.6.0.tar.gz
 ### Windows (MSYS2)
 ```shell
 cd openssl-3.6.0
-perl Configure mingw64 no-shared
+perl Configure mingw64 no-docs no-module no-shared no-tests
 make
 make install
 ```
@@ -47,7 +47,7 @@ make install
 ### Windows (Visual Studio)
 ```shell
 cd openssl-3.6.0
-perl Configure VC-WIN64A no-shared
+perl Configure VC-WIN64A no-docs no-module no-shared no-tests
 nmake
 nmake install
 ```
