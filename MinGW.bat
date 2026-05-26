@@ -1,4 +1,4 @@
-cd openssl-3.6.0
+cd openssl-4.0.0
 perl Configure mingw64 no-docs no-module no-shared no-tests
 make
 make install
