@@ -15,7 +15,7 @@ OpenSSL 64-bit binaries for MinGW and Visual Studio
 
 # Features
 * Supported compilers: MSYS2/Mingw-x64, Visual Studio 2022 (64-bit)
-* Supported version: OpenSSL 4.0.0
+* Supported version: OpenSSL 4.0.2
 * Windows platform
 
 # Requirements
@@ -28,17 +28,17 @@ OpenSSL 64-bit binaries for MinGW and Visual Studio
 
 ### Download OpenSSL archive
 ```shell
-curl https://www.openssl.org/source/openssl-4.0.0.tar.gz --output openssl-4.0.0.tar.gz
+curl https://www.openssl.org/source/openssl-4.0.2.tar.gz --output openssl-4.0.2.tar.gz
 ```
 
 ### Extract OpenSSL sources
 ```shell
-tar -xvzf openssl-4.0.0.tar.gz
+tar -xvzf openssl-4.0.2.tar.gz
 ```
 
 ### Windows (MSYS2)
 ```shell
-cd openssl-4.0.0
+cd openssl-4.0.2
 perl Configure mingw64 no-docs no-module no-shared no-tests
 make
 make install
@@ -46,7 +46,7 @@ make install
 
 ### Windows (Visual Studio)
 ```shell
-cd openssl-4.0.0
+cd openssl-4.0.2
 perl Configure VC-WIN64A no-docs no-module no-shared no-tests
 nmake
 nmake install
