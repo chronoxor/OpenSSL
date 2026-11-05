@@ -1,4 +1,4 @@
-# 
+# This file provides configuration information for OpenSSL
 prefix=/usr/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib64
@@ -6,7 +6,7 @@ includedir=${prefix}/include
 
 Name: OpenSSL-libssl
 Description: Secure Sockets Layer and cryptography libraries
-Version: 4.0.3
+Version: 4.1.0
 Requires.private: libcrypto
 Libs: -L${libdir} -lssl
 Cflags: -I${includedir}
